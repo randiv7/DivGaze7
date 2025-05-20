@@ -1,12 +1,12 @@
 // Logic for fish behavior and movement
 import { Fish, CursorState, TailSegment } from './types';
 
-// Fixed fish size as specified in requirements (50-60px width)
-const FISH_SIZE = 55;
+// Fixed fish size as specified in requirements (slightly smaller)
+const FISH_SIZE = 48; // Reduced from 55
 // Edge boundary buffer to prevent sticking
 const EDGE_BUFFER = 5;
-// More tail segments for greater fluidity and longer tail
-const TAIL_SEGMENT_COUNT = 10; // Increased from 8 to create longer tail
+// More tail segments for greater fluidity
+const TAIL_SEGMENT_COUNT = 8;
 
 /**
  * Creates a new fish object
@@ -16,9 +16,10 @@ export function createFish(id: number, tankWidth: number, tankHeight: number): F
     id,
     x: Math.random() * (tankWidth - 2 * EDGE_BUFFER) + EDGE_BUFFER,
     y: Math.random() * (tankHeight - 2 * EDGE_BUFFER) + EDGE_BUFFER,
-    size: FISH_SIZE, // Fixed fish size as specified
+    size: FISH_SIZE, // Smaller fish size
     speed: 0.8 + Math.random() * 0.4,
-    maxSpeed: 2 + Math.random() * 0.5,
+    // Reduced maximum speed from 2.0-2.5 range to 1.5-1.8 range
+    maxSpeed: 1.5 + Math.random() * 0.3,
     normalSpeed: 0.8 + Math.random() * 0.4,
     angle: Math.random() * Math.PI * 2,
     targetAngle: Math.random() * Math.PI * 2,
@@ -27,11 +28,11 @@ export function createFish(id: number, tankWidth: number, tankHeight: number): F
       x: 0, y: 0, angle: 0,
       // Add flexibility values for more dynamic tail movement
       // More flexibility toward the end of the tail
-      flexibility: 0.5 + (i / TAIL_SEGMENT_COUNT) * 0.7 // Increased flexibility for longer tail
+      flexibility: 0.5 + (i / TAIL_SEGMENT_COUNT) * 0.5
     } as TailSegment)),
     wobbleOffset: Math.random() * Math.PI * 2,
     wobbleSpeed: 0.05 + Math.random() * 0.03, // Speed of tail wobble
-    wobbleIntensity: 1.0 + Math.random() * 0.5, // Increased intensity for more visible tail movement
+    wobbleIntensity: 0.8 + Math.random() * 0.4, // Intensity of tail movement
     state: 'swimming',
     stateTime: 0,
     inspectDuration: 1000 + Math.random() * 2000,
@@ -57,7 +58,7 @@ export function getDistance(x1: number, y1: number, x2: number, y2: number): num
 
 /**
  * Updates the fish tail segments for fluid motion
- * Adapted for longer tail and smaller body
+ * Now adapted for the top-down flattened fish design
  */
 export function updateFishTail(fish: Fish): void {
   // Update wobble effect for the tail
@@ -67,11 +68,11 @@ export function updateFishTail(fish: Fish): void {
   const speedFactor = fish.speed / fish.normalSpeed;
   
   // Different wobble characteristics based on fish state
-  const stateWobbleMultiplier = fish.state === 'chasing' ? 1.3 : 
-                              fish.state === 'inspecting' ? 0.8 : 1.0;
+  const stateWobbleMultiplier = fish.state === 'chasing' ? 1.2 : 
+                              fish.state === 'inspecting' ? 0.7 : 1.0;
   
-  // Calculate lag factor - increased for longer tail
-  const lagFactor = 0.25; // Increased from 0.2 for better length effect
+  // Calculate lag factor - how much each segment lags behind the previous one
+  const lagFactor = 0.2;
   
   // Head position
   const headX = fish.x;
@@ -92,12 +93,11 @@ export function updateFishTail(fish: Fish): void {
     const lagAmount = lagFactor * (segmentIndex / totalSegments) * speedFactor;
     
     // Dynamic distance based on speed and segment position
-    // Longer segment distances for longer tail
-    const segmentDistance = fish.size * 0.12 * (1 + lagAmount); // Increased from 0.1 to 0.12
+    const segmentDistance = fish.size * 0.1 * (1 + lagAmount);
     
     // Wobble increases toward tail end
     const wobbleAmplitude = fish.wobbleIntensity * (segmentIndex / totalSegments) * stateWobbleMultiplier;
-    const wobbleFrequency = 1 + segmentIndex * 0.25; // Adjusted for longer tail
+    const wobbleFrequency = 1 + segmentIndex * 0.2; // Higher frequency for tail end
     
     // Calculate wobble amount with sine wave
     const wobblePhase = fish.wobbleOffset * wobbleFrequency + segmentIndex * 0.5;
@@ -116,8 +116,7 @@ export function updateFishTail(fish: Fish): void {
     const segmentFraction = segmentIndex / totalSegments;
     
     // Blend between direct angle to head and previous segment angle for smoother curve
-    // For longer tails, we want more influence from the previous segment
-    const blendFactor = Math.min(1, segmentFraction * 2.2); // Increased factor for more fluid motion
+    const blendFactor = Math.min(1, segmentFraction * 2);
     segment.angle = angleToHead * (1 - blendFactor) + prevAngle * blendFactor;
     
     // Update previous positions for next segment

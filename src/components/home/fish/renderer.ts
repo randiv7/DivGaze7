@@ -31,15 +31,15 @@ export function drawWaterTexture(ctx: CanvasRenderingContext2D, width: number, h
 }
 
 /**
- * Draws a fish - new top-down flattened design
+ * Draws a fish - top-down flattened design with smaller body
  */
 export function drawFish(ctx: CanvasRenderingContext2D, fish: Fish): void {
   ctx.save();
   
-  // Calculate body dimensions based on fish size
-  const bodyWidth = fish.size * 0.6; // Main body width
-  const bodyHeight = fish.size * 0.3; // Main body height
-  const tailLength = fish.size * 0.8; // Tail length - at least 50% of total length as specified
+  // Calculate body dimensions based on fish size (slightly smaller)
+  const bodyWidth = fish.size * 0.55; // Reduced from 0.6
+  const bodyHeight = fish.size * 0.28; // Reduced from 0.3
+  const tailLength = fish.size * 0.85; // Increased proportion of tail to body
   
   // Position for drawing
   const centerX = fish.x;
