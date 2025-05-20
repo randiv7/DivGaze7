@@ -1,0 +1,185 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Rajdhani:wght@300;400;500;600;700&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 230 49% 11%; /* Deep Navy Blue */
+    --foreground: 0 0% 100%; /* Pure White */
+
+    --card: 234 29% 22%; /* Grid Purple */
+    --card-foreground: 0 0% 100%; /* Pure White */
+
+    --popover: 230 49% 11%; /* Deep Navy Blue */
+    --popover-foreground: 0 0% 100%; /* Pure White */
+
+    --primary: 180 100% 50%; /* Neon Blue */
+    --primary-foreground: 0 0% 100%; /* Pure White */
+
+    --secondary: 234 29% 22%; /* Grid Purple */
+    --secondary-foreground: 0 0% 100%; /* Pure White */
+
+    --muted: 234 29% 22%; /* Grid Purple */
+    --muted-foreground: 223 33% 82%; /* Soft Blue Gray */
+
+    --accent: 277 74% 53%; /* Electric Violet */
+    --accent-foreground: 0 0% 100%; /* Pure White */
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 100%; /* Pure White */
+
+    --border: 234 29% 22%; /* Grid Purple */
+    --input: 234 29% 22%; /* Grid Purple */
+    --ring: 180 100% 50%; /* Neon Blue */
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 230 49% 11%; /* Deep Navy Blue */
+    --foreground: 0 0% 100%; /* Pure White */
+
+    --card: 234 29% 22%; /* Grid Purple */
+    --card-foreground: 0 0% 100%; /* Pure White */
+
+    --popover: 230 49% 11%; /* Deep Navy Blue */
+    --popover-foreground: 0 0% 100%; /* Pure White */
+
+    --primary: 180 100% 50%; /* Neon Blue */
+    --primary-foreground: 0 0% 100%; /* Pure White */
+
+    --secondary: 234 29% 22%; /* Grid Purple */
+    --secondary-foreground: 0 0% 100%; /* Pure White */
+
+    --muted: 234 29% 22%; /* Grid Purple */
+    --muted-foreground: 223 33% 82%; /* Soft Blue Gray */
+
+    --accent: 277 74% 53%; /* Electric Violet */
+    --accent-foreground: 0 0% 100%; /* Pure White */
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 100%; /* Pure White */
+
+    --border: 234 29% 22%; /* Grid Purple */
+    --input: 234 29% 22%; /* Grid Purple */
+    --ring: 180 100% 50%; /* Neon Blue */
+
+    --sidebar-background: 230 49% 11%; /* Deep Navy Blue */
+    --sidebar-foreground: 0 0% 100%; /* Pure White */
+    --sidebar-primary: 180 100% 50%; /* Neon Blue */
+    --sidebar-primary-foreground: 0 0% 100%; /* Pure White */
+    --sidebar-accent: 234 29% 22%; /* Grid Purple */
+    --sidebar-accent-foreground: 0 0% 100%; /* Pure White */
+    --sidebar-border: 234 29% 22%; /* Grid Purple */
+    --sidebar-ring: 180 100% 50%; /* Neon Blue */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-inter;
+    scroll-behavior: smooth;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-inter;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-muted/30;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-neon-blue/50 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-neon-blue/70;
+}
+
+/* Custom utility classes */
+.glow-effect {
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+}
+
+.blue-purple-gradient {
+  background: linear-gradient(to right, #00FFFF, #8A2BE2);
+}
+
+.text-gradient {
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  background-image: linear-gradient(to right, #00FFFF, #8A2BE2);
+}
+
+.glassmorphism {
+  backdrop-filter: blur(10px);
+  background: rgba(40, 43, 72, 0.7);
+  border: 1px solid rgba(138, 43, 226, 0.2);
+}
+
+/* Glowing button effect */
+.glow-on-hover {
+  position: relative;
+  z-index: 1;
+}
+
+.glow-on-hover:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, #00FFFF, #8A2BE2, #FF2EF5, #00FFFF);
+  background-size: 400% 400%;
+  z-index: -1;
+  filter: blur(15px);
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.glow-on-hover:hover:after {
+  opacity: 1;
+  animation: glowing 1.5s ease-in-out infinite;
+}
+
+@keyframes glowing {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 400% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+/* Add cyber gradient */
+.cyber-gradient {
+  background: linear-gradient(to right, #00FFFF, #FF2EF5);
+}
