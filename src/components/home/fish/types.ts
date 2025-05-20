@@ -1,0 +1,40 @@
+// Defines types and interfaces for the fish tank animation
+
+export type FishState = 'swimming' | 'chasing' | 'inspecting';
+
+export interface TailSegment {
+  x: number;
+  y: number;
+  angle: number;
+  flexibility: number; // Added for more dynamic tail movement
+}
+
+export interface Fish {
+  id: number;
+  x: number;
+  y: number;
+  size: number; // Fixed size as specified in the requirements
+  speed: number;
+  maxSpeed: number;
+  normalSpeed: number;
+  angle: number;
+  targetAngle: number;
+  turnSpeed: number;
+  tailSegments: TailSegment[];
+  wobbleOffset: number;
+  wobbleSpeed: number;
+  wobbleIntensity: number; // Controls the amount of tail movement
+  state: FishState;
+  stateTime: number;
+  inspectDuration: number;
+  inspectRadius: number;
+  orbitOffset: number;
+  acceleration: number;
+}
+
+export interface CursorState {
+  x: number | null;
+  y: number | null;
+  lastMoved: number;
+  isActive: boolean;
+}
