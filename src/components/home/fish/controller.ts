@@ -36,8 +36,10 @@ export function createFish(id: number, tankWidth: number, tankHeight: number): F
     state: 'swimming',
     stateTime: 0,
     inspectDuration: 1000 + Math.random() * 2000,
-    inspectRadius: 20 + id * 10,
-    orbitOffset: id * (Math.PI * 2 / 3),
+    // Adjusted for 4 fish - more evenly spaced orbit radii
+    inspectRadius: 20 + id * 15,
+    // Adjusted for 4 fish - more evenly spaced orbit positions
+    orbitOffset: id * (Math.PI * 2 / 4),
     acceleration: 0.05,
   };
 }

@@ -3,8 +3,8 @@ import { CursorState, Fish } from './fish/types';
 import { drawFish, drawWaterTexture } from './fish/renderer';
 import { initFishes, updateFish } from './fish/controller';
 
-// Number of fish to show in the tank
-const FISH_COUNT = 3;
+// Number of fish to show in the tank - increased from 3 to 4
+const FISH_COUNT = 4;
 
 const CyberFishTank: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
