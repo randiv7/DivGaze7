@@ -6,7 +6,6 @@ import CyberFishTank from "./CyberFishTank";
 
 const HeroSection: React.FC = () => {
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const subtitleRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
   const decorationRef = useRef<HTMLDivElement>(null);
 
@@ -17,10 +16,6 @@ const HeroSection: React.FC = () => {
           if (entry.isIntersecting) {
             if (entry.target === titleRef.current) {
               titleRef.current.classList.add("animate-fade-in");
-            } else if (entry.target === subtitleRef.current) {
-              setTimeout(() => {
-                subtitleRef.current?.classList.add("animate-fade-in");
-              }, 300);
             } else if (entry.target === ctaRef.current) {
               setTimeout(() => {
                 ctaRef.current?.classList.add("animate-fade-in");
@@ -37,7 +32,6 @@ const HeroSection: React.FC = () => {
     );
 
     if (titleRef.current) observer.observe(titleRef.current);
-    if (subtitleRef.current) observer.observe(subtitleRef.current);
     if (ctaRef.current) observer.observe(ctaRef.current);
     if (decorationRef.current) observer.observe(decorationRef.current);
 
@@ -59,36 +53,24 @@ const HeroSection: React.FC = () => {
       <div className="container mx-auto px-4 relative z-10 text-center">
         <h1 
           ref={titleRef}
-          className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 opacity-0 transition-opacity duration-700"
+          className="text-5xl md:text-7xl lg:text-8xl font-bold mb-10 opacity-0 transition-opacity duration-700"
           style={{ textShadow: "0 0 40px rgba(0, 255, 255, 0.4)" }}
         >
-          <span className="bg-gradient-to-r from-pure-white to-neon-blue text-transparent bg-clip-text animate-text-shimmer bg-[length:200%_auto]">
+          {/* Fixed gradient color with increased size */}
+          <span className="bg-gradient-to-r from-cyber-pink to-neon-blue text-transparent bg-clip-text">
             We don't build,
           </span>
           <br />
-          <span className="bg-gradient-to-r from-neon-blue to-electric-violet text-transparent bg-clip-text animate-text-shimmer bg-[length:200%_auto]">
+          <span className="bg-gradient-to-r from-cyber-pink to-neon-blue text-transparent bg-clip-text">
             we create.
           </span>
         </h1>
         
-        <p 
-          ref={subtitleRef}
-          className="text-lg md:text-xl max-w-2xl mx-auto mb-8 text-soft-blue-gray opacity-0 transition-opacity duration-700"
-        >
-          Delivering cutting-edge digital solutions through software development, 
-          AI, design, and strategy that transforms your business.
-        </p>
-        
         <div 
           ref={ctaRef}
-          className="flex flex-col sm:flex-row gap-4 justify-center opacity-0 transition-opacity duration-700"
+          className="flex justify-center opacity-0 transition-opacity duration-700"
         >
-          <Button asChild size="lg" className="bg-neon-blue hover:bg-cyber-pink text-white glow-on-hover group">
-            <Link to="/contact" className="flex items-center gap-2">
-              Get a Quote
-              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-            </Link>
-          </Button>
+          {/* Keeping only the "Explore Our Work" button */}
           <Button asChild size="lg" variant="outline" className="border-neon-blue text-neon-blue hover:bg-neon-blue/10 group">
             <Link to="/portfolio" className="flex items-center gap-2">
               Explore Our Work
