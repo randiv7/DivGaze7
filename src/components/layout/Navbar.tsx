@@ -1,10 +1,8 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
-import LanguageSelector from "./LanguageSelector";
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -74,9 +72,10 @@ const Navbar: React.FC = () => {
             </div>
             
             <div className="flex items-center gap-4">
-              <LanguageSelector />
-              <Button asChild className="bg-neon-blue hover:bg-electric-violet transition-colors duration-300 glow-on-hover">
-                <Link to="/contact">Get a Quote</Link>
+              <Button asChild variant="outline" className="border-neon-blue text-neon-blue hover:bg-neon-blue/10 group">
+                <Link to="/contact" className="flex items-center gap-2">
+                  Get a Quote
+                </Link>
               </Button>
             </div>
           </>
@@ -114,10 +113,7 @@ const Navbar: React.FC = () => {
                 )}
               </Link>
             ))}
-            <div className="mt-4 mb-2">
-              <LanguageSelector />
-            </div>
-            <Button asChild className="w-full bg-neon-blue hover:bg-electric-violet transition-colors animate-pulse-glow mt-4">
+            <Button asChild variant="outline" className="w-full border-neon-blue text-neon-blue hover:bg-neon-blue/10 group">
               <Link to="/contact" onClick={() => setMobileMenuOpen(false)}>
                 Get a Quote
               </Link>

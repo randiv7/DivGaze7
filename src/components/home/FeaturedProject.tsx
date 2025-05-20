@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -89,10 +88,10 @@ const FeaturedProject: React.FC = () => {
               </div>
             </div>
             
-            <Button asChild className="group glow-on-hover bg-neon-blue hover:bg-cyber-pink">
+            <Button asChild variant="outline" className="border-neon-blue text-neon-blue hover:bg-neon-blue/10 group">
               <Link to="/portfolio" className="flex items-center gap-2">
                 View Project Details
-                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="h-4 w-4 transition-transform duration-300 opacity-0 group-hover:opacity-100 group-hover:translate-x-1" />
               </Link>
             </Button>
           </div>
