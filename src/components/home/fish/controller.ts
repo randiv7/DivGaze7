@@ -3,11 +3,11 @@
 import { Fish, CursorState, TailSegment, Particle, ParticleType } from './types';
 
 // Fixed fish size as specified in requirements (slightly smaller)
-const FISH_SIZE = 48; // Reduced from 55
+const FISH_SIZE = 29; // Reduced from 55
 // Edge boundary buffer to prevent sticking
 const EDGE_BUFFER = 5;
 // More tail segments for greater fluidity
-const TAIL_SEGMENT_COUNT = 8;
+const TAIL_SEGMENT_COUNT = 10;
 
 /**
  * Creates a new fish object

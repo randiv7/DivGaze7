@@ -32,15 +32,15 @@ export function drawWaterTexture(ctx: CanvasRenderingContext2D, width: number, h
 }
 
 /**
- * Draws a fish - top-down flattened design with smaller body
+ * Draws a fish with the new shape: elliptical body with triangular front and tail pointing same direction
  */
 export function drawFish(ctx: CanvasRenderingContext2D, fish: Fish): void {
   ctx.save();
   
-  // Calculate body dimensions based on fish size (slightly smaller)
-  const bodyWidth = fish.size * 0.55; // Reduced from 0.6
-  const bodyHeight = fish.size * 0.28; // Reduced from 0.3
-  const tailLength = fish.size * 0.85; // Increased proportion of tail to body
+  // Calculate body dimensions based on fish size
+  // Adjusted to match CSS proportions
+  const bodyWidth = fish.size * 0.70; // Increased for larger body (200px in CSS)
+  const bodyHeight = fish.size * 0.35; // Proportional to width (80px in CSS)
   
   // Position for drawing
   const centerX = fish.x;
@@ -50,8 +50,14 @@ export function drawFish(ctx: CanvasRenderingContext2D, fish: Fish): void {
   ctx.translate(centerX, centerY);
   ctx.rotate(fish.angle);
   
-  // Draw tail first (behind body)
-  drawFishTail(ctx, fish, tailLength, bodyWidth, bodyHeight);
+  // Draw triangular tail first (behind body) - points right according to CSS
+  drawFishTail(ctx, fish, bodyWidth, bodyHeight);
+  
+  // Draw triangular front (also points right according to CSS)
+  drawFishFront(ctx, fish, bodyWidth, bodyHeight);
+  
+  // Draw side fins (wings)
+  drawFishWings(ctx, fish, bodyWidth, bodyHeight);
   
   // Draw main body (neon cyan elliptical shape)
   ctx.beginPath();
@@ -96,132 +102,248 @@ export function drawFish(ctx: CanvasRenderingContext2D, fish: Fish): void {
 }
 
 /**
- * Draws the fish tail with fluid motion
+ * Draws a triangular front pointing right like in CSS
  */
-function drawFishTail(
+function drawFishFront(
   ctx: CanvasRenderingContext2D, 
   fish: Fish, 
-  tailLength: number, 
   bodyWidth: number, 
   bodyHeight: number
 ): void {
-  // We'll use the fish's tail segments to create a smooth curve
-  if (fish.tailSegments.length === 0) return;
+  // Dimensions for front triangle based on CSS proportions (100px width, 160px total height)
+  const frontLength = bodyWidth * 1; // Length of the triangle (100px in CSS)
+  const frontHeight = bodyHeight * 2; // Height (top to bottom) (160px in CSS)
   
-  // Starting point for the tail (back of the body)
-  const startX = -bodyWidth * 0.5; // Slightly behind center of fish body
-  const startY = 0;
+  // Get wobble amount for animation
+  const wobbleTime = fish.wobbleOffset;
+  const wobbleSpeed = fish.state === 'chasing' ? 1.5 : 1.0;
   
-  ctx.beginPath();
-  ctx.moveTo(startX, startY - bodyHeight * 0.3); // Top edge of body
+  // Create a slight wobble effect for the front
+  const wobbleAmount = Math.sin(wobbleTime * wobbleSpeed) * (fish.wobbleIntensity * 2);
   
-  // Create control points based on tail segments for smooth curve
-  const points = [];
-  const numPoints = fish.tailSegments.length;
-  
-  // Build tail path based on segment positions
-  for (let i = 0; i < numPoints; i++) {
-    const segment = fish.tailSegments[i];
-    const segmentFraction = (i + 1) / numPoints;
-    
-    // Calculate segment position in local space
-    const distanceFromBody = tailLength * segmentFraction;
-    const widthAtSegment = bodyWidth * 0.5 * (1 - segmentFraction); // Gradually taper width
-    
-    // Get wobble amount based on segment position and tail physics
-    const wobbleAmplitude = fish.wobbleIntensity * (1 - segmentFraction) * 15;
-    const wobbleOffset = fish.wobbleOffset + segmentFraction * 2;
-    const wobbleY = Math.sin(wobbleOffset) * wobbleAmplitude;
-    
-    // Store point for curve
-    points.push({
-      x: startX - distanceFromBody,
-      y: wobbleY,
-      width: widthAtSegment
-    });
-  }
-  
-  // Draw the tail as a smooth path
+  // Draw the front triangle - pointing right just like the CSS
   ctx.beginPath();
   
-  // Top edge of tail
-  ctx.moveTo(startX, -bodyHeight * 0.4); // Start at top of back
+  // Position at the front of body based on CSS (left: 30px vs body at 100px)
+  const frontStartX = -bodyWidth * 0.7; // Left side of body - front triangle starts before body
   
-  // Draw top curve with points
-  for (let i = 0; i < points.length; i++) {
-    const point = points[i];
-    // Create a smooth curve along tail segments
-    if (i === 0) {
-      ctx.quadraticCurveTo(
-        point.x + tailLength * 0.1, -bodyHeight * 0.3,
-        point.x, point.y - point.width
-      );
-    } else {
-      const prevPoint = points[i-1];
-      // Use control points for smoother curve
-      const cpX = (prevPoint.x + point.x) / 2;
-      const cpY = (prevPoint.y - prevPoint.width + point.y - point.width) / 2;
-      ctx.quadraticCurveTo(cpX, cpY, point.x, point.y - point.width);
-    }
-  }
+  // Draw the triangle with animation (pointing right with border-left in CSS)
+  ctx.moveTo(frontStartX, 0); // Base center point 
+  ctx.lineTo(frontStartX - frontLength, frontHeight/2 + wobbleAmount); // Top point
+  ctx.lineTo(frontStartX - frontLength, -frontHeight/2 + wobbleAmount); // Bottom point
+  ctx.closePath();
   
-  // Tip of tail
-  const lastPoint = points[points.length - 1];
+  // Create a gradient for the front
+  const frontGradient = ctx.createLinearGradient(frontStartX, 0, frontStartX - frontLength, 0);
+  frontGradient.addColorStop(0, 'rgba(0, 255, 255, 0.7)');
+  frontGradient.addColorStop(0.7, 'rgba(0, 255, 255, 0.3)');
+  frontGradient.addColorStop(1, 'rgba(0, 255, 255, 0.1)');
   
-  // Bottom edge of tail (connecting back)
-  for (let i = points.length - 1; i >= 0; i--) {
-    const point = points[i];
-    if (i === points.length - 1) {
-      // End point
-      ctx.lineTo(point.x, point.y + point.width);
-    } else {
-      const nextPoint = points[i+1];
-      // Use control points for smoother curve
-      const cpX = (nextPoint.x + point.x) / 2;
-      const cpY = (nextPoint.y + nextPoint.width + point.y + point.width) / 2;
-      ctx.quadraticCurveTo(cpX, cpY, point.x, point.y + point.width);
-    }
-  }
-  
-  // Close the path
-  ctx.lineTo(startX, bodyHeight * 0.4); // Bottom of back
-  
-  // Create a gradient for the tail to give it a semi-transparent effect
-  const tailGradient = ctx.createLinearGradient(startX, 0, lastPoint.x, 0);
-  tailGradient.addColorStop(0, 'rgba(0, 255, 255, 0.7)');
-  tailGradient.addColorStop(0.7, 'rgba(0, 255, 255, 0.3)');
-  tailGradient.addColorStop(1, 'rgba(0, 255, 255, 0.1)');
-  
-  ctx.fillStyle = tailGradient;
+  ctx.fillStyle = frontGradient;
   ctx.shadowBlur = 10;
   ctx.shadowColor = 'rgba(0, 255, 255, 0.5)';
   
-  // Fill the tail with semi-transparent color
+  // Fill the front with semi-transparent color
   ctx.fill();
   
-  // Add an subtle outer glow
+  // Add subtle outer glow
   ctx.beginPath();
-  ctx.moveTo(startX, -bodyHeight * 0.3);
-  
-  // Simplified path for the glow effect
-  for (let i = 0; i < points.length; i++) {
-    const point = points[i];
-    ctx.lineTo(point.x, point.y - point.width * 1.2);
-  }
-  
-  for (let i = points.length - 1; i >= 0; i--) {
-    const point = points[i];
-    ctx.lineTo(point.x, point.y + point.width * 1.2);
-  }
-  
+  ctx.moveTo(frontStartX, 0);
+  ctx.lineTo(frontStartX - frontLength * 1.05, frontHeight/2 * 1.1 + wobbleAmount);
+  ctx.lineTo(frontStartX - frontLength * 1.05, -frontHeight/2 * 1.1 + wobbleAmount);
   ctx.closePath();
   
-  // Add outer glow effect to tail
   ctx.shadowBlur = 15;
   ctx.shadowColor = '#00FFFF';
   ctx.strokeStyle = 'rgba(0, 255, 255, 0.1)';
   ctx.lineWidth = 1;
   ctx.stroke();
+}
+
+/**
+ * Draws a triangular tail pointing right like in CSS - now with cyber pink color
+ */
+function drawFishTail(
+  ctx: CanvasRenderingContext2D, 
+  fish: Fish, 
+  bodyWidth: number, 
+  bodyHeight: number
+): void {
+  // Dimensions for tail triangle based on CSS proportions (150px border-left, 160px height)
+  const tailLength = bodyWidth * 2.5; // Length of the triangular tail (150px in CSS)
+  const tailHeight = bodyHeight * 5; // Height (top to bottom) (160px in CSS) - updated to 5x
+  
+  // Enhanced physics-based wobble simulation
+  const wobbleTime = fish.wobbleOffset;
+  const wobbleSpeed = fish.state === 'chasing' ? 1.8 : 
+                     fish.state === 'inspecting' ? 1.3 : 1.0;
+  
+  // Calculate primary wobble motion
+  const primaryWobble = Math.sin(wobbleTime * wobbleSpeed) * (fish.wobbleIntensity * 6);
+  
+  // Add secondary wobble for more complex motion
+  const secondaryWobble = Math.sin(wobbleTime * wobbleSpeed * 1.7 + 0.4) * (fish.wobbleIntensity * 2);
+  
+  // Combine wobbles for natural motion
+  const tailWobble = primaryWobble + secondaryWobble;
+  
+  // Position for tail based on CSS (left: 150px vs body at 100px)
+  const tailStartX = bodyWidth * 0.25; // Right side of body where tail overlaps (about 50px after body start)
+  
+  // Create a path for the tail with enhanced physics - pointing right like CSS
+  ctx.beginPath();
+  
+  // Draw the triangle with animation (pointing right with border-left)
+  ctx.moveTo(tailStartX, 0); // Base center point
+  ctx.lineTo(tailStartX - tailLength, tailHeight/2 + tailWobble); // Top point
+  ctx.lineTo(tailStartX - tailLength, -tailHeight/2 + tailWobble); // Bottom point
+  ctx.closePath();
+  
+  // Create a gradient for the tail to give it a cyber pink semi-transparent effect
+  const tailGradient = ctx.createLinearGradient(tailStartX, 0, tailStartX - tailLength, 0);
+  tailGradient.addColorStop(0, 'rgba(255, 46, 245, 0.7)'); // Cyber pink color
+  tailGradient.addColorStop(0.7, 'rgba(255, 46, 245, 0.3)');
+  tailGradient.addColorStop(1, 'rgba(255, 46, 245, 0.1)');
+  
+  ctx.fillStyle = tailGradient;
+  ctx.shadowBlur = 10;
+  ctx.shadowColor = 'rgba(255, 46, 245, 0.5)'; // Cyber pink shadow
+  
+  // Fill the tail with semi-transparent color
+  ctx.fill();
+  
+  // Add subtle outer glow
+  ctx.beginPath();
+  ctx.moveTo(tailStartX, 0);
+  ctx.lineTo(tailStartX - tailLength * 1.05, tailHeight/2 * 1.1 + tailWobble);
+  ctx.lineTo(tailStartX - tailLength * 1.05, -tailHeight/2 * 1.1 + tailWobble);
+  ctx.closePath();
+  
+  ctx.shadowBlur = 15;
+  ctx.shadowColor = '#FF2EF5'; // Cyber pink glow
+  ctx.strokeStyle = 'rgba(255, 46, 245, 0.1)'; // Cyber pink stroke
+  ctx.lineWidth = 1;
+  ctx.stroke();
+}
+
+/**
+ * Draws the side fins (wings) with fluid motion
+ */
+function drawFishWings(
+  ctx: CanvasRenderingContext2D,
+  fish: Fish,
+  bodyWidth: number,
+  bodyHeight: number
+): void {
+  // Wing dimensions - smaller than tail
+  const wingLength = bodyWidth * 2;
+  const wingBaseWidth = bodyHeight * 4;
+  
+  // Wing physics properties - slightly different frequencies than the tail
+  // for more interesting motion and asymmetry
+  const wobbleTime = fish.wobbleOffset;
+  const leftWingPhase = wobbleTime * 1.2; // Slightly faster than tail
+  const rightWingPhase = wobbleTime * 1.2 + Math.PI; // Opposite phase
+  
+  // Wing amplitude increases with fish speed
+  const wingAmplitude = fish.wobbleIntensity * 8 * (fish.speed / fish.normalSpeed);
+  
+  // Increase flutter when chasing or inspecting
+  const flutterIntensity = fish.state === 'chasing' ? 1.5 : 
+                          fish.state === 'inspecting' ? 1.2 : 1.0;
+  
+  // Left wing (extends from left side of body)
+  drawWing(
+    ctx,
+    0, // At center of body
+    -bodyHeight * 0.8, // Offset to left side
+    wingLength,
+    wingBaseWidth,
+    leftWingPhase,
+    wingAmplitude * flutterIntensity,
+    Math.PI / 2 // 90 degrees (pointing left)
+  );
+  
+  // Right wing (extends from right side of body)
+  drawWing(
+    ctx,
+    0, // At center of body
+    bodyHeight * 0.8, // Offset to right side
+    wingLength,
+    wingBaseWidth,
+    rightWingPhase,
+    wingAmplitude * flutterIntensity,
+    -Math.PI / 2 // -90 degrees (pointing right)
+  );
+}
+
+/**
+ * Helper function to draw a single wing with physics
+ */
+function drawWing(
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  length: number,
+  baseWidth: number,
+  phase: number,
+  amplitude: number,
+  angle: number
+): void {
+  // Save context to isolate transformations
+  ctx.save();
+  
+  // Move to wing base position and rotate
+  ctx.translate(x, y);
+  ctx.rotate(angle);
+  
+  // Calculate wing curve based on physics
+  // Use primary and secondary sine waves for more complex motion
+  const primaryWobble = Math.sin(phase) * amplitude;
+  const secondaryWobble = Math.sin(phase * 1.5 + 0.4) * (amplitude * 0.3);
+  const curveAmount = primaryWobble + secondaryWobble;
+  
+  // Draw wing path
+  ctx.beginPath();
+  
+  // Wing base
+  ctx.moveTo(0, -baseWidth/3);
+  
+  // Create a curved wing shape with physics-based movement
+  // Top edge with curve
+  ctx.quadraticCurveTo(
+    length * 0.5, -baseWidth/2 + curveAmount * 0.7, // Control point with physics
+    length, 0 // End point (tip of wing)
+  );
+  
+  // Bottom edge with curve (opposite phase)
+  ctx.quadraticCurveTo(
+    length * 0.5, baseWidth/2 + curveAmount * 0.5, // Control point with physics
+    0, baseWidth/3 // Back to base (bottom)
+  );
+  
+  // Close the path
+  ctx.closePath();
+  
+  // Create a gradient similar to the tail
+  const wingGradient = ctx.createLinearGradient(0, 0, length, 0);
+  wingGradient.addColorStop(0, 'rgba(0, 255, 255, 0.7)');
+  wingGradient.addColorStop(0.5, 'rgba(0, 255, 255, 0.4)');
+  wingGradient.addColorStop(1, 'rgba(0, 255, 255, 0.1)');
+  
+  // Apply gradient and glow effects
+  ctx.fillStyle = wingGradient;
+  ctx.shadowBlur = 10;
+  ctx.shadowColor = 'rgba(0, 255, 255, 0.5)';
+  ctx.fill();
+  
+  // Add subtle glow outline
+  ctx.strokeStyle = 'rgba(0, 255, 255, 0.2)';
+  ctx.lineWidth = 0.5;
+  ctx.stroke();
+  
+  // Restore context
+  ctx.restore();
 }
 
 /**
