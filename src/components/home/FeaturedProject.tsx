@@ -82,7 +82,7 @@ const FeaturedProject: React.FC = () => {
             </div>
             
             <Button asChild variant="outline" className="border-neon-blue text-neon-blue hover:bg-neon-blue/10 group">
-              <Link to="/portfolio" className="flex items-center gap-2">
+              <Link to="/why-ai" className="flex items-center gap-2">
                 Learn more
                 <ArrowRight className="h-4 w-4 transition-transform duration-300 opacity-0 group-hover:opacity-100 group-hover:translate-x-1" />
               </Link>

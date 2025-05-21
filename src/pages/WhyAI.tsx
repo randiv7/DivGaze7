@@ -1,0 +1,260 @@
+import React, { useEffect, useRef } from "react";
+import Layout from "@/components/layout/Layout";
+import { ArrowRight, Check } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Link, useLocation } from "react-router-dom";
+
+const WhyAI: React.FC = () => {
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const introRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+  const benefitsRef = useRef<HTMLDivElement>(null);
+  const rainiRef = useRef<HTMLDivElement>(null);
+  const location = useLocation();
+
+  useEffect(() => {
+    // Scroll to top when the page loads
+    window.scrollTo(0, 0);
+  }, [location]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("animate-fade-in");
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    if (headingRef.current) observer.observe(headingRef.current);
+    if (introRef.current) observer.observe(introRef.current);
+    if (gridRef.current) observer.observe(gridRef.current);
+    if (benefitsRef.current) observer.observe(benefitsRef.current);
+    if (rainiRef.current) observer.observe(rainiRef.current);
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Gallery images - replace with your actual images
+  const galleryImages = [
+    { src: "/assets/ai1.png", alt: "AI-generated marketing visual 1" },
+    { src: "/assets/ai2.png", alt: "AI-generated marketing visual 2" },
+    { src: "/assets/ai3.png", alt: "AI-generated marketing visual 3" },
+    { src: "/assets/ai4.png", alt: "AI-generated marketing visual 4" },
+    { src: "/assets/ai5.png", alt: "AI-generated marketing visual 5" },
+    { src: "/assets/ai6.png", alt: "AI-generated marketing visual 6" },
+    { src: "/assets/ai7.png", alt: "AI-generated marketing visual 7" },
+    { src: "/assets/ai8.png", alt: "AI-generated marketing visual 8" },
+    { src: "/assets/ai9.png", alt: "AI-generated marketing visual 9" },
+  ];
+
+  return (
+    <Layout>
+      <div className="container mx-auto px-4 py-20 mt-16">
+        <h1 
+          ref={headingRef} 
+          className="text-3xl md:text-5xl font-bold mb-8 opacity-0 bg-gradient-to-r from-neon-blue to-electric-violet bg-clip-text text-transparent"
+        >
+          Why Choose AI for Marketing?
+        </h1>
+
+        {/* Benefits Section - at the top */}
+        <div 
+          ref={benefitsRef} 
+          className="bg-grid-purple/20 p-8 rounded-lg border border-electric-violet/10 opacity-0 mb-16"
+        >
+          <h2 className="text-2xl md:text-3xl font-bold mb-6 bg-gradient-to-r from-cyber-pink to-electric-violet bg-clip-text text-transparent">
+            Benefits of AI-Generated Content
+          </h2>
+          
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="space-y-4">
+              <div className="flex items-start gap-3">
+                <div className="mt-1 bg-neon-blue/20 p-1 rounded-full">
+                  <Check className="h-4 w-4 text-neon-blue" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-neon-blue">Cost-Effective Production</h3>
+                  <p className="text-soft-blue-gray">Eliminate expenses related to photoshoots, studios, travel, and talent fees while maintaining professional quality.</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start gap-3">
+                <div className="mt-1 bg-neon-blue/20 p-1 rounded-full">
+                  <Check className="h-4 w-4 text-neon-blue" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-neon-blue">Rapid Iteration</h3>
+                  <p className="text-soft-blue-gray">Generate and refine multiple creative concepts in hours instead of weeks, enabling faster campaign launches.</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start gap-3">
+                <div className="mt-1 bg-neon-blue/20 p-1 rounded-full">
+                  <Check className="h-4 w-4 text-neon-blue" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-neon-blue">Unlimited Creativity</h3>
+                  <p className="text-soft-blue-gray">Explore creative concepts that would be impractical or impossible to capture with traditional photography or video.</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="space-y-4">
+              <div className="flex items-start gap-3">
+                <div className="mt-1 bg-electric-violet/20 p-1 rounded-full">
+                  <Check className="h-4 w-4 text-electric-violet" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-electric-violet">Personalization at Scale</h3>
+                  <p className="text-soft-blue-gray">Create thousands of tailored visuals for different audience segments, locations, or campaigns with minimal effort.</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start gap-3">
+                <div className="mt-1 bg-electric-violet/20 p-1 rounded-full">
+                  <Check className="h-4 w-4 text-electric-violet" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-electric-violet">Consistent Brand Identity</h3>
+                  <p className="text-soft-blue-gray">Ensure visual consistency across all marketing materials by applying the same style parameters to every generation.</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start gap-3">
+                <div className="mt-1 bg-electric-violet/20 p-1 rounded-full">
+                  <Check className="h-4 w-4 text-electric-violet" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-electric-violet">Future-Proof Marketing</h3>
+                  <p className="text-soft-blue-gray">Stay ahead of competitors by embracing cutting-edge technology that continuously improves in quality and capabilities.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Image Gallery Grid */}
+        <div 
+          ref={gridRef} 
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16 opacity-0"
+        >
+          {galleryImages.map((image, index) => (
+            <div 
+              key={index} 
+              className="aspect-square bg-grid-purple/40 rounded-lg border border-neon-blue/20 hover:border-neon-blue/50 transition-all duration-500 overflow-hidden group shadow-[0_0_0_rgba(0,255,255,0)] hover:shadow-[0_0_15px_rgba(0,255,255,0.3)]"
+            >
+              <img 
+                src={image.src} 
+                alt={image.alt} 
+                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* Meet Raini Section */}
+        <div 
+          ref={rainiRef} 
+          className="opacity-0 mb-16"
+        >
+          <h2 className="text-2xl md:text-3xl font-bold mb-6 bg-gradient-to-r from-neon-blue to-cyber-pink bg-clip-text text-transparent">
+            Meet Raini
+          </h2>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+            {/* Text column - spans 5/12 on large screens */}
+            <div className="lg:col-span-5 space-y-6">
+              <p className="text-soft-blue-gray text-lg">
+                Raini is a next-generation AI influencer with roots in the heart of Sri Lanka. A proud Sinhala Buddhist girl, Raini blends cultural authenticity with modern digital charm. At just 22 years old, she radiates a warm, creative, and confident energy that speaks to a new generation.
+              </p>
+              <p className="text-soft-blue-gray text-lg">
+                More than just a virtual personality, Raini is here to inspire. She's passionate about fashion, mindful living, and storytelling that celebrates identity and innovation. With her calm, friendly vibe and stylish aesthetic, she connects deeply with her audience across platforms.
+              </p>
+              <p className="text-soft-blue-gray text-lg">
+                As an AI influencer, Raini collaborates with brands to craft unique and engaging content—helping businesses stand out with a fresh, futuristic voice. Whether it's social media campaigns, brand storytelling, or virtual appearances, Raini offers a new kind of influence: smart, soulful, and always ahead of the curve.
+              </p>
+              
+              {/* TikTok Button */}
+              <div className="pt-4">
+                <Button asChild variant="outline" className="border-cyber-pink text-cyber-pink hover:bg-cyber-pink/10 group">
+                  <a 
+                    href="https://www.tiktok.com/@__.raini.___" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="flex items-center gap-2"
+                  >
+                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
+                    </svg>
+                    Follow Raini on TikTok
+                    <ArrowRight className="h-4 w-4 transition-transform duration-300 opacity-0 group-hover:opacity-100 group-hover:translate-x-1" />
+                  </a>
+                </Button>
+              </div>
+            </div>
+            
+            {/* Image gallery column - spans 7/12 on large screens */}
+            <div className="lg:col-span-7 grid grid-cols-12 gap-4">
+              {/* Left column with 2 stacked images - spans 5/12 columns */}
+              <div className="col-span-5 space-y-4">
+                {/* Top image */}
+                <div className="aspect-[3/4] bg-grid-purple/40 rounded-lg border border-neon-blue/20 hover:border-neon-blue/50 transition-all duration-500 overflow-hidden group shadow-[0_0_0_rgba(0,255,255,0)] hover:shadow-[0_0_15px_rgba(0,255,255,0.3)]">
+                  <img 
+                    src="/assets/raini-square1.png" 
+                    alt="Raini portrait" 
+                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                  />
+                </div>
+                
+                {/* Bottom image */}
+                <div className="aspect-[3/4] bg-grid-purple/40 rounded-lg border border-electric-violet/20 hover:border-electric-violet/50 transition-all duration-500 overflow-hidden group shadow-[0_0_0_rgba(138,43,226,0)] hover:shadow-[0_0_15px_rgba(138,43,226,0.3)]">
+                  <img 
+                    src="/assets/raini-square2.png" 
+                    alt="Raini lifestyle" 
+                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                  />
+                </div>
+              </div>
+              
+              {/* Right full-height image - spans 7/12 columns */}
+              <div className="col-span-7 aspect-[9/16] h-full bg-grid-purple/40 rounded-lg border border-cyber-pink/20 hover:border-cyber-pink/50 transition-all duration-500 overflow-hidden group shadow-[0_0_0_rgba(255,46,245,0)] hover:shadow-[0_0_15px_rgba(255,46,245,0.3)]">
+                <img 
+                  src="/assets/raini-tiktok.jpg" 
+                  alt="Raini in a TikTok format" 
+                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Introduction Section - at the bottom */}
+        <div 
+          ref={introRef} 
+          className="opacity-0 mb-16 max-w-3xl"
+        >
+          <h2 className="text-2xl md:text-3xl font-bold mb-6 bg-gradient-to-r from-neon-blue to-electric-violet bg-clip-text text-transparent">
+            The Future of Visual Marketing
+          </h2>
+          <p className="text-soft-blue-gray text-lg mb-6">
+            AI-generated content is revolutionizing digital marketing by enabling brands to create 
+            personalized, high-quality visuals at scale. From custom product photography to virtual 
+            influencers, AI empowers marketers to deliver compelling content without the traditional 
+            constraints of time, budget, or logistics.
+          </p>
+          <p className="text-soft-blue-gray text-lg">
+            At Divgaze, we're helping forward-thinking brands leverage this transformative technology
+            to stay ahead of the curve and connect with audiences in innovative ways. Contact us today
+            to explore how AI-generated content can transform your marketing strategy.
+          </p>
+        </div>
+      </div>
+    </Layout>
+  );
+};
+
+export default WhyAI;
