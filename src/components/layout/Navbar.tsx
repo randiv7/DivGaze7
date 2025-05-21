@@ -42,9 +42,9 @@ const Navbar: React.FC = () => {
         isScrolled ? "bg-deep-navy-blue/90 backdrop-blur-md shadow-md" : "bg-transparent"
       }`}
     >
-      <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+      <div className="container mx-auto px-4 py-6 flex items-center justify-between">
         <Link to="/" className="flex items-center">
-          <span className="text-2xl font-bold text-gradient">
+          <span className="text-3xl font-bold text-gradient">
             DivGaze
           </span>
         </Link>
