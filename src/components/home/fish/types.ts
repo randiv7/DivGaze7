@@ -1,3 +1,5 @@
+// src/components/home/fish/types.ts
+
 // Defines types and interfaces for the fish tank animation
 
 export type FishState = 'swimming' | 'chasing' | 'inspecting';
@@ -37,4 +39,21 @@ export interface CursorState {
   y: number | null;
   lastMoved: number;
   isActive: boolean;
+}
+
+// Simplified particle type
+export type ParticleType = 'floater';
+
+export interface Particle {
+  x: number;
+  y: number;
+  size: number;
+  speed: number;
+  alpha: number;
+  color: string;
+  type: ParticleType;
+  lifetime: number;
+  maxLifetime: number;
+  pulse: number; // For glow pulsing
+  pulseSpeed: number;
 }

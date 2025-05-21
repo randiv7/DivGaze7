@@ -1,5 +1,6 @@
+// src/components/home/fish/renderer.ts
 // Functions for rendering fish and water effects
-import { Fish } from './types';
+import { Fish, Particle } from './types';
 
 /**
  * Draws the water texture/background
@@ -221,4 +222,47 @@ function drawFishTail(
   ctx.strokeStyle = 'rgba(0, 255, 255, 0.1)';
   ctx.lineWidth = 1;
   ctx.stroke();
+}
+
+/**
+ * Draws particles on the canvas
+ */
+export function drawParticles(ctx: CanvasRenderingContext2D, particles: Particle[]): void {
+  particles.forEach(particle => {
+    ctx.save();
+    
+    // Enhanced floating digital particles with stronger glow
+    // Calculate pulse effect for glow intensity
+    const pulseIntensity = 0.7 + (particle.pulse * 0.3);
+    const glowSize = 8 + (particle.pulse * 5);
+    
+    // Set opacity based on lifetime
+    ctx.globalAlpha = particle.alpha * (particle.lifetime / particle.maxLifetime);
+    
+    // Enhanced glow effect
+    ctx.shadowBlur = glowSize;
+    ctx.shadowColor = particle.color;
+    
+    // Digital rectangle shape
+    ctx.fillStyle = particle.color;
+    
+    // Draw a small rectangle
+    ctx.fillRect(
+      particle.x - particle.size / 2, 
+      particle.y - particle.size / 2, 
+      particle.size, 
+      particle.size
+    );
+    
+    // Add a second layer for stronger glow at center
+    ctx.globalAlpha = pulseIntensity * 0.7 * (particle.lifetime / particle.maxLifetime);
+    ctx.fillRect(
+      particle.x - particle.size * 0.6, 
+      particle.y - particle.size * 0.6, 
+      particle.size * 1.2, 
+      particle.size * 1.2
+    );
+    
+    ctx.restore();
+  });
 }

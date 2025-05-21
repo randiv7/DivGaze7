@@ -1,10 +1,15 @@
+// src/components/home/CyberFishTank.tsx
 import React, { useEffect, useRef, useState } from 'react';
-import { CursorState, Fish } from './fish/types';
-import { drawFish, drawWaterTexture } from './fish/renderer';
-import { initFishes, updateFish } from './fish/controller';
+import { CursorState, Fish, Particle } from './fish/types';
+import { drawFish, drawWaterTexture, drawParticles } from './fish/renderer';
+import { initFishes, updateFish, createParticle } from './fish/controller';
 
-// Number of fish to show in the tank - increased from 3 to 4
+// Number of fish to show in the tank
 const FISH_COUNT = 4;
+// Number of initial particles
+const INITIAL_PARTICLES = 50;
+// Cyber pink color
+const CYBER_PINK = '#FF2EF5';
 
 const CyberFishTank: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -22,6 +27,7 @@ const CyberFishTank: React.FC = () => {
     isActive: false
   });
   const fishesRef = useRef<Fish[]>([]);
+  const particlesRef = useRef<Particle[]>([]);
   const animationRef = useRef<number | null>(null);
   
   // Handle window resize
@@ -52,6 +58,20 @@ const CyberFishTank: React.FC = () => {
     
     // Initialize fish on first render or when window resizes
     fishesRef.current = initFishes(FISH_COUNT, canvas.width, canvas.height);
+    
+    // Initialize particles
+    particlesRef.current = [];
+    for (let i = 0; i < INITIAL_PARTICLES; i++) {
+      // Create initial floating particles
+      particlesRef.current.push(createParticle(
+        Math.random() * canvas.width,
+        Math.random() * canvas.height,
+        'floater',
+        CYBER_PINK,
+        canvas.width,
+        canvas.height
+      ));
+    }
     
     // Mouse event handlers
     const handleMouseMove = (e: MouseEvent) => {
@@ -98,11 +118,45 @@ const CyberFishTank: React.FC = () => {
       // Draw water texture effects
       drawWaterTexture(ctx, canvas.width, canvas.height);
       
+      // Create new floating particles occasionally
+      if (Math.random() < 0.07) {
+        particlesRef.current.push(createParticle(
+          Math.random() * canvas.width,
+          canvas.height - 10,
+          'floater',
+          CYBER_PINK,
+          canvas.width,
+          canvas.height
+        ));
+      }
+      
+      // Update and filter out dead particles
+      particlesRef.current = particlesRef.current
+        .filter(particle => {
+          // Update particle position based on type
+          particle.y -= particle.speed * (deltaTime / 16);
+          particle.x += Math.sin(timestamp / 1000 + particle.x) * 0.2;
+          particle.lifetime--;
+          particle.pulse = (Math.sin(timestamp / 500 * particle.pulseSpeed) + 1) / 2; // For glow pulsing
+          
+          // Remove particles that are out of bounds or expired
+          return (
+            particle.y > -10 && 
+            particle.y < canvas.height + 10 &&
+            particle.x > -10 && 
+            particle.x < canvas.width + 10 &&
+            particle.lifetime > 0
+          );
+        });
+      
       // Update and draw each fish
       fishesRef.current.forEach(fish => {
         updateFish(fish, canvas.width, canvas.height, cursorRef.current, isMobileRef.current, deltaTime);
         drawFish(ctx, fish);
       });
+      
+      // Draw particles
+      drawParticles(ctx, particlesRef.current);
       
       // Continue animation
       animationRef.current = requestAnimationFrame(animate);

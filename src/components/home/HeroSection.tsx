@@ -7,7 +7,6 @@ import CyberFishTank from "./CyberFishTank";
 const HeroSection: React.FC = () => {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
-  const decorationRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -20,10 +19,6 @@ const HeroSection: React.FC = () => {
               setTimeout(() => {
                 ctaRef.current?.classList.add("animate-fade-in");
               }, 600);
-            } else if (entry.target === decorationRef.current) {
-              setTimeout(() => {
-                decorationRef.current?.classList.add("animate-fade-in");
-              }, 900);
             }
           }
         });
@@ -33,7 +28,6 @@ const HeroSection: React.FC = () => {
 
     if (titleRef.current) observer.observe(titleRef.current);
     if (ctaRef.current) observer.observe(ctaRef.current);
-    if (decorationRef.current) observer.observe(decorationRef.current);
 
     return () => observer.disconnect();
   }, []);
@@ -77,18 +71,6 @@ const HeroSection: React.FC = () => {
               <ArrowRight className="h-4 w-4 transition-transform duration-300 opacity-0 group-hover:opacity-100 group-hover:translate-x-1" />
             </Link>
           </Button>
-        </div>
-
-        {/* Decorative elements */}
-        <div 
-          ref={decorationRef} 
-          className="absolute -bottom-10 left-0 right-0 opacity-0"
-        >
-          <div className="relative max-w-5xl mx-auto">
-            <div className="absolute -top-20 -left-10 w-32 h-32 border border-neon-blue/20 rounded-full animate-float"></div>
-            <div className="absolute -top-40 right-20 w-48 h-48 border border-electric-violet/20 rounded-full animate-float" style={{animationDelay: "1s"}}></div>
-            <div className="absolute top-0 right-0 w-24 h-24 border border-cyber-pink/20 rounded-full animate-float" style={{animationDelay: "1.5s"}}></div>
-          </div>
         </div>
       </div>
 

@@ -1,5 +1,6 @@
+// src/components/home/fish/controller.ts
 // Logic for fish behavior and movement
-import { Fish, CursorState, TailSegment } from './types';
+import { Fish, CursorState, TailSegment, Particle, ParticleType } from './types';
 
 // Fixed fish size as specified in requirements (slightly smaller)
 const FISH_SIZE = 48; // Reduced from 55
@@ -41,6 +42,40 @@ export function createFish(id: number, tankWidth: number, tankHeight: number): F
     // Adjusted for 4 fish - more evenly spaced orbit positions
     orbitOffset: id * (Math.PI * 2 / 4),
     acceleration: 0.05,
+  };
+}
+
+/**
+ * Creates a new particle
+ */
+export function createParticle(
+  x: number, 
+  y: number, 
+  type: ParticleType,
+  color: string,
+  canvasWidth: number,
+  canvasHeight: number
+): Particle {
+  // Enhanced floating digital particles with stronger glow
+  const size = 1.5 + Math.random() * 2.5; // Slightly larger
+  const speed = 0.3 + Math.random() * 0.5;
+  const alpha = 0.5 + Math.random() * 0.5; // Increased opacity
+  const lifetime = 300 + Math.random() * 500;
+  const pulse = Math.random(); // Random starting pulse phase
+  const pulseSpeed = 0.5 + Math.random() * 1; // Control pulse speed
+  
+  return {
+    x,
+    y,
+    size,
+    speed,
+    alpha,
+    color,
+    type: 'floater',
+    lifetime,
+    maxLifetime: lifetime,
+    pulse,
+    pulseSpeed
   };
 }
 
