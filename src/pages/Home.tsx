@@ -5,7 +5,7 @@ import { ArrowRight } from "lucide-react";
 import HeroSection from "@/components/home/HeroSection";
 import ServicesSection from "@/components/home/ServicesSection";
 import FeaturedProject from "@/components/home/FeaturedProject";
-import WhyDivgazeSection from "@/components/home/WhyDivgazeSection"; // New import
+import WhyDivgazeSection from "@/components/home/WhyDivgazeSection";
 import Layout from "@/components/layout/Layout";
 
 const Home: React.FC = () => {
@@ -13,8 +13,8 @@ const Home: React.FC = () => {
     <Layout>
       <HeroSection />
       <ServicesSection />
-      <FeaturedProject />
-      <WhyDivgazeSection /> {/* Replaced TestimonialsSection */}
+      <WhyDivgazeSection /> {/* Moved before FeaturedProject */}
+      <FeaturedProject /> {/* Moved after WhyDivgazeSection */}
       
       <section className="container mx-auto px-4 py-20 text-center">
         <h2 className="text-3xl md:text-4xl font-bold mb-6 font-orbitron">Ready to transform your vision into reality?</h2>
