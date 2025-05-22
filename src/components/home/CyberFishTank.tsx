@@ -2,14 +2,20 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { CursorState, Fish, Particle } from './fish/types';
 import { drawFish, drawWaterTexture, drawParticles } from './fish/renderer';
-import { initFishes, updateFish, createParticle } from './fish/controller';
+import { initFishes, updateFish, createParticle, createBubble } from './fish/controller';
+import { DivFish } from './divfish/types';
+import { createDivFish, updateDivFish } from './divfish/controller';
+import { drawDivFish } from './divfish/renderer';
 
-// Number of fish to show in the tank
-const FISH_COUNT = 4;
+// Number of normal fish to show in the tank
+const FISH_COUNT_MOBILE = 4; // Mobile fish count
+const FISH_COUNT_DESKTOP = 6; // Desktop fish count (1 more than mobile)
 // Number of initial particles
 const INITIAL_PARTICLES = 50;
 // Cyber pink color
 const CYBER_PINK = '#FF2EF5';
+// Bubble release interval (8 seconds = 8000ms)
+const BUBBLE_RELEASE_INTERVAL = 8000;
 
 const CyberFishTank: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -27,8 +33,10 @@ const CyberFishTank: React.FC = () => {
     isActive: false
   });
   const fishesRef = useRef<Fish[]>([]);
+  const divfishRef = useRef<DivFish | null>(null);
   const particlesRef = useRef<Particle[]>([]);
   const animationRef = useRef<number | null>(null);
+  const lastBubbleTimeRef = useRef<number>(0);
   
   // Handle window resize
   useEffect(() => {
@@ -56,8 +64,12 @@ const CyberFishTank: React.FC = () => {
     canvas.width = windowSize.width;
     canvas.height = Math.min(windowSize.height * 0.7, 600);
     
-    // Initialize fish on first render or when window resizes
-    fishesRef.current = initFishes(FISH_COUNT, canvas.width, canvas.height);
+    // Initialize normal fish on first render or when window resizes
+    const fishCount = isMobileRef.current ? FISH_COUNT_MOBILE : FISH_COUNT_DESKTOP;
+    fishesRef.current = initFishes(fishCount, canvas.width, canvas.height);
+    
+    // Initialize divfish
+    divfishRef.current = createDivFish(canvas.width, canvas.height);
     
     // Initialize particles
     particlesRef.current = [];
@@ -72,6 +84,9 @@ const CyberFishTank: React.FC = () => {
         canvas.height
       ));
     }
+    
+    // Reset bubble timer
+    lastBubbleTimeRef.current = Date.now();
     
     // Mouse event handlers
     const handleMouseMove = (e: MouseEvent) => {
@@ -130,12 +145,35 @@ const CyberFishTank: React.FC = () => {
         ));
       }
       
+      // Divfish bubble release every 8 seconds
+      const currentTime = Date.now();
+      if (divfishRef.current && currentTime - lastBubbleTimeRef.current > BUBBLE_RELEASE_INTERVAL) {
+        // Release 6 bubbles from divfish position
+        for (let i = 0; i < 6; i++) {
+          particlesRef.current.push(createBubble(
+            divfishRef.current.x,
+            divfishRef.current.y,
+            canvas.width,
+            canvas.height
+          ));
+        }
+        lastBubbleTimeRef.current = currentTime;
+      }
+      
       // Update and filter out dead particles
       particlesRef.current = particlesRef.current
         .filter(particle => {
           // Update particle position based on type
-          particle.y -= particle.speed * (deltaTime / 16);
-          particle.x += Math.sin(timestamp / 1000 + particle.x) * 0.2;
+          if (particle.type === 'bubble') {
+            // Bubbles float upward
+            particle.y -= particle.speed * (deltaTime / 16);
+            particle.x += Math.sin(timestamp / 800 + particle.x) * 0.3; // Slight wobble
+          } else {
+            // Regular floater particles
+            particle.y -= particle.speed * (deltaTime / 16);
+            particle.x += Math.sin(timestamp / 1000 + particle.x) * 0.2;
+          }
+          
           particle.lifetime--;
           particle.pulse = (Math.sin(timestamp / 500 * particle.pulseSpeed) + 1) / 2; // For glow pulsing
           
@@ -149,11 +187,17 @@ const CyberFishTank: React.FC = () => {
           );
         });
       
-      // Update and draw each fish
+      // Update and draw normal fish (pass divfish for influence calculation)
       fishesRef.current.forEach(fish => {
-        updateFish(fish, canvas.width, canvas.height, cursorRef.current, isMobileRef.current, deltaTime);
+        updateFish(fish, canvas.width, canvas.height, cursorRef.current, isMobileRef.current, deltaTime, divfishRef.current);
         drawFish(ctx, fish);
       });
+      
+      // Update and draw divfish
+      if (divfishRef.current) {
+        updateDivFish(divfishRef.current, canvas.width, canvas.height, deltaTime);
+        drawDivFish(ctx, divfishRef.current);
+      }
       
       // Draw particles
       drawParticles(ctx, particlesRef.current);

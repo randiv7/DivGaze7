@@ -1,6 +1,7 @@
 // src/components/home/fish/controller.ts
 // Logic for fish behavior and movement
 import { Fish, CursorState, TailSegment, Particle, ParticleType } from './types';
+import { DivFish } from '../divfish/types';
 
 // Fixed fish size as specified in requirements (slightly smaller)
 const FISH_SIZE = 29; // Reduced from 55
@@ -8,6 +9,8 @@ const FISH_SIZE = 29; // Reduced from 55
 const EDGE_BUFFER = 5;
 // More tail segments for greater fluidity
 const TAIL_SEGMENT_COUNT = 10;
+// Influence distance for divfish effect
+const DIVFISH_INFLUENCE_DISTANCE = 150;
 
 /**
  * Creates a new fish object
@@ -17,7 +20,7 @@ export function createFish(id: number, tankWidth: number, tankHeight: number): F
     id,
     x: Math.random() * (tankWidth - 2 * EDGE_BUFFER) + EDGE_BUFFER,
     y: Math.random() * (tankHeight - 2 * EDGE_BUFFER) + EDGE_BUFFER,
-    size: FISH_SIZE, // Smaller fish size
+    size: FISH_SIZE,
     speed: 0.8 + Math.random() * 0.4,
     // Reduced maximum speed from 2.0-2.5 range to 1.5-1.8 range
     maxSpeed: 1.5 + Math.random() * 0.3,
@@ -42,6 +45,9 @@ export function createFish(id: number, tankWidth: number, tankHeight: number): F
     // Adjusted for 4 fish - more evenly spaced orbit positions
     orbitOffset: id * (Math.PI * 2 / 4),
     acceleration: 0.05,
+    // Add divfish influence properties
+    divfishBoost: 1.0, // Multiplier for speed and glow when near divfish
+    divfishBoostDecay: 0.02, // How fast the boost fades
   };
 }
 
@@ -72,6 +78,37 @@ export function createParticle(
     alpha,
     color,
     type: 'floater',
+    lifetime,
+    maxLifetime: lifetime,
+    pulse,
+    pulseSpeed
+  };
+}
+
+/**
+ * Creates a bubble particle from divfish
+ */
+export function createBubble(
+  x: number, 
+  y: number, 
+  canvasWidth: number,
+  canvasHeight: number
+): Particle {
+  const size = 1.5 + Math.random() * 2; // Smaller bubbles
+  const speed = 1 + Math.random() * 1.5; // Faster upward movement
+  const alpha = 0.8 + Math.random() * 0.2; // Higher initial alpha for better visibility
+  const lifetime = 600 + Math.random() * 400; // Longer lifetime for fade effect
+  const pulse = Math.random();
+  const pulseSpeed = 0.3 + Math.random() * 0.7;
+  
+  return {
+    x: x + (Math.random() - 0.5) * 20, // Slight random offset
+    y,
+    size,
+    speed,
+    alpha,
+    color: '#87CEEB', // Light blue bubble color
+    type: 'bubble',
     lifetime,
     maxLifetime: lifetime,
     pulse,
@@ -172,13 +209,38 @@ export function updateFish(
   tankHeight: number, 
   cursor: CursorState, 
   isMobile: boolean, 
-  deltaTime: number
+  deltaTime: number,
+  divfish?: DivFish | null
 ): void {
   const now = Date.now();
   const timeSinceCursorMoved = now - cursor.lastMoved;
   
   // Update state time
   fish.stateTime += deltaTime;
+  
+  // Check divfish influence
+  let nearDivfish = false;
+  if (divfish) {
+    const distanceToDivfish = getDistance(fish.x, fish.y, divfish.x, divfish.y);
+    if (distanceToDivfish < DIVFISH_INFLUENCE_DISTANCE) {
+      // Apply divfish boost
+      fish.divfishBoost = Math.min(3.0, fish.divfishBoost + 0.05); // Boost up to 3x
+      nearDivfish = true;
+      
+      // Make normal fish turn away from divfish when they get close
+      const dx = fish.x - divfish.x;
+      const dy = fish.y - divfish.y;
+      const angleAwayFromDivfish = Math.atan2(dy, dx);
+      
+      // Gradually turn away from divfish
+      fish.targetAngle = angleAwayFromDivfish;
+    }
+  }
+  
+  // Decay divfish boost when not near
+  if (!nearDivfish) {
+    fish.divfishBoost = Math.max(1.0, fish.divfishBoost - fish.divfishBoostDecay);
+  }
   
   // Handle different states
   if (isMobile) {
@@ -221,23 +283,25 @@ export function updateFish(
       fish.targetAngle = Math.random() * Math.PI * 2;
     }
     
-    // Gradually return to normal speed
-    fish.speed = fish.speed + (fish.normalSpeed - fish.speed) * fish.acceleration;
+    // Gradually return to normal speed (affected by divfish boost)
+    const targetSpeed = fish.normalSpeed * fish.divfishBoost;
+    fish.speed = fish.speed + (targetSpeed - fish.speed) * fish.acceleration;
     
     // Add some natural wobble to the swimming motion
     if (Math.random() < 0.02) {
       // Small random direction adjustments
       fish.targetAngle += (Math.random() - 0.5) * 0.2;
     }
-  } else if (fish.state === 'chasing' && cursor.x !== null) {
+  } else if (fish.state === 'chasing' && cursor.x !== null && cursor.y !== null) {
     // Chase cursor behavior
     const dx = cursor.x - fish.x;
     const dy = cursor.y - fish.y;
     fish.targetAngle = Math.atan2(dy, dx);
     
-    // Gradually increase to max speed
-    fish.speed = fish.speed + (fish.maxSpeed - fish.speed) * fish.acceleration;
-  } else if (fish.state === 'inspecting' && cursor.x !== null) {
+    // Gradually increase to max speed (affected by divfish boost)
+    const targetSpeed = fish.maxSpeed * fish.divfishBoost;
+    fish.speed = fish.speed + (targetSpeed - fish.speed) * fish.acceleration;
+  } else if (fish.state === 'inspecting' && cursor.x !== null && cursor.y !== null) {
     // Circle around cursor behavior
     const inspectTime = fish.stateTime / 1000; // convert to seconds
     const angle = inspectTime * 2 + fish.orbitOffset;
@@ -251,9 +315,9 @@ export function updateFish(
     const dy = targetY - fish.y;
     fish.targetAngle = Math.atan2(dy, dx);
     
-    // Adjust speed based on distance to target orbit position
+    // Adjust speed based on distance to target orbit position (affected by divfish boost)
     const distToOrbitPos = getDistance(fish.x, fish.y, targetX, targetY);
-    const orbitSpeed = 0.5 + (distToOrbitPos / 50); // speed up if far from orbit position
+    const orbitSpeed = (0.5 + (distToOrbitPos / 50)) * fish.divfishBoost;
     fish.speed = fish.speed + (orbitSpeed - fish.speed) * fish.acceleration * 2;
   }
   
@@ -267,19 +331,17 @@ export function updateFish(
   
   // Improved edge detection with anticipation to prevent sticking
   // Check if the next position would be too close to or beyond the edge
-  const edgeMargin = EDGE_BUFFER + fish.speed * 2; // Dynamic margin based on speed
+  const edgeMargin = EDGE_BUFFER + fish.speed * 3; // Increased margin to prevent corner sticking
   
   // Handle horizontal boundaries with improved anticipation
   if (nextX < edgeMargin) {
-    // Approaching left edge - turn right
-    fish.targetAngle = 0; // Right
-    // Small immediate adjustment to prevent sticking
-    fish.x += Math.min(edgeMargin - nextX, fish.speed);
+    // Approaching left edge - turn right with random angle variation
+    fish.targetAngle = (Math.random() * Math.PI / 2) - (Math.PI / 4); // Random angle between -45° to 45° (generally rightward)
+    fish.x = Math.max(edgeMargin, fish.x); // Ensure fish doesn't go past margin
   } else if (nextX > tankWidth - edgeMargin) {
-    // Approaching right edge - turn left
-    fish.targetAngle = Math.PI; // Left
-    // Small immediate adjustment to prevent sticking
-    fish.x -= Math.min(nextX - (tankWidth - edgeMargin), fish.speed);
+    // Approaching right edge - turn left with random angle variation
+    fish.targetAngle = Math.PI + (Math.random() * Math.PI / 2) - (Math.PI / 4); // Random angle between 135° to 225° (generally leftward)
+    fish.x = Math.min(tankWidth - edgeMargin, fish.x); // Ensure fish doesn't go past margin
   } else {
     // Regular movement
     fish.x = nextX;
@@ -287,15 +349,13 @@ export function updateFish(
   
   // Handle vertical boundaries with improved anticipation
   if (nextY < edgeMargin) {
-    // Approaching top edge - turn down
-    fish.targetAngle = Math.PI / 2; // Down
-    // Small immediate adjustment to prevent sticking
-    fish.y += Math.min(edgeMargin - nextY, fish.speed);
+    // Approaching top edge - turn down with random angle variation
+    fish.targetAngle = (Math.PI / 2) + (Math.random() * Math.PI / 2) - (Math.PI / 4); // Random angle between 45° to 135° (generally downward)
+    fish.y = Math.max(edgeMargin, fish.y); // Ensure fish doesn't go past margin
   } else if (nextY > tankHeight - edgeMargin) {
-    // Approaching bottom edge - turn up
-    fish.targetAngle = -Math.PI / 2; // Up
-    // Small immediate adjustment to prevent sticking
-    fish.y -= Math.min(nextY - (tankHeight - edgeMargin), fish.speed);
+    // Approaching bottom edge - turn up with random angle variation
+    fish.targetAngle = (-Math.PI / 2) + (Math.random() * Math.PI / 2) - (Math.PI / 4); // Random angle between -135° to -45° (generally upward)
+    fish.y = Math.min(tankHeight - edgeMargin, fish.y); // Ensure fish doesn't go past margin
   } else {
     // Regular movement
     fish.y = nextY;

@@ -32,6 +32,9 @@ export interface Fish {
   inspectRadius: number;
   orbitOffset: number;
   acceleration: number;
+  // Add divfish influence properties
+  divfishBoost: number; // Multiplier for speed and glow when near divfish
+  divfishBoostDecay: number; // How fast the boost fades
 }
 
 export interface CursorState {
@@ -42,7 +45,7 @@ export interface CursorState {
 }
 
 // Simplified particle type
-export type ParticleType = 'floater';
+export type ParticleType = 'floater' | 'bubble';
 
 export interface Particle {
   x: number;

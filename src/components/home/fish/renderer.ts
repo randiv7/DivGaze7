@@ -50,27 +50,35 @@ export function drawFish(ctx: CanvasRenderingContext2D, fish: Fish): void {
   ctx.translate(centerX, centerY);
   ctx.rotate(fish.angle);
   
+  // Normal fish uses cyan/pink colors with divfish boost glow
+  const bodyColor = '#00FFFF';
+  const frontColor = 'rgba(0, 255, 255, 0.7)';
+  const tailColor = 'rgba(255, 46, 245, 0.7)';
+  const wingColor = 'rgba(0, 255, 255, 0.7)';
+  
   // Draw triangular tail first (behind body) - points right according to CSS
-  drawFishTail(ctx, fish, bodyWidth, bodyHeight);
+  drawFishTail(ctx, fish, bodyWidth, bodyHeight, tailColor);
   
   // Draw triangular front (also points right according to CSS)
-  drawFishFront(ctx, fish, bodyWidth, bodyHeight);
+  drawFishFront(ctx, fish, bodyWidth, bodyHeight, frontColor);
   
   // Draw side fins (wings)
-  drawFishWings(ctx, fish, bodyWidth, bodyHeight);
+  drawFishWings(ctx, fish, bodyWidth, bodyHeight, wingColor);
   
-  // Draw main body (neon cyan elliptical shape)
+  // Draw main body (colored elliptical shape)
   ctx.beginPath();
   ctx.ellipse(0, 0, bodyWidth, bodyHeight, 0, 0, Math.PI * 2);
   
-  // Add glow effect based on state
-  const glowIntensity = fish.state === 'chasing' ? 20 : 
-                       fish.state === 'inspecting' ? 15 : 10;
+  // Add glow effect based on state and divfish boost
+  const baseGlowIntensity = fish.state === 'chasing' ? 20 : 
+                           fish.state === 'inspecting' ? 15 : 10;
+  const glowIntensity = baseGlowIntensity * fish.divfishBoost; // Enhanced by divfish boost
   ctx.shadowBlur = glowIntensity;
-  ctx.shadowColor = '#00FFFF';
+  ctx.shadowColor = bodyColor;
   
-  // Solid bright cyan color for body
-  ctx.fillStyle = '#00FFFF';
+  // Solid body color with brightness boost
+  const brightnessBoost = Math.min(1.5, fish.divfishBoost);
+  ctx.fillStyle = brightnessBoost > 1.2 ? '#40FFFF' : bodyColor; // Brighter cyan when boosted
   ctx.fill();
   
   // Add subtle highlight for depth
@@ -84,7 +92,7 @@ export function drawFish(ctx: CanvasRenderingContext2D, fish: Fish): void {
     // Inner tech circle
     ctx.beginPath();
     ctx.arc(0, 0, bodyWidth * 0.4, 0, Math.PI * 2);
-    ctx.strokeStyle = 'rgba(0, 255, 255, 0.6)';
+    ctx.strokeStyle = `rgba(0, 255, 255, ${0.6 * fish.divfishBoost})`;
     ctx.lineWidth = 1;
     ctx.stroke();
     
@@ -93,7 +101,7 @@ export function drawFish(ctx: CanvasRenderingContext2D, fish: Fish): void {
       const pulseSize = 0.3 + 0.1 * Math.sin(fish.stateTime / 200);
       ctx.beginPath();
       ctx.arc(0, 0, bodyWidth * pulseSize, 0, Math.PI * 2);
-      ctx.strokeStyle = 'rgba(0, 255, 255, 0.8)';
+      ctx.strokeStyle = `rgba(0, 255, 255, ${0.8 * fish.divfishBoost})`;
       ctx.stroke();
     }
   }
@@ -108,7 +116,8 @@ function drawFishFront(
   ctx: CanvasRenderingContext2D, 
   fish: Fish, 
   bodyWidth: number, 
-  bodyHeight: number
+  bodyHeight: number,
+  color: string
 ): void {
   // Dimensions for front triangle based on CSS proportions (100px width, 160px total height)
   const frontLength = bodyWidth * 1; // Length of the triangle (100px in CSS)
@@ -135,13 +144,13 @@ function drawFishFront(
   
   // Create a gradient for the front
   const frontGradient = ctx.createLinearGradient(frontStartX, 0, frontStartX - frontLength, 0);
-  frontGradient.addColorStop(0, 'rgba(0, 255, 255, 0.7)');
-  frontGradient.addColorStop(0.7, 'rgba(0, 255, 255, 0.3)');
-  frontGradient.addColorStop(1, 'rgba(0, 255, 255, 0.1)');
+  frontGradient.addColorStop(0, color);
+  frontGradient.addColorStop(0.7, color.replace('0.7', '0.3'));
+  frontGradient.addColorStop(1, color.replace('0.7', '0.1'));
   
   ctx.fillStyle = frontGradient;
-  ctx.shadowBlur = 10;
-  ctx.shadowColor = 'rgba(0, 255, 255, 0.5)';
+  ctx.shadowBlur = 10 * fish.divfishBoost;
+  ctx.shadowColor = color;
   
   // Fill the front with semi-transparent color
   ctx.fill();
@@ -153,9 +162,9 @@ function drawFishFront(
   ctx.lineTo(frontStartX - frontLength * 1.05, -frontHeight/2 * 1.1 + wobbleAmount);
   ctx.closePath();
   
-  ctx.shadowBlur = 15;
+  ctx.shadowBlur = 15 * fish.divfishBoost;
   ctx.shadowColor = '#00FFFF';
-  ctx.strokeStyle = 'rgba(0, 255, 255, 0.1)';
+  ctx.strokeStyle = color.replace('0.7', '0.1');
   ctx.lineWidth = 1;
   ctx.stroke();
 }
@@ -167,7 +176,8 @@ function drawFishTail(
   ctx: CanvasRenderingContext2D, 
   fish: Fish, 
   bodyWidth: number, 
-  bodyHeight: number
+  bodyHeight: number,
+  color: string
 ): void {
   // Dimensions for tail triangle based on CSS proportions (150px border-left, 160px height)
   const tailLength = bodyWidth * 2.5; // Length of the triangular tail (150px in CSS)
@@ -201,13 +211,13 @@ function drawFishTail(
   
   // Create a gradient for the tail to give it a cyber pink semi-transparent effect
   const tailGradient = ctx.createLinearGradient(tailStartX, 0, tailStartX - tailLength, 0);
-  tailGradient.addColorStop(0, 'rgba(255, 46, 245, 0.7)'); // Cyber pink color
-  tailGradient.addColorStop(0.7, 'rgba(255, 46, 245, 0.3)');
-  tailGradient.addColorStop(1, 'rgba(255, 46, 245, 0.1)');
+  tailGradient.addColorStop(0, color);
+  tailGradient.addColorStop(0.7, color.replace('0.7', '0.3'));
+  tailGradient.addColorStop(1, color.replace('0.7', '0.1'));
   
   ctx.fillStyle = tailGradient;
-  ctx.shadowBlur = 10;
-  ctx.shadowColor = 'rgba(255, 46, 245, 0.5)'; // Cyber pink shadow
+  ctx.shadowBlur = 10 * fish.divfishBoost;
+  ctx.shadowColor = color;
   
   // Fill the tail with semi-transparent color
   ctx.fill();
@@ -219,9 +229,9 @@ function drawFishTail(
   ctx.lineTo(tailStartX - tailLength * 1.05, -tailHeight/2 * 1.1 + tailWobble);
   ctx.closePath();
   
-  ctx.shadowBlur = 15;
+  ctx.shadowBlur = 15 * fish.divfishBoost;
   ctx.shadowColor = '#FF2EF5'; // Cyber pink glow
-  ctx.strokeStyle = 'rgba(255, 46, 245, 0.1)'; // Cyber pink stroke
+  ctx.strokeStyle = color.replace('0.7', '0.1');
   ctx.lineWidth = 1;
   ctx.stroke();
 }
@@ -233,7 +243,8 @@ function drawFishWings(
   ctx: CanvasRenderingContext2D,
   fish: Fish,
   bodyWidth: number,
-  bodyHeight: number
+  bodyHeight: number,
+  color: string
 ): void {
   // Wing dimensions - smaller than tail
   const wingLength = bodyWidth * 2;
@@ -261,7 +272,9 @@ function drawFishWings(
     wingBaseWidth,
     leftWingPhase,
     wingAmplitude * flutterIntensity,
-    Math.PI / 2 // 90 degrees (pointing left)
+    Math.PI / 2, // 90 degrees (pointing left)
+    color,
+    fish.divfishBoost
   );
   
   // Right wing (extends from right side of body)
@@ -273,7 +286,9 @@ function drawFishWings(
     wingBaseWidth,
     rightWingPhase,
     wingAmplitude * flutterIntensity,
-    -Math.PI / 2 // -90 degrees (pointing right)
+    -Math.PI / 2, // -90 degrees (pointing right)
+    color,
+    fish.divfishBoost
   );
 }
 
@@ -288,7 +303,9 @@ function drawWing(
   baseWidth: number,
   phase: number,
   amplitude: number,
-  angle: number
+  angle: number,
+  color: string,
+  divfishBoost: number
 ): void {
   // Save context to isolate transformations
   ctx.save();
@@ -327,18 +344,18 @@ function drawWing(
   
   // Create a gradient similar to the tail
   const wingGradient = ctx.createLinearGradient(0, 0, length, 0);
-  wingGradient.addColorStop(0, 'rgba(0, 255, 255, 0.7)');
-  wingGradient.addColorStop(0.5, 'rgba(0, 255, 255, 0.4)');
-  wingGradient.addColorStop(1, 'rgba(0, 255, 255, 0.1)');
+  wingGradient.addColorStop(0, color);
+  wingGradient.addColorStop(0.5, color.replace('0.7', '0.4'));
+  wingGradient.addColorStop(1, color.replace('0.7', '0.1'));
   
   // Apply gradient and glow effects
   ctx.fillStyle = wingGradient;
-  ctx.shadowBlur = 10;
-  ctx.shadowColor = 'rgba(0, 255, 255, 0.5)';
+  ctx.shadowBlur = 10 * divfishBoost;
+  ctx.shadowColor = color;
   ctx.fill();
   
   // Add subtle glow outline
-  ctx.strokeStyle = 'rgba(0, 255, 255, 0.2)';
+  ctx.strokeStyle = color.replace('0.7', '0.2');
   ctx.lineWidth = 0.5;
   ctx.stroke();
   
@@ -353,37 +370,73 @@ export function drawParticles(ctx: CanvasRenderingContext2D, particles: Particle
   particles.forEach(particle => {
     ctx.save();
     
-    // Enhanced floating digital particles with stronger glow
-    // Calculate pulse effect for glow intensity
-    const pulseIntensity = 0.7 + (particle.pulse * 0.3);
-    const glowSize = 8 + (particle.pulse * 5);
-    
-    // Set opacity based on lifetime
-    ctx.globalAlpha = particle.alpha * (particle.lifetime / particle.maxLifetime);
-    
-    // Enhanced glow effect
-    ctx.shadowBlur = glowSize;
-    ctx.shadowColor = particle.color;
-    
-    // Digital rectangle shape
-    ctx.fillStyle = particle.color;
-    
-    // Draw a small rectangle
-    ctx.fillRect(
-      particle.x - particle.size / 2, 
-      particle.y - particle.size / 2, 
-      particle.size, 
-      particle.size
-    );
-    
-    // Add a second layer for stronger glow at center
-    ctx.globalAlpha = pulseIntensity * 0.7 * (particle.lifetime / particle.maxLifetime);
-    ctx.fillRect(
-      particle.x - particle.size * 0.6, 
-      particle.y - particle.size * 0.6, 
-      particle.size * 1.2, 
-      particle.size * 1.2
-    );
+    if (particle.type === 'bubble') {
+      // Draw bubble particles with glow and fade effect
+      const pulseIntensity = 0.8 + (particle.pulse * 0.2);
+      const glowSize = 4 + (particle.pulse * 2); // Smaller glow for smaller bubbles
+      
+      // Calculate fade based on lifetime - fade more as bubble rises
+      const fadeMultiplier = particle.lifetime / particle.maxLifetime;
+      ctx.globalAlpha = particle.alpha * fadeMultiplier;
+      
+      // Bubble glow effect
+      ctx.shadowBlur = glowSize;
+      ctx.shadowColor = particle.color;
+      
+      // Draw bubble as circle
+      ctx.beginPath();
+      ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+      ctx.fillStyle = particle.color;
+      ctx.fill();
+      
+      // Add bubble highlight with fade
+      ctx.globalAlpha = (particle.alpha * fadeMultiplier) * 0.8;
+      ctx.beginPath();
+      ctx.arc(particle.x - particle.size * 0.3, particle.y - particle.size * 0.3, particle.size * 0.4, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+      ctx.fill();
+      
+      // Add outer glow ring
+      ctx.globalAlpha = (particle.alpha * fadeMultiplier) * 0.3;
+      ctx.beginPath();
+      ctx.arc(particle.x, particle.y, particle.size * 1.5, 0, Math.PI * 2);
+      ctx.strokeStyle = particle.color;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+      
+    } else {
+      // Enhanced floating digital particles with stronger glow
+      // Calculate pulse effect for glow intensity
+      const pulseIntensity = 0.7 + (particle.pulse * 0.3);
+      const glowSize = 8 + (particle.pulse * 5);
+      
+      // Set opacity based on lifetime
+      ctx.globalAlpha = particle.alpha * (particle.lifetime / particle.maxLifetime);
+      
+      // Enhanced glow effect
+      ctx.shadowBlur = glowSize;
+      ctx.shadowColor = particle.color;
+      
+      // Digital rectangle shape
+      ctx.fillStyle = particle.color;
+      
+      // Draw a small rectangle
+      ctx.fillRect(
+        particle.x - particle.size / 2, 
+        particle.y - particle.size / 2, 
+        particle.size, 
+        particle.size
+      );
+      
+      // Add a second layer for stronger glow at center
+      ctx.globalAlpha = pulseIntensity * 0.7 * (particle.lifetime / particle.maxLifetime);
+      ctx.fillRect(
+        particle.x - particle.size * 0.6, 
+        particle.y - particle.size * 0.6, 
+        particle.size * 1.2, 
+        particle.size * 1.2
+      );
+    }
     
     ctx.restore();
   });
