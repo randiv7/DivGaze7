@@ -137,25 +137,6 @@ const WhyAI: React.FC = () => {
           </div>
         </div>
 
-        {/* Image Gallery Grid */}
-        <div 
-          ref={gridRef} 
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16 opacity-0"
-        >
-          {galleryImages.map((image, index) => (
-            <div 
-              key={index} 
-              className="aspect-square bg-grid-purple/40 rounded-lg border border-neon-blue/20 hover:border-neon-blue/50 transition-all duration-500 overflow-hidden group shadow-[0_0_0_rgba(0,255,255,0)] hover:shadow-[0_0_15px_rgba(0,255,255,0.3)]"
-            >
-              <img 
-                src={image.src} 
-                alt={image.alt} 
-                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-              />
-            </div>
-          ))}
-        </div>
-
         {/* Meet Raini Section */}
         <div 
           ref={rainiRef} 
@@ -230,6 +211,25 @@ const WhyAI: React.FC = () => {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Image Gallery Grid */}
+        <div 
+          ref={gridRef} 
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16 opacity-0"
+        >
+          {galleryImages.map((image, index) => (
+            <div 
+              key={index} 
+              className="aspect-square bg-grid-purple/40 rounded-lg border border-neon-blue/20 hover:border-neon-blue/50 transition-all duration-500 overflow-hidden group shadow-[0_0_0_rgba(0,255,255,0)] hover:shadow-[0_0_15px_rgba(0,255,255,0.3)]"
+            >
+              <img 
+                src={image.src} 
+                alt={image.alt} 
+                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+              />
+            </div>
+          ))}
         </div>
 
         {/* Introduction Section - at the bottom */}
