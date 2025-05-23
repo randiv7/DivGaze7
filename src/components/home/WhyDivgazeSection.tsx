@@ -1,7 +1,4 @@
 import React, { useEffect, useRef } from "react";
-import { ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
 import DivfishOnly from "./DivfishOnly";
 
 const WhyDivgazeSection: React.FC = () => {
@@ -27,7 +24,7 @@ const WhyDivgazeSection: React.FC = () => {
   }, []);
 
   return (
-    <section className="min-h-screen flex items-center justify-center py-20 relative overflow-hidden">
+    <section className="h-screen flex items-center justify-center py-20 relative overflow-hidden">
       {/* Divfish Only Animation */}
       <DivfishOnly />
 
