@@ -2,19 +2,21 @@
 
 import { DivFish, DivFishTailSegment } from './types';
 
-const DIVFISH_SIZE = 40; // Bigger than normal fish
+const DIVFISH_SIZE = 80; // Doubled from 40 to 80 for Why Choose Divgaze section
 const EDGE_BUFFER = 5;
 const TAIL_SEGMENT_COUNT = 10;
 
 /**
- * Creates the divfish
+ * Creates the divfish with larger size for Why Choose Divgaze section
  */
-export function createDivFish(tankWidth: number, tankHeight: number): DivFish {
+export function createDivFish(tankWidth: number, tankHeight: number, isLargeSize: boolean = false): DivFish {
+  const size = isLargeSize ? DIVFISH_SIZE : 40; // Use larger size only when specified
+  
   return {
     id: 999, // Unique ID for divfish
     x: Math.random() * (tankWidth - 2 * EDGE_BUFFER) + EDGE_BUFFER,
     y: Math.random() * (tankHeight - 2 * EDGE_BUFFER) + EDGE_BUFFER,
-    size: DIVFISH_SIZE,
+    size: size,
     speed: 0.4 + Math.random() * 0.2, // Made slower: was 0.8 + 0.4, now 0.4 + 0.2
     normalSpeed: 0.4 + Math.random() * 0.2, // Made slower: was 0.8 + 0.4, now 0.4 + 0.2
     angle: Math.random() * Math.PI * 2,

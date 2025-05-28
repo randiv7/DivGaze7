@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from "react";
 import { Code, Smartphone, CreditCard, Bot, LineChart, Monitor } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -105,38 +104,49 @@ const ServicesSection: React.FC = () => {
   ];
 
   return (
-    <section className="container mx-auto px-4 py-20">
-      <div className="text-center mb-12">
-        <h2 
-          ref={titleRef}
-          className="text-3xl md:text-4xl font-bold mb-4 opacity-0"
+    <section className="min-h-screen flex items-center justify-center py-20 pt-32">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-12">
+          <h2 
+            ref={titleRef}
+            className="text-3xl md:text-4xl font-bold mb-4 opacity-0"
+          >
+            Our Services
+          </h2>
+          <p 
+            ref={descriptionRef}
+            className="text-soft-blue-gray max-w-2xl mx-auto opacity-0"
+          >
+            We offer a comprehensive range of digital services to help your business thrive in the digital landscape.
+          </p>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {services.map((service, index) => (
+            <ServiceCard key={index} {...service} index={index} />
+          ))}
+        </div>
+        
+        <div 
+          ref={buttonRef}
+          className="text-center mt-12 opacity-0"
         >
-          Our Services
-        </h2>
-        <p 
-          ref={descriptionRef}
-          className="text-soft-blue-gray max-w-2xl mx-auto opacity-0"
-        >
-          We offer a comprehensive range of digital services to help your business thrive in the digital landscape.
-        </p>
-      </div>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {services.map((service, index) => (
-          <ServiceCard key={index} {...service} index={index} />
-        ))}
-      </div>
-      
-      <div 
-        ref={buttonRef}
-        className="text-center mt-12 opacity-0"
-      >
-        <Button asChild variant="outline" className="border-neon-blue text-neon-blue hover:bg-neon-blue/10 group">
-          <Link to="/services" className="flex items-center gap-2">
-            View All Services
-            <span className="w-5 h-0.5 bg-neon-blue transform transition-all duration-300 group-hover:w-8"></span>
-          </Link>
-        </Button>
+          <Button 
+            onClick={() => {
+              const element = document.getElementById('contact');
+              if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+            }}
+            variant="outline" 
+            className="border-neon-blue text-neon-blue hover:bg-neon-blue/10 group"
+          >
+            <span className="flex items-center gap-2">
+              View All Services
+              <span className="w-5 h-0.5 bg-neon-blue transform transition-all duration-300 group-hover:w-8"></span>
+            </span>
+          </Button>
+        </div>
       </div>
     </section>
   );

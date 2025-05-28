@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -128,12 +127,12 @@ export default {
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
-        'fade-in': 'fade-in 0.5s ease-out forwards',
+        'fade-in': 'fade-in 0.8s ease-out forwards',
         'fade-out': 'fade-out 0.5s ease-out forwards',
         'float': 'float 4s ease-in-out infinite',
         'pulse-glow': 'pulse-glow 3s infinite',
-        'slide-in-left': 'slide-in-left 0.5s ease-out forwards',
-        'slide-in-right': 'slide-in-right 0.5s ease-out forwards',
+        'slide-in-left': 'slide-in-left 1s ease-out forwards',
+        'slide-in-right': 'slide-in-right 1s ease-out forwards',
         'glow': 'glow 2s ease-in-out infinite',
         'text-shimmer': 'text-shimmer 3s ease infinite',
       }

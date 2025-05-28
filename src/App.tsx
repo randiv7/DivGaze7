@@ -5,13 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
-
-// Import placeholder pages (to be implemented later)
-import About from "./pages/About";
-import Services from "./pages/Services";
-import Portfolio from "./pages/Portfolio";
-import Contact from "./pages/Contact";
-import WhyAI from "./pages/WhyAI"; // Import the new WhyAI page
+import WhyAI from "./pages/WhyAI";
 
 const queryClient = new QueryClient();
 
@@ -23,11 +17,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/portfolio" element={<Portfolio />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/why-ai" element={<WhyAI />} /> {/* Add the new route */}
+          <Route path="/why-ai" element={<WhyAI />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
