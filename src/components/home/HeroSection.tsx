@@ -52,11 +52,11 @@ const HeroSection: React.FC = () => {
         >
           {/* Fixed gradient color with increased size */}
           <span className="bg-gradient-to-r from-cyber-pink to-neon-blue text-transparent bg-clip-text">
-            We don't build,
+            Beyond  boundaries
           </span>
           <br />
           <span className="bg-gradient-to-r from-cyber-pink to-neon-blue text-transparent bg-clip-text">
-            we create.
+           
           </span>
         </h1>
         
@@ -64,13 +64,7 @@ const HeroSection: React.FC = () => {
           ref={ctaRef}
           className="flex justify-center opacity-0 transition-opacity duration-700"
         >
-          {/* Keeping only the "Explore Our Work" button */}
-          <Button asChild size="lg" variant="outline" className="border-neon-blue text-neon-blue hover:bg-neon-blue/10 group">
-            <Link to="/portfolio" className="flex items-center gap-2">
-              Explore Our Work
-              <ArrowRight className="h-4 w-4 transition-transform duration-300 opacity-0 group-hover:opacity-100 group-hover:translate-x-1" />
-            </Link>
-          </Button>
+        
         </div>
       </div>
 
