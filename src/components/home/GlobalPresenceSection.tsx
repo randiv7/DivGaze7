@@ -12,12 +12,18 @@ const GlobalPresenceSection: React.FC = () => {
     colombo: {
       x: 65.5, // 65% from left (adjust this to move Colombo marker left/right)
       y: 52.3, // 62% from top (adjust this to move Colombo marker up/down)
-      name: "Colombo"
+      name: "Colombo",
+      labelText: "Colombo, Sri Lanka",
+      labelX: -90, // Label position X offset in pixels from ripple center
+      labelY: 15   // Label position Y offset in pixels from ripple center
     },
     sydney: {
       x: 80.4, // 87% from left (adjust this to move Sydney marker left/right)  
       y: 73, // 78% from top (adjust this to move Sydney marker up/down)
-      name: "Sydney"
+      name: "Sydney",
+      labelText: "Keysborough, Australia",
+      labelX: -80, // Label position X offset in pixels from ripple center
+      labelY: 20   // Label position Y offset in pixels from ripple center
     }
   };
 
@@ -89,6 +95,9 @@ const GlobalPresenceSection: React.FC = () => {
                       y={locationMarkers.colombo.y}
                       city={locationMarkers.colombo.name}
                       delay={0}
+                      labelText={locationMarkers.colombo.labelText}
+                      labelX={locationMarkers.colombo.labelX}
+                      labelY={locationMarkers.colombo.labelY}
                     />
                     
                     {/* Sydney Ripples */}
@@ -97,6 +106,9 @@ const GlobalPresenceSection: React.FC = () => {
                       y={locationMarkers.sydney.y}
                       city={locationMarkers.sydney.name}
                       delay={1500} // 1.5 second delay after Colombo
+                      labelText={locationMarkers.sydney.labelText}
+                      labelX={locationMarkers.sydney.labelX}
+                      labelY={locationMarkers.sydney.labelY}
                     />
                   </div>
                 </div>
