@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Rajdhani:wght@300;400;500;600;700&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 @tailwind base;
@@ -182,4 +181,62 @@
 /* Add cyber gradient */
 .cyber-gradient {
   background: linear-gradient(to right, #00FFFF, #FF2EF5);
+}
+
+/* Animations for GlobalPresenceSection */
+@keyframes grid-pulse {
+  0% { opacity: 0.1; }
+  100% { opacity: 0.3; }
+}
+
+@keyframes text-shimmer {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+/* Ripple Animations for Location Markers */
+@keyframes ripple-1 {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(8);
+    opacity: 0;
+  }
+}
+
+@keyframes ripple-2 {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(12);
+    opacity: 0;
+  }
+}
+
+@keyframes ripple-3 {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(16);
+    opacity: 0;
+  }
+}
+
+/* Animation classes for ripples */
+.animate-ripple-1 {
+  animation: ripple-1 2s ease-out infinite;
+}
+
+.animate-ripple-2 {
+  animation: ripple-2 2.5s ease-out infinite;
+}
+
+.animate-ripple-3 {
+  animation: ripple-3 3s ease-out infinite;
 }

@@ -1,9 +1,13 @@
-
 import React from "react";
-import { Link } from "react-router-dom";
-import { Twitter, Instagram, Linkedin, Github } from "lucide-react";
 
 const Footer: React.FC = () => {
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   return (
     <footer className="bg-deep-navy-blue border-t border-grid-purple/20 relative overflow-hidden">
       {/* Background elements */}
@@ -13,46 +17,64 @@ const Footer: React.FC = () => {
       <div className="container mx-auto px-4 py-12 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="md:col-span-2">
-            <Link to="/" className="inline-block mb-4">
+            <div className="inline-block mb-4">
               <span className="text-2xl font-bold text-gradient">
                 Divgaze
               </span>
-            </Link>
+            </div>
             <p className="text-soft-blue-gray max-w-md mb-4">
               "We don't build, we create." Delivering cutting-edge digital solutions through 
               software development, AI, design, and strategy.
             </p>
-            <div className="flex gap-4">
-              <a href="#" className="text-soft-blue-gray hover:text-neon-blue transition-colors transform hover:scale-110" aria-label="Twitter">
-                <Twitter size={20} />
-              </a>
-              <a href="#" className="text-soft-blue-gray hover:text-electric-violet transition-colors transform hover:scale-110" aria-label="Instagram">
-                <Instagram size={20} />
-              </a>
-              <a href="#" className="text-soft-blue-gray hover:text-cyber-pink transition-colors transform hover:scale-110" aria-label="LinkedIn">
-                <Linkedin size={20} />
-              </a>
-              <a href="#" className="text-soft-blue-gray hover:text-neon-lime transition-colors transform hover:scale-110" aria-label="GitHub">
-                <Github size={20} />
-              </a>
+            <div className="flex gap-5">
+              <img 
+                src="/assets/sl.png" 
+                alt="Sri Lanka" 
+                className="w-18 h-16 object-cover rounded shadow-sm hover:scale-110 transition-transform duration-300"
+              />
+              <img 
+                src="/assets/aus.png" 
+                alt="Australia" 
+                className="w-18 h-16 object-cover rounded shadow-sm hover:scale-110 transition-transform duration-300"
+              />
             </div>
           </div>
           
           <div>
             <h3 className="font-semibold mb-4 text-neon-blue">Company</h3>
             <ul className="space-y-2">
-              <li><Link to="/about" className="text-soft-blue-gray hover:text-neon-blue transition-colors">About</Link></li>
-              <li><Link to="/services" className="text-soft-blue-gray hover:text-neon-blue transition-colors">Services</Link></li>
-              <li><Link to="/portfolio" className="text-soft-blue-gray hover:text-neon-blue transition-colors">Portfolio</Link></li>
-              <li><Link to="/contact" className="text-soft-blue-gray hover:text-neon-blue transition-colors">Contact</Link></li>
+              <li>
+                <button 
+                  onClick={() => scrollToSection('about')} 
+                  className="text-soft-blue-gray hover:text-neon-blue transition-colors text-left"
+                >
+                  About
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => scrollToSection('services')} 
+                  className="text-soft-blue-gray hover:text-neon-blue transition-colors text-left"
+                >
+                  Services
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => scrollToSection('contact')} 
+                  className="text-soft-blue-gray hover:text-neon-blue transition-colors text-left"
+                >
+                  Contact
+                </button>
+              </li>
             </ul>
           </div>
           
           <div>
             <h3 className="font-semibold mb-4 text-electric-violet">Legal</h3>
             <ul className="space-y-2">
-              <li><Link to="/privacy" className="text-soft-blue-gray hover:text-electric-violet transition-colors">Privacy Policy</Link></li>
-              <li><Link to="/terms" className="text-soft-blue-gray hover:text-electric-violet transition-colors">Terms of Service</Link></li>
+              <li><a href="/privacy" className="text-soft-blue-gray hover:text-electric-violet transition-colors">Privacy Policy</a></li>
+              <li><a href="/terms" className="text-soft-blue-gray hover:text-electric-violet transition-colors">Terms of Service</a></li>
             </ul>
           </div>
         </div>

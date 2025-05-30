@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from "react";
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
@@ -176,8 +175,9 @@ const Contact: React.FC = () => {
             <div className="bg-grid-purple/20 p-6 rounded-lg border border-electric-violet/10 hover:border-electric-violet/30 transition-all duration-300 shadow-[0_0_20px_rgba(138,43,226,0.05)] hover:shadow-[0_0_30px_rgba(138,43,226,0.15)] flex gap-4">
               <MessageCircle size={24} className="text-electric-violet mt-1 flex-shrink-0" />
               <div>
-                <h3 className="text-xl font-semibold mb-2">Chat With Us</h3>
-                <p className="text-soft-blue-gray">Use our chatbot for immediate assistance or to schedule a call with our team.</p>
+                <h3 className="text-xl font-semibold mb-2">Direct Contact</h3>
+                <p className="text-soft-blue-gray text-sm mb-3">Reach out to us directly for immediate assistance</p>
+                <p className="text-electric-violet">Email or call us for support</p>
               </div>
             </div>
             
@@ -185,8 +185,8 @@ const Contact: React.FC = () => {
               <Mail size={24} className="text-neon-blue mt-1 flex-shrink-0" />
               <div>
                 <h3 className="text-xl font-semibold mb-2">Email Us</h3>
-                <p className="text-soft-blue-gray">For project inquiries: <span className="text-neon-blue">projects@divgaze.com</span></p>
-                <p className="text-soft-blue-gray">For support: <span className="text-neon-blue">support@divgaze.com</span></p>
+                <p className="text-soft-blue-gray text-sm mb-3">For project inquiries: <span className="text-neon-blue">projects@divgaze.com</span></p>
+                <p className="text-soft-blue-gray text-sm mb-3">For support: <span className="text-neon-blue">support@divgaze.com</span></p>
               </div>
             </div>
             
