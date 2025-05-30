@@ -5,6 +5,7 @@ import FeaturedProject from "@/components/home/FeaturedProject";
 import WhyDivgazeSection from "@/components/home/WhyDivgazeSection";
 import ContactSection from "@/components/home/ContactSection";
 import GlobalPresenceSection from "@/components/home/GlobalPresenceSection";
+import CustomerCounterSection from "@/components/home/CustomerCounterSection"; // New import
 import Layout from "@/components/layout/Layout";
 
 const Home: React.FC = () => {
@@ -21,6 +22,8 @@ const Home: React.FC = () => {
       </div>
       <FeaturedProject />
       <GlobalPresenceSection />
+      {/* New Customer Counter Section */}
+      <CustomerCounterSection />
       <div id="contact">
         <ContactSection />
       </div>

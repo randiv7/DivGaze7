@@ -240,3 +240,312 @@
 .animate-ripple-3 {
   animation: ripple-3 3s ease-out infinite;
 }
+
+/* NEW: Customer Counter Section Animations */
+
+/* Scroll animation for customer logos */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 20s linear infinite;
+}
+
+/* Counter pulse effect */
+@keyframes counter-pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-counter-pulse {
+  animation: counter-pulse 2s ease-in-out;
+}
+
+/* Particle float effect */
+@keyframes particle-float {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.animate-particle-float {
+  animation: particle-float 3s ease-out;
+}
+
+/* ULTRA SMOOTH PARTICLE SYSTEM - Zero Lag */
+.particle-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0); /* Force GPU acceleration */
+}
+
+.particle-1 {
+  left: 30%;
+  top: 80%;
+  background: #00FFFF;
+  box-shadow: 0 0 6px #00FFFF;
+  animation: superSmoothFloat 4s linear 0s infinite;
+}
+
+.particle-2 {
+  left: 40%;
+  top: 75%;
+  background: #8A2BE2;
+  box-shadow: 0 0 6px #8A2BE2;
+  animation: superSmoothFloat 5s linear 1s infinite;
+}
+
+.particle-3 {
+  left: 50%;
+  top: 78%;
+  background: #00FFFF;
+  box-shadow: 0 0 6px #00FFFF;
+  animation: superSmoothFloat 4.5s linear 2s infinite;
+}
+
+.particle-4 {
+  left: 60%;
+  top: 76%;
+  background: #8A2BE2;
+  box-shadow: 0 0 6px #8A2BE2;
+  animation: superSmoothFloat 5.5s linear 3s infinite;
+}
+
+.particle-5 {
+  left: 35%;
+  top: 82%;
+  background: #00FFFF;
+  box-shadow: 0 0 6px #00FFFF;
+  animation: superSmoothFloat 4.8s linear 4s infinite;
+}
+
+.particle-6 {
+  left: 65%;
+  top: 79%;
+  background: #8A2BE2;
+  box-shadow: 0 0 6px #8A2BE2;
+  animation: superSmoothFloat 5.2s linear 5s infinite;
+}
+
+/* SUPER SMOOTH - No lag animation */
+@keyframes superSmoothFloat {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.8);
+    opacity: 0;
+  }
+  2% {
+    opacity: 1;
+    transform: translate3d(0, -10px, 0) scale(1);
+  }
+  25% {
+    opacity: 1;
+    transform: translate3d(5px, -25vh, 0) scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translate3d(10px, -50vh, 0) scale(1);
+  }
+  75% {
+    opacity: 0.5;
+    transform: translate3d(15px, -75vh, 0) scale(0.8);
+  }
+  98% {
+    opacity: 0.2;
+    transform: translate3d(20px, -98vh, 0) scale(0.6);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(25px, -100vh, 0) scale(0.4);
+  }
+}
+
+/* Remove old particle animations */
+@keyframes smoothFloatUp {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.8);
+    opacity: 0;
+  }
+  5% {
+    opacity: 0.8;
+    transform: translate3d(0, -10px, 0) scale(1);
+  }
+  25% {
+    opacity: 1;
+    transform: translate3d(2px, -25vh, 0) scale(1.1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: translate3d(5px, -50vh, 0) scale(1);
+  }
+  75% {
+    opacity: 0.6;
+    transform: translate3d(8px, -75vh, 0) scale(0.9);
+  }
+  95% {
+    opacity: 0.2;
+    transform: translate3d(10px, -95vh, 0) scale(0.8);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(12px, -100vh, 0) scale(0.6);
+  }
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translate3d(0px, 0px, 0) scale(1);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  50% {
+    transform: translate3d(5px, -50vh, 0) scale(1.1);
+    opacity: 0.6;
+  }
+  90% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: translate3d(10px, -100vh, 0) scale(0.8);
+    opacity: 0;
+  }
+}
+
+/* Remove the old complex animation */
+@keyframes continuous-particle-float {
+  0% {
+    transform: translateY(0px) translateX(0px) rotate(0deg);
+    opacity: 0;
+  }
+  5% {
+    opacity: 0.8;
+  }
+  95% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-120px) translateX(20px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.animate-continuous-particle-float {
+  animation: continuous-particle-float 4s ease-out infinite;
+}
+
+/* Enhanced glow effect for counter */
+@keyframes counter-glow {
+  0% {
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 60px rgba(0, 255, 255, 0.4), 0 0 100px rgba(138, 43, 226, 0.2);
+  }
+  100% {
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+  }
+}
+
+.animate-counter-glow {
+  animation: counter-glow 3s ease-in-out infinite;
+}
+
+/* Number morphing effect */
+@keyframes number-pop {
+  0% {
+    transform: scale(1);
+  }
+  20% {
+    transform: scale(1.1);
+  }
+  40% {
+    transform: scale(0.95);
+  }
+  60% {
+    transform: scale(1.05);
+  }
+  80% {
+    transform: scale(0.98);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-number-pop {
+  animation: number-pop 0.6s ease-out;
+}
+
+/* Plus sign bounce effect */
+@keyframes plus-bounce {
+  0% {
+    transform: scale(0) rotate(-180deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.3) rotate(-90deg);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+.animate-plus-bounce {
+  animation: plus-bounce 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Staggered fade-in for customer logos */
+@keyframes stagger-fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-stagger-fade-in {
+  animation: stagger-fade-in 0.6s ease-out forwards;
+}
