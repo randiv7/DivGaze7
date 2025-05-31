@@ -1,10 +1,20 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 
 const Footer: React.FC = () => {
+  const location = useLocation();
+
   const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Check if we're on the home page
+    if (location.pathname === '/') {
+      // We're on home page, scroll to section
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    } else {
+      // We're on another page, navigate to home page with hash
+      window.location.href = `/#${sectionId}`;
     }
   };
 

@@ -143,21 +143,46 @@ const WhyAI: React.FC = () => {
           className="opacity-0 mb-16"
         >
           <h2 className="text-2xl md:text-3xl font-bold mb-6 bg-gradient-to-r from-neon-blue to-cyber-pink bg-clip-text text-transparent">
-            Meet Raini
+            Meet Raini – AI Influencer
           </h2>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
             {/* Text column - spans 5/12 on large screens */}
             <div className="lg:col-span-5 space-y-6">
               <p className="text-soft-blue-gray text-lg">
-                Raini is a next-generation AI influencer with roots in the heart of Sri Lanka. A proud Sinhala Buddhist girl, Raini blends cultural authenticity with modern digital charm. At just 22 years old, she radiates a warm, creative, and confident energy that speaks to a new generation.
+                <strong>Raini</strong> is a next-generation AI influencer born in the heart of <strong>Sri Lanka</strong> — a proud <strong>Sinhala girl</strong> blending cultural authenticity with futuristic charm.
               </p>
               <p className="text-soft-blue-gray text-lg">
-                More than just a virtual personality, Raini is here to inspire. She's passionate about fashion, mindful living, and storytelling that celebrates identity and innovation. With her calm, friendly vibe and stylish aesthetic, she connects deeply with her audience across platforms.
+                At just <strong>22 years old</strong>, Raini embodies warmth, creativity, and quiet confidence. She represents a new era of digital influence — one that's not only visually captivating but emotionally resonant.
               </p>
               <p className="text-soft-blue-gray text-lg">
-                As an AI influencer, Raini collaborates with brands to craft unique and engaging content—helping businesses stand out with a fresh, futuristic voice. Whether it's social media campaigns, brand storytelling, or virtual appearances, Raini offers a new kind of influence: smart, soulful, and always ahead of the curve.
+                More than just a virtual persona, Raini is a <strong>digital storyteller</strong>. She's passionate about <strong>fashion</strong>, <strong>mindful living</strong>, and using technology to celebrate <strong>identity and innovation</strong>. Her calming energy and modern style create a strong, relatable connection with her audience — especially among Gen Z and digital-first communities.
               </p>
+              <p className="text-soft-blue-gray text-lg">
+                With over <strong>100K views on TikTok</strong>, Raini has already begun to turn heads.
+              </p>
+              <p className="text-soft-blue-gray text-lg">
+                Whether it's:
+              </p>
+              <ul className="text-soft-blue-gray text-lg space-y-2 ml-4">
+                <li>• Social media campaigns</li>
+                <li>• Brand storytelling</li>
+                <li>• Virtual appearances or product placement</li>
+              </ul>
+              <p className="text-soft-blue-gray text-lg">
+                Raini delivers a <strong>soulful, smart, and stylish presence</strong> that speaks to the future of digital marketing.
+              </p>
+              <div className="bg-grid-purple/20 p-6 rounded-lg border border-cyber-pink/20">
+                <p className="text-cyber-pink font-semibold text-lg mb-2">
+                  Want a virtual influencer for your brand?
+                </p>
+                <p className="text-soft-blue-gray">
+                  We can help you create your own AI personality — fully tailored to your audience, culture, and goals.
+                </p>
+                <p className="text-soft-blue-gray font-medium mt-2">
+                  Let's build the future of influence, together.
+                </p>
+              </div>
               
               {/* TikTok Button */}
               <div className="pt-4">
