@@ -37,26 +37,25 @@ const HeroSection: React.FC = () => {
       {/* Cyber Fish Tank Animation */}
       <CyberFishTank />
 
-      {/* Background animation - still keeping this for additional effect */}
+      {/* Background animation - mobile optimized */}
       <div className="absolute inset-0 z-0">
         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-neon-blue/5 to-transparent opacity-30"></div>
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-neon-blue/5 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-electric-violet/5 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute top-1/4 left-1/4 w-48 md:w-96 h-48 md:h-96 bg-neon-blue/5 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-32 md:w-64 h-32 md:h-64 bg-electric-violet/5 rounded-full blur-3xl animate-pulse"></div>
       </div>
 
       <div className="container mx-auto px-4 relative z-10 text-center">
         <h1 
           ref={titleRef}
-          className="text-5xl md:text-7xl lg:text-8xl font-bold mb-10 opacity-0 transition-opacity duration-700"
-          style={{ textShadow: "0 0 40px rgba(0, 255, 255, 0.4)" }}
+          className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold mb-6 md:mb-10 opacity-0 transition-opacity duration-700"
+          style={{ 
+            textShadow: "0 0 40px rgba(0, 255, 255, 0.4)",
+            lineHeight: "1.1" 
+          }}
         >
-          {/* Fixed gradient color with increased size */}
-          <span className="bg-gradient-to-r from-cyber-pink to-neon-blue text-transparent bg-clip-text">
-            Beyond  boundaries
-          </span>
-          <br />
-          <span className="bg-gradient-to-r from-cyber-pink to-neon-blue text-transparent bg-clip-text">
-           
+          {/* Mobile optimized gradient text */}
+          <span className="bg-gradient-to-r from-cyber-pink to-neon-blue text-transparent bg-clip-text block">
+            Beyond boundaries
           </span>
         </h1>
         
@@ -68,10 +67,10 @@ const HeroSection: React.FC = () => {
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce">
+      {/* Mobile optimized scroll indicator */}
+      <div className="absolute bottom-4 md:bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce">
         <span className="text-xs text-soft-blue-gray mb-2">Scroll</span>
-        <div className="h-8 w-0.5 bg-neon-blue/50"></div>
+        <div className="h-6 md:h-8 w-0.5 bg-neon-blue/50"></div>
       </div>
     </section>
   );

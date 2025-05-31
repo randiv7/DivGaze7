@@ -84,10 +84,21 @@ const ServiceModal = ({ service, isOpen, onClose }) => {
     if (isOpen) {
       // Delay content animation to allow modal to scale first
       const timer = setTimeout(() => setContentVisible(true), 200);
-      return () => clearTimeout(timer);
+      // Prevent body scroll when modal is open
+      document.body.style.overflow = 'hidden';
+      return () => {
+        clearTimeout(timer);
+        document.body.style.overflow = 'unset';
+      };
     } else {
       setContentVisible(false);
+      document.body.style.overflow = 'unset';
     }
+    
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
   }, [isOpen]);
 
   if (!isOpen || !service) return null;
@@ -101,55 +112,53 @@ const ServiceModal = ({ service, isOpen, onClose }) => {
       />
       
       {/* Modal */}
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-2 md:p-4">
         <div 
           className={`
-            relative w-full max-w-4xl max-h-[90vh] overflow-y-auto
+            relative w-full max-w-4xl max-h-[95vh] md:max-h-[90vh] overflow-y-auto
             bg-gradient-to-br from-grid-purple/70 to-deep-navy-blue/70
             backdrop-blur-xl border-2 border-neon-blue/40
-            rounded-2xl shadow-[0_0_50px_rgba(0,255,255,0.4)]
+            rounded-lg md:rounded-2xl shadow-[0_0_50px_rgba(0,255,255,0.4)]
             transform transition-all duration-500 ease-out
             ${isOpen ? 'scale-100 opacity-100' : 'scale-75 opacity-0'}
           `}
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Animated background removed */}
-
-          {/* Close button */}
+          {/* Close button - Fixed for mobile */}
           <button
             onClick={onClose}
-            className="absolute top-6 right-6 z-10 p-2 rounded-full bg-neon-blue/20 hover:bg-neon-blue/40 transition-colors duration-300 group"
+            className="absolute top-4 right-4 md:top-6 md:right-6 z-10 p-2 rounded-full bg-neon-blue/20 hover:bg-neon-blue/40 transition-colors duration-300 group min-h-[44px] min-w-[44px] flex items-center justify-center"
           >
             <X className="w-5 h-5 text-neon-blue group-hover:text-white" />
           </button>
 
-          <div className="p-8 md:p-12">
+          <div className="p-4 md:p-8 lg:p-12">
             {/* Header with animated icon */}
-            <div className={`flex items-center gap-6 mb-8 transform transition-all duration-700 ${contentVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
-              <div className={`p-4 bg-neon-blue/20 rounded-xl flex items-center justify-center transition-all duration-500 ${contentVisible ? 'scale-100' : 'scale-0'}`}>
-                <div className="scale-150">
+            <div className={`flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6 mb-6 md:mb-8 transform transition-all duration-700 ${contentVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
+              <div className={`p-3 md:p-4 bg-neon-blue/20 rounded-xl flex items-center justify-center transition-all duration-500 ${contentVisible ? 'scale-100' : 'scale-0'}`}>
+                <div className="scale-125 md:scale-150">
                   {service.icon}
                 </div>
               </div>
-              <div>
-                <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-neon-blue to-electric-violet bg-clip-text text-transparent">
+              <div className="flex-1">
+                <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-neon-blue to-electric-violet bg-clip-text text-transparent">
                   {service.title}
                 </h2>
-                <div className="h-1 w-20 bg-gradient-to-r from-neon-blue to-electric-violet rounded-full mt-2"></div>
+                <div className="h-1 w-16 md:w-20 bg-gradient-to-r from-neon-blue to-electric-violet rounded-full mt-2"></div>
               </div>
             </div>
 
             {/* Description with typewriter effect */}
-            <div className={`mb-8 transform transition-all duration-700 delay-200 ${contentVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
-              <p className="text-base leading-relaxed text-soft-blue-gray">
+            <div className={`mb-6 md:mb-8 transform transition-all duration-700 delay-200 ${contentVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
+              <p className="text-sm md:text-base leading-relaxed text-soft-blue-gray">
                 {service.description}
               </p>
             </div>
 
             {/* Benefits Section */}
-            <div className="mb-8">
+            <div className="mb-6 md:mb-8">
               <div className={`transform transition-all duration-700 delay-400 ${contentVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
-                <h3 className="text-xl font-semibold text-neon-blue mb-4 flex items-center gap-2">
+                <h3 className="text-lg md:text-xl font-semibold text-neon-blue mb-4 flex items-center gap-2">
                   <div className="w-2 h-2 bg-neon-blue rounded-full"></div>
                   Benefits You Get
                 </h3>
@@ -161,7 +170,7 @@ const ServiceModal = ({ service, isOpen, onClose }) => {
                       style={{transitionDelay: `${600 + index * 100}ms`}}
                     >
                       <div className="w-1.5 h-1.5 bg-electric-violet rounded-full mt-2 flex-shrink-0"></div>
-                      <span className="text-soft-blue-gray leading-relaxed" style={{fontSize: '15px'}}>{feature}</span>
+                      <span className="text-soft-blue-gray leading-relaxed text-sm md:text-base">{feature}</span>
                     </li>
                   ))}
                 </ul>
@@ -169,19 +178,19 @@ const ServiceModal = ({ service, isOpen, onClose }) => {
             </div>
 
             {/* Why Collaborate Section */}
-            <div className={`mb-8 transform transition-all duration-700 delay-500 ${contentVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
-              <div className="p-6 bg-gradient-to-r from-neon-blue/10 to-electric-violet/10 rounded-lg border border-neon-blue/20">
-                <h3 className="text-xl font-semibold bg-gradient-to-r from-neon-blue to-electric-violet bg-clip-text text-transparent mb-3">
+            <div className={`mb-6 md:mb-8 transform transition-all duration-700 delay-500 ${contentVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
+              <div className="p-4 md:p-6 bg-gradient-to-r from-neon-blue/10 to-electric-violet/10 rounded-lg border border-neon-blue/20">
+                <h3 className="text-lg md:text-xl font-semibold bg-gradient-to-r from-neon-blue to-electric-violet bg-clip-text text-transparent mb-3">
                   Why Collaborate with Us?
                 </h3>
-                <p className="text-soft-blue-gray leading-relaxed">
+                <p className="text-soft-blue-gray leading-relaxed text-sm md:text-base">
                   We go <span className="text-neon-blue font-semibold">Beyond Boundaries</span> to create future-ready solutions that don't just meet today's needs—they anticipate tomorrow's opportunities. Our passion drives us to build transformative digital experiences that push the limits of what's possible, ensuring your business stays ahead while competitors catch up.
                 </p>
               </div>
             </div>
 
             {/* Call to Action */}
-            <div className={`flex flex-col sm:flex-row gap-4 transform transition-all duration-700 delay-600 ${contentVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
+            <div className={`flex flex-col gap-3 md:gap-4 transform transition-all duration-700 delay-600 ${contentVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
               <button 
                 onClick={() => {
                   // Scroll to contact section
@@ -191,10 +200,10 @@ const ServiceModal = ({ service, isOpen, onClose }) => {
                     onClose();
                   }
                 }}
-                className="flex-1 bg-gradient-to-r from-neon-blue to-electric-violet text-white px-6 py-4 rounded-lg font-semibold hover:from-electric-violet hover:to-neon-blue transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 group"
+                className="w-full bg-gradient-to-r from-neon-blue to-electric-violet text-white px-4 md:px-6 py-3 md:py-4 rounded-lg font-semibold hover:from-electric-violet hover:to-neon-blue transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 group text-sm md:text-base"
               >
                 Get Started with This Service
-                <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                <ArrowRight className="w-4 h-4 md:w-5 md:h-5 transition-transform duration-300 group-hover:translate-x-1" />
               </button>
             </div>
           </div>
@@ -238,13 +247,13 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ title, description, icon, ind
     <div 
       ref={cardRef}
       onClick={onClick}
-      className="bg-grid-purple/20 border border-electric-violet/10 rounded-lg p-6 hover:transform hover:scale-105 transition-all duration-300 group opacity-0 hover:border-electric-violet/30 hover:shadow-[0_0_15px_rgba(138,43,226,0.15)] cursor-pointer"
+      className="bg-grid-purple/20 border border-electric-violet/10 rounded-lg p-4 md:p-6 hover:transform hover:scale-105 transition-all duration-300 group opacity-0 hover:border-electric-violet/30 hover:shadow-[0_0_15px_rgba(138,43,226,0.15)] cursor-pointer min-h-[120px] md:min-h-[140px]"
     >
-      <div className="p-3 bg-neon-blue/10 rounded-lg w-12 h-12 flex items-center justify-center mb-4 group-hover:bg-neon-blue/20 transition-colors">
+      <div className="p-2 md:p-3 bg-neon-blue/10 rounded-lg w-10 h-10 md:w-12 md:h-12 flex items-center justify-center mb-3 md:mb-4 group-hover:bg-neon-blue/20 transition-colors">
         {icon}
       </div>
-      <h3 className="text-lg font-bold mb-2">{title}</h3>
-      <p className="text-soft-blue-gray">Click to learn more about this service</p>
+      <h3 className="text-base md:text-lg font-bold mb-2">{title}</h3>
+      <p className="text-soft-blue-gray text-sm md:text-base">Click to learn more about this service</p>
     </div>
   );
 };
