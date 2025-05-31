@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { Code, Smartphone, CreditCard, Bot, LineChart, Monitor } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Code, Smartphone, CreditCard, BarChart3, LineChart, Palette, Globe, Sparkles, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface ServiceCardProps {
@@ -20,7 +19,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ title, description, icon, ind
           if (entry.isIntersecting) {
             setTimeout(() => {
               cardRef.current?.classList.add("animate-fade-in");
-            }, index * 100); // Stagger animation based on index
+            }, index * 100);
           }
         });
       },
@@ -73,33 +72,48 @@ const ServicesSection: React.FC = () => {
   const services = [
     {
       title: "Web & Mobile App Development",
-      description: "Creating responsive web and mobile applications with cutting-edge technology.",
+      description: "Creating responsive web and mobile applications with cutting-edge technology and modern frameworks.",
       icon: <Code className="h-6 w-6 text-neon-blue" />,
     },
     {
       title: "Custom Software Solutions",
-      description: "Tailored software to address your unique business challenges.",
+      description: "Tailored software development to address your unique business challenges and requirements.",
       icon: <Smartphone className="h-6 w-6 text-neon-blue" />,
     },
     {
       title: "SaaS & E-commerce",
-      description: "Scalable SaaS platforms and e-commerce solutions for your business growth.",
+      description: "Scalable SaaS platforms and e-commerce solutions for sustainable business growth.",
       icon: <CreditCard className="h-6 w-6 text-neon-blue" />,
     },
     {
-      title: "AI & Automation",
-      description: "Intelligent chatbots, machine learning models, and robotic process automation.",
-      icon: <Bot className="h-6 w-6 text-neon-blue" />,
+      title: "AI & Data Analytics Solutions",
+      description: "Advanced AI implementation and data analytics to drive intelligent business decisions.",
+      icon: <BarChart3 className="h-6 w-6 text-neon-blue" />,
     },
     {
       title: "Digital Marketing",
-      description: "Strategic SEO, social media management, and results-driven PPC campaigns.",
+      description: "Strategic SEO, social media management, and results-driven digital marketing campaigns.",
       icon: <LineChart className="h-6 w-6 text-neon-blue" />,
     },
     {
-      title: "Creative & Design Services",
-      description: "Engaging UI/UX designs and professional video editing services.",
-      icon: <Monitor className="h-6 w-6 text-neon-blue" />,
+      title: "Graphic Designing and Video Editing Services",
+      description: "Creative visual content, professional graphic design, and high-quality video editing services.",
+      icon: <Palette className="h-6 w-6 text-neon-blue" />,
+    },
+    {
+      title: "Website/Social Media Handling",
+      description: "Complete website management and social media handling for consistent online presence.",
+      icon: <Globe className="h-6 w-6 text-neon-blue" />,
+    },
+    {
+      title: "AI-Generated Services",
+      description: "Cutting-edge AI content generation for marketing, design, and automated business processes.",
+      icon: <Sparkles className="h-6 w-6 text-neon-blue" />,
+    },
+    {
+      title: "Work Smarter: AI Optimization for Teams",
+      description: "AI-powered workflow optimization and automation tools to enhance team productivity and efficiency.",
+      icon: <Zap className="h-6 w-6 text-neon-blue" />,
     },
   ];
 
