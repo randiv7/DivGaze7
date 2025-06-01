@@ -1,9 +1,12 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { ChevronDown, ChevronUp, Lightbulb, Target, Palette, Code } from "lucide-react";
 import DivfishOnly from "./DivfishOnly";
 
 const WhyDivgazeSection: React.FC = () => {
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const descriptionRef = useRef<HTMLParagraphElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [expandedSections, setExpandedSections] = useState<{ [key: string]: boolean }>({});
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -11,6 +14,9 @@ const WhyDivgazeSection: React.FC = () => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("animate-fade-in");
+            if (entry.target === contentRef.current) {
+              setIsVisible(true);
+            }
           }
         });
       },
@@ -18,54 +24,149 @@ const WhyDivgazeSection: React.FC = () => {
     );
 
     if (titleRef.current) observer.observe(titleRef.current);
-    if (descriptionRef.current) observer.observe(descriptionRef.current);
+    if (contentRef.current) observer.observe(contentRef.current);
 
     return () => observer.disconnect();
   }, []);
 
+  const toggleSection = (sectionKey: string) => {
+    setExpandedSections(prev => ({
+      ...prev,
+      [sectionKey]: !prev[sectionKey]
+    }));
+  };
+
+  const coreValues = [
+    {
+      id: "purpose",
+      icon: <Target className="w-5 h-5 text-neon-blue" />,
+      title: "Purpose-Driven Design",
+      preview: "We craft digital experiences driven by purpose, emotion, and imagination.",
+      details: "We believe great work begins by asking better questions, challenging assumptions, and creating with clear intent. Every pixel, every interaction, every line of code serves a meaningful purpose."
+    },
+    {
+      id: "innovation",
+      icon: <Lightbulb className="w-5 h-5 text-electric-violet" />,
+      title: "Boundary-Pushing Innovation",
+      preview: "We push boundaries — both creatively and technically — to build work that's meaningful.",
+      details: "We're not interested in building just another product. We create solutions that are lasting, made for the future, and designed to give you competitive advantages that others simply can't replicate."
+    },
+    {
+      id: "passion",
+      icon: <Palette className="w-5 h-5 text-cyber-pink" />,
+      title: "Deep Passion & Craft",
+      preview: "We blend intuition with research, creativity with data, storytelling with code.",
+      details: "Above all, we're deeply passionate about what we do. The best ideas live where art meets logic, where technical excellence meets creative vision, where innovation serves real human needs."
+    },
+    {
+      id: "partnership",
+      icon: <Code className="w-5 h-5 text-neon-blue" />,
+      title: "Lasting Partnerships",
+      preview: "Those who work with Divgaze return — not just for what we create, but how we create it.",
+      details: "It's how we think. It's how we work. We don't just deliver projects; we build relationships. Our clients become partners in innovation, collaborators in pushing the boundaries of what's possible."
+    }
+  ];
+
   return (
-    <section className="h-screen flex items-center justify-center py-20 relative overflow-hidden">
-      {/* Divfish Only Animation */}
-      <DivfishOnly />
+    <section className="h-screen flex items-center justify-center py-20 px-4 md:px-0 relative overflow-hidden">
+      {/* Divfish Only Animation - pause when not visible */}
+      {isVisible && <DivfishOnly />}
 
       {/* Background elements */}
       <div className="absolute -top-40 -right-40 w-96 h-96 bg-electric-violet/5 rounded-full filter blur-3xl"></div>
       <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-neon-blue/5 rounded-full filter blur-3xl"></div>
       
-      <div className="container mx-auto px-4 text-center relative z-10 max-w-6xl">
+      <div className="container mx-auto px-4 md:px-6 lg:px-8 text-center relative z-10 max-w-6xl">
         <h2 
           ref={titleRef}
-          className="text-4xl md:text-5xl font-bold mb-16 opacity-0 bg-gradient-to-r from-neon-blue to-electric-violet bg-clip-text text-transparent"
-          style={{ marginTop: '-8rem' }}
+          className="text-3xl sm:text-4xl md:text-5xl font-bold mb-8 md:mb-16 opacity-0 bg-gradient-to-r from-neon-blue to-electric-violet bg-clip-text text-transparent"
+          style={{ marginTop: 'clamp(-8rem, -12vw, -4rem)' }}
         >
           Why Choose Divgaze?
         </h2>
         
         <div 
-          ref={descriptionRef}
-          className="relative inline-block p-12 md:p-16 rounded-3xl backdrop-blur-sm transition-shadow duration-700 opacity-0 w-full max-w-5xl"
+          ref={contentRef}
+          className="relative inline-block p-6 sm:p-8 md:p-12 lg:p-16 rounded-2xl md:rounded-3xl backdrop-blur-sm transition-shadow duration-700 opacity-0 w-full max-w-5xl my-8 md:my-0"
           style={{
             background: 'linear-gradient(135deg, rgba(40, 43, 72, 0.4) 0%, rgba(10, 15, 44, 0.6) 100%)',
             border: '2px solid rgba(0, 255, 255, 0.3)',
-            boxShadow: '0 0 30px rgba(0, 255, 255, 0.2)'
+            boxShadow: '0 0 30px rgba(0, 255, 255, 0.2)',
+            padding: 'clamp(1.5rem, 4vw, 4rem)',
           }}
         >
-          <div className="text-soft-blue-gray text-base md:text-lg leading-relaxed text-left space-y-6">
-            <p className="transition-all duration-300 hover:text-neon-blue hover:scale-105 cursor-pointer">
-              We don't just deliver projects — we craft digital experiences driven by purpose, emotion, and imagination. We believe great work begins by asking better questions, challenging assumptions, and creating with clear intent.
+          {/* Opening Statement */}
+          <div className="mb-8 md:mb-12">
+            <p className="text-soft-blue-gray text-base sm:text-lg md:text-xl leading-relaxed text-center">
+              <span className="text-neon-blue font-semibold text-lg sm:text-xl md:text-2xl block mb-4">
+                Why choose DivGaze?
+              </span>
+              We don't just deliver projects — we craft digital experiences that transform possibilities into realities.
             </p>
-            
-            <p className="transition-all duration-300 hover:text-neon-blue hover:scale-105 cursor-pointer">
-              We're not interested in building just another product. We push boundaries — both creatively and technically — to build work that's meaningful, lasting, and made for the future. Above all, we're deeply passionate about what we do.
-            </p>
-            
-            <p className="transition-all duration-300 hover:text-neon-blue hover:scale-105 cursor-pointer">
-              We blend intuition with research, creativity with data, and storytelling with code — because the best ideas live where art meets logic.
-            </p>
-            
-            <p className="transition-all duration-300 hover:text-neon-blue hover:scale-105 cursor-pointer">
-              It's how we think. It's how we work. And it's why those who work with Divgaze return — not just for what we create, but how we create it.
-            </p>
+          </div>
+
+          {/* Core Values Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 text-left">
+            {coreValues.map((value, index) => (
+              <div 
+                key={value.id}
+                className="group"
+                style={{
+                  animationDelay: `${index * 200}ms`
+                }}
+              >
+                <div 
+                  className="bg-gradient-to-br from-grid-purple/30 to-deep-navy-blue/40 p-4 md:p-6 rounded-lg border border-electric-violet/20 hover:border-electric-violet/40 transition-all duration-300 cursor-pointer"
+                  onClick={() => toggleSection(value.id)}
+                >
+                  {/* Header */}
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 bg-electric-violet/20 rounded-lg">
+                        {value.icon}
+                      </div>
+                      <h3 className="text-base md:text-lg font-semibold text-white leading-tight">
+                        {value.title}
+                      </h3>
+                    </div>
+                    <button className="flex-shrink-0 p-1 hover:bg-electric-violet/20 rounded transition-colors duration-200 min-h-[44px] min-w-[44px] flex items-center justify-center md:min-h-0 md:min-w-0">
+                      {expandedSections[value.id] ? 
+                        <ChevronUp className="w-5 h-5 text-electric-violet" /> : 
+                        <ChevronDown className="w-5 h-5 text-electric-violet" />
+                      }
+                    </button>
+                  </div>
+
+                  {/* Preview Text */}
+                  <p className="text-soft-blue-gray text-sm md:text-base leading-relaxed mb-3">
+                    {value.preview}
+                  </p>
+
+                  {/* Expandable Details */}
+                  <div className={`overflow-hidden transition-all duration-300 ${
+                    expandedSections[value.id] ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                  }`}>
+                    <div className="pt-3 border-t border-electric-violet/20">
+                      <p className="text-soft-blue-gray text-sm md:text-base leading-relaxed">
+                        {value.details}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Call to Action */}
+          <div className="mt-8 md:mt-12 pt-6 md:pt-8 border-t border-electric-violet/20">
+            <div className="bg-gradient-to-r from-neon-blue/10 to-electric-violet/10 p-4 md:p-6 rounded-lg border border-neon-blue/20">
+              <p className="text-neon-blue font-semibold text-lg md:text-xl mb-2 text-center">
+                Ready to Go Beyond Boundaries?
+              </p>
+              <p className="text-soft-blue-gray text-sm md:text-base text-center leading-relaxed">
+                Let's collaborate to create digital experiences that don't just meet today's needs—they anticipate tomorrow's opportunities.
+              </p>
+            </div>
           </div>
         </div>
       </div>
