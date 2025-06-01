@@ -11,12 +11,15 @@ import TermsOfService from "./pages/TermsOfService";
 
 const queryClient = new QueryClient();
 
+// Get the base path for GitHub Pages
+const basename = import.meta.env.PROD ? '/DivGaze7' : '';
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
+      <BrowserRouter basename={basename}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/why-ai" element={<WhyAI />} />
