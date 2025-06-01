@@ -11,7 +11,7 @@ import TermsOfService from "./pages/TermsOfService";
 
 const queryClient = new QueryClient();
 
-// Get the base path for GitHub Pages
+// Get the base path for GitHub Pages - Updated for your repo
 const basename = import.meta.env.PROD ? '/DivGaze7' : '';
 
 const App = () => (
