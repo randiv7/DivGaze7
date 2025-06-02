@@ -53,84 +53,84 @@ const WhyAI: React.FC = () => {
 
   return (
     <Layout>
-      <div className="container mx-auto px-4 py-20 mt-16">
+      <div className="container mx-auto px-4 md:px-6 lg:px-8 py-16 md:py-20 mt-16">
         <h1 
           ref={headingRef} 
-          className="text-3xl md:text-5xl font-bold mb-8 opacity-0 bg-gradient-to-r from-neon-blue to-electric-violet bg-clip-text text-transparent"
+          className="text-2xl md:text-3xl lg:text-5xl font-bold mb-6 md:mb-8 opacity-0 bg-gradient-to-r from-neon-blue to-electric-violet bg-clip-text text-transparent"
         >
-          Why Choose AI for Marketing?
+          AI contents for your brand.
         </h1>
 
         {/* Benefits Section - at the top */}
         <div 
           ref={benefitsRef} 
-          className="bg-grid-purple/20 p-8 rounded-lg border border-electric-violet/10 opacity-0 mb-16"
+          className="bg-grid-purple/20 p-4 md:p-8 rounded-lg border border-electric-violet/10 opacity-0 mb-12 md:mb-16"
         >
-          <h2 className="text-2xl md:text-3xl font-bold mb-6 bg-gradient-to-r from-cyber-pink to-electric-violet bg-clip-text text-transparent">
+          <h2 className="text-xl md:text-2xl lg:text-3xl font-bold mb-4 md:mb-6 bg-gradient-to-r from-cyber-pink to-electric-violet bg-clip-text text-transparent">
             Benefits of AI-Generated Content
           </h2>
           
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+            <div className="space-y-3 md:space-y-4">
               <div className="flex items-start gap-3">
-                <div className="mt-1 bg-neon-blue/20 p-1 rounded-full">
+                <div className="mt-1 bg-neon-blue/20 p-1 rounded-full flex-shrink-0">
                   <Check className="h-4 w-4 text-neon-blue" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-neon-blue">Cost-Effective Production</h3>
-                  <p className="text-soft-blue-gray">Eliminate expenses related to photoshoots, studios, travel, and talent fees while maintaining professional quality.</p>
+                  <h3 className="font-semibold text-neon-blue text-sm md:text-base">Cost-Effective Production</h3>
+                  <p className="text-soft-blue-gray text-sm md:text-base">Eliminate expenses related to photoshoots, studios, travel, and talent fees while maintaining professional quality.</p>
                 </div>
               </div>
               
               <div className="flex items-start gap-3">
-                <div className="mt-1 bg-neon-blue/20 p-1 rounded-full">
+                <div className="mt-1 bg-neon-blue/20 p-1 rounded-full flex-shrink-0">
                   <Check className="h-4 w-4 text-neon-blue" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-neon-blue">Rapid Iteration</h3>
-                  <p className="text-soft-blue-gray">Generate and refine multiple creative concepts in hours instead of weeks, enabling faster campaign launches.</p>
+                  <h3 className="font-semibold text-neon-blue text-sm md:text-base">Rapid Iteration</h3>
+                  <p className="text-soft-blue-gray text-sm md:text-base">Generate and refine multiple creative concepts in hours instead of weeks, enabling faster campaign launches.</p>
                 </div>
               </div>
               
               <div className="flex items-start gap-3">
-                <div className="mt-1 bg-neon-blue/20 p-1 rounded-full">
+                <div className="mt-1 bg-neon-blue/20 p-1 rounded-full flex-shrink-0">
                   <Check className="h-4 w-4 text-neon-blue" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-neon-blue">Unlimited Creativity</h3>
-                  <p className="text-soft-blue-gray">Explore creative concepts that would be impractical or impossible to capture with traditional photography or video.</p>
+                  <h3 className="font-semibold text-neon-blue text-sm md:text-base">Unlimited Creativity</h3>
+                  <p className="text-soft-blue-gray text-sm md:text-base">Explore creative concepts that would be impractical or impossible to capture with traditional photography or video.</p>
                 </div>
               </div>
             </div>
             
-            <div className="space-y-4">
+            <div className="space-y-3 md:space-y-4">
               <div className="flex items-start gap-3">
-                <div className="mt-1 bg-electric-violet/20 p-1 rounded-full">
+                <div className="mt-1 bg-electric-violet/20 p-1 rounded-full flex-shrink-0">
                   <Check className="h-4 w-4 text-electric-violet" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-electric-violet">Personalization at Scale</h3>
-                  <p className="text-soft-blue-gray">Create thousands of tailored visuals for different audience segments, locations, or campaigns with minimal effort.</p>
+                  <h3 className="font-semibold text-electric-violet text-sm md:text-base">Personalization at Scale</h3>
+                  <p className="text-soft-blue-gray text-sm md:text-base">Create thousands of tailored visuals for different audience segments, locations, or campaigns with minimal effort.</p>
                 </div>
               </div>
               
               <div className="flex items-start gap-3">
-                <div className="mt-1 bg-electric-violet/20 p-1 rounded-full">
+                <div className="mt-1 bg-electric-violet/20 p-1 rounded-full flex-shrink-0">
                   <Check className="h-4 w-4 text-electric-violet" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-electric-violet">Consistent Brand Identity</h3>
-                  <p className="text-soft-blue-gray">Ensure visual consistency across all marketing materials by applying the same style parameters to every generation.</p>
+                  <h3 className="font-semibold text-electric-violet text-sm md:text-base">Consistent Brand Identity</h3>
+                  <p className="text-soft-blue-gray text-sm md:text-base">Ensure visual consistency across all marketing materials by applying the same style parameters to every generation.</p>
                 </div>
               </div>
               
               <div className="flex items-start gap-3">
-                <div className="mt-1 bg-electric-violet/20 p-1 rounded-full">
+                <div className="mt-1 bg-electric-violet/20 p-1 rounded-full flex-shrink-0">
                   <Check className="h-4 w-4 text-electric-violet" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-electric-violet">Future-Proof Marketing</h3>
-                  <p className="text-soft-blue-gray">Stay ahead of competitors by embracing cutting-edge technology that continuously improves in quality and capabilities.</p>
+                  <h3 className="font-semibold text-electric-violet text-sm md:text-base">Future-Proof Marketing</h3>
+                  <p className="text-soft-blue-gray text-sm md:text-base">Stay ahead of competitors by embracing cutting-edge technology that continuously improves in quality and capabilities.</p>
                 </div>
               </div>
             </div>
@@ -140,58 +140,58 @@ const WhyAI: React.FC = () => {
         {/* Meet Raini Section */}
         <div 
           ref={rainiRef} 
-          className="opacity-0 mb-16"
+          className="opacity-0 mb-12 md:mb-16"
         >
-          <h2 className="text-2xl md:text-3xl font-bold mb-6 bg-gradient-to-r from-neon-blue to-cyber-pink bg-clip-text text-transparent">
+          <h2 className="text-xl md:text-2xl lg:text-3xl font-bold mb-4 md:mb-6 bg-gradient-to-r from-neon-blue to-cyber-pink bg-clip-text text-transparent">
             Meet Raini – AI Influencer
           </h2>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-6 items-start">
             {/* Text column - spans 5/12 on large screens */}
-            <div className="lg:col-span-5 space-y-6">
-              <p className="text-soft-blue-gray text-lg">
+            <div className="lg:col-span-5 space-y-4 md:space-y-6">
+              <p className="text-soft-blue-gray text-sm md:text-base lg:text-lg">
                 <strong>Raini</strong> is a next-generation AI influencer born in the heart of <strong>Sri Lanka</strong> — a proud <strong>Sinhala girl</strong> blending cultural authenticity with futuristic charm.
               </p>
-              <p className="text-soft-blue-gray text-lg">
+              <p className="text-soft-blue-gray text-sm md:text-base lg:text-lg">
                 At just <strong>22 years old</strong>, Raini embodies warmth, creativity, and quiet confidence. She represents a new era of digital influence — one that's not only visually captivating but emotionally resonant.
               </p>
-              <p className="text-soft-blue-gray text-lg">
+              <p className="text-soft-blue-gray text-sm md:text-base lg:text-lg">
                 More than just a virtual persona, Raini is a <strong>digital storyteller</strong>. She's passionate about <strong>fashion</strong>, <strong>mindful living</strong>, and using technology to celebrate <strong>identity and innovation</strong>. Her calming energy and modern style create a strong, relatable connection with her audience — especially among Gen Z and digital-first communities.
               </p>
-              <p className="text-soft-blue-gray text-lg">
+              <p className="text-soft-blue-gray text-sm md:text-base lg:text-lg">
                 With over <strong>100K views on TikTok</strong>, Raini has already begun to turn heads.
               </p>
-              <p className="text-soft-blue-gray text-lg">
+              <p className="text-soft-blue-gray text-sm md:text-base lg:text-lg">
                 Whether it's:
               </p>
-              <ul className="text-soft-blue-gray text-lg space-y-2 ml-4">
+              <ul className="text-soft-blue-gray text-sm md:text-base lg:text-lg space-y-1 md:space-y-2 ml-4">
                 <li>• Social media campaigns</li>
                 <li>• Brand storytelling</li>
                 <li>• Virtual appearances or product placement</li>
               </ul>
-              <p className="text-soft-blue-gray text-lg">
+              <p className="text-soft-blue-gray text-sm md:text-base lg:text-lg">
                 Raini delivers a <strong>soulful, smart, and stylish presence</strong> that speaks to the future of digital marketing.
               </p>
-              <div className="bg-grid-purple/20 p-6 rounded-lg border border-cyber-pink/20">
-                <p className="text-cyber-pink font-semibold text-lg mb-2">
+              <div className="bg-grid-purple/20 p-4 md:p-6 rounded-lg border border-cyber-pink/20">
+                <p className="text-cyber-pink font-semibold text-base md:text-lg mb-2">
                   Want a virtual influencer for your brand?
                 </p>
-                <p className="text-soft-blue-gray">
+                <p className="text-soft-blue-gray text-sm md:text-base">
                   We can help you create your own AI personality — fully tailored to your audience, culture, and goals.
                 </p>
-                <p className="text-soft-blue-gray font-medium mt-2">
+                <p className="text-soft-blue-gray font-medium mt-2 text-sm md:text-base">
                   Let's build the future of influence, together.
                 </p>
               </div>
               
               {/* TikTok Button */}
-              <div className="pt-4">
-                <Button asChild variant="outline" className="border-cyber-pink text-cyber-pink hover:bg-cyber-pink/10 group">
+              <div className="pt-2 md:pt-4">
+                <Button asChild variant="outline" className="border-cyber-pink text-cyber-pink hover:bg-cyber-pink/10 group w-full md:w-auto">
                   <a 
                     href="https://www.tiktok.com/@__.raini.___" 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="flex items-center gap-2"
+                    className="flex items-center justify-center gap-2 min-h-[48px]"
                   >
                     <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
@@ -204,9 +204,9 @@ const WhyAI: React.FC = () => {
             </div>
             
             {/* Image gallery column - spans 7/12 on large screens */}
-            <div className="lg:col-span-7 grid grid-cols-12 gap-4">
+            <div className="lg:col-span-7 grid grid-cols-12 gap-3 md:gap-4">
               {/* Left column with 2 stacked images - spans 5/12 columns */}
-              <div className="col-span-5 space-y-4">
+              <div className="col-span-5 space-y-3 md:space-y-4">
                 {/* Top image */}
                 <div className="aspect-[3/4] bg-grid-purple/40 rounded-lg border border-neon-blue/20 hover:border-neon-blue/50 transition-all duration-500 overflow-hidden group shadow-[0_0_0_rgba(0,255,255,0)] hover:shadow-[0_0_15px_rgba(0,255,255,0.3)]">
                   <img 
@@ -241,7 +241,7 @@ const WhyAI: React.FC = () => {
         {/* Image Gallery Grid */}
         <div 
           ref={gridRef} 
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16 opacity-0"
+          className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6 mb-12 md:mb-16 opacity-0"
         >
           {galleryImages.map((image, index) => (
             <div 
@@ -260,18 +260,18 @@ const WhyAI: React.FC = () => {
         {/* Introduction Section - at the bottom */}
         <div 
           ref={introRef} 
-          className="opacity-0 mb-16 max-w-3xl"
+          className="opacity-0 mb-8 md:mb-16 max-w-3xl mx-4 md:mx-0"
         >
-          <h2 className="text-2xl md:text-3xl font-bold mb-6 bg-gradient-to-r from-neon-blue to-electric-violet bg-clip-text text-transparent">
+          <h2 className="text-xl md:text-2xl lg:text-3xl font-bold mb-4 md:mb-6 bg-gradient-to-r from-neon-blue to-electric-violet bg-clip-text text-transparent">
             The Future of Visual Marketing
           </h2>
-          <p className="text-soft-blue-gray text-lg mb-6">
+          <p className="text-soft-blue-gray text-sm md:text-base lg:text-lg mb-4 md:mb-6">
             AI-generated content is revolutionizing digital marketing by enabling brands to create 
             personalized, high-quality visuals at scale. From custom product photography to virtual 
             influencers, AI empowers marketers to deliver compelling content without the traditional 
             constraints of time, budget, or logistics.
           </p>
-          <p className="text-soft-blue-gray text-lg">
+          <p className="text-soft-blue-gray text-sm md:text-base lg:text-lg">
             At Divgaze, we're helping forward-thinking brands leverage this transformative technology
             to stay ahead of the curve and connect with audiences in innovative ways. Contact us today
             to explore how AI-generated content can transform your marketing strategy.
