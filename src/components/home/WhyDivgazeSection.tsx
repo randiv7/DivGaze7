@@ -69,8 +69,12 @@ const WhyDivgazeSection: React.FC = () => {
 
   return (
     <section className="min-h-screen flex items-center justify-center py-10 px-2 md:py-20 md:px-4 relative overflow-hidden">
-      {/* Divfish Only Animation - pause when not visible */}
-      {isVisible && <DivfishOnly />}
+      {/* Divfish Only Animation - pause when not visible, only show on desktop */}
+      {isVisible && (
+        <div className="hidden lg:block">
+          <DivfishOnly />
+        </div>
+      )}
 
       {/* Background elements */}
       <div className="absolute -top-40 -right-40 w-96 h-96 bg-electric-violet/5 rounded-full filter blur-3xl"></div>
@@ -81,7 +85,7 @@ const WhyDivgazeSection: React.FC = () => {
           ref={titleRef}
           className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 md:mb-16 opacity-0 bg-gradient-to-r from-neon-blue to-electric-violet bg-clip-text text-transparent"
         >
-          Why Choose Divgaze?
+          About Us
         </h2>
         
         <div 
@@ -94,7 +98,14 @@ const WhyDivgazeSection: React.FC = () => {
           }}
         >
           {/* Opening Statement */}
-         
+          <div className="mb-6 md:mb-12">
+            <p className="text-soft-blue-gray text-base sm:text-lg md:text-xl leading-relaxed text-center">
+              <span className="text-neon-blue font-semibold text-lg sm:text-xl md:text-2xl block mb-4">
+                Why choose DivGaze?
+              </span>
+             
+            </p>
+          </div>
 
           {/* Core Values Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 text-left">
