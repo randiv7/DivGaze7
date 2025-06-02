@@ -54,19 +54,12 @@ const WhyAI: React.FC = () => {
   return (
     <Layout>
       <div className="container mx-auto px-4 md:px-6 lg:px-8 py-16 md:py-20 mt-16">
-        <h1 
-          ref={headingRef} 
-          className="text-2xl md:text-3xl lg:text-5xl font-bold mb-6 md:mb-8 opacity-0 bg-gradient-to-r from-neon-blue to-electric-violet bg-clip-text text-transparent"
-        >
-          AI contents for your brand.
-        </h1>
-
         {/* Benefits Section - at the top */}
         <div 
           ref={benefitsRef} 
-          className="bg-grid-purple/20 p-4 md:p-8 rounded-lg border border-electric-violet/10 opacity-0 mb-12 md:mb-16"
+          className="bg-grid-purple/20 p-4 md:p-8 rounded-lg border border-neon-blue/30 shadow-[0_0_20px_rgba(0,255,255,0.3)] opacity-0 mb-12 md:mb-16"
         >
-          <h2 className="text-xl md:text-2xl lg:text-3xl font-bold mb-4 md:mb-6 bg-gradient-to-r from-cyber-pink to-electric-violet bg-clip-text text-transparent">
+          <h2 className="text-xl md:text-2xl lg:text-3xl font-bold mb-4 md:mb-6 text-neon-blue">
             Benefits of AI-Generated Content
           </h2>
           
@@ -105,31 +98,31 @@ const WhyAI: React.FC = () => {
             
             <div className="space-y-3 md:space-y-4">
               <div className="flex items-start gap-3">
-                <div className="mt-1 bg-electric-violet/20 p-1 rounded-full flex-shrink-0">
-                  <Check className="h-4 w-4 text-electric-violet" />
+                <div className="mt-1 bg-neon-blue/20 p-1 rounded-full flex-shrink-0">
+                  <Check className="h-4 w-4 text-neon-blue" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-electric-violet text-sm md:text-base">Personalization at Scale</h3>
+                  <h3 className="font-semibold text-neon-blue text-sm md:text-base">Personalization at Scale</h3>
                   <p className="text-soft-blue-gray text-sm md:text-base">Create thousands of tailored visuals for different audience segments, locations, or campaigns with minimal effort.</p>
                 </div>
               </div>
               
               <div className="flex items-start gap-3">
-                <div className="mt-1 bg-electric-violet/20 p-1 rounded-full flex-shrink-0">
-                  <Check className="h-4 w-4 text-electric-violet" />
+                <div className="mt-1 bg-neon-blue/20 p-1 rounded-full flex-shrink-0">
+                  <Check className="h-4 w-4 text-neon-blue" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-electric-violet text-sm md:text-base">Consistent Brand Identity</h3>
+                  <h3 className="font-semibold text-neon-blue text-sm md:text-base">Consistent Brand Identity</h3>
                   <p className="text-soft-blue-gray text-sm md:text-base">Ensure visual consistency across all marketing materials by applying the same style parameters to every generation.</p>
                 </div>
               </div>
               
               <div className="flex items-start gap-3">
-                <div className="mt-1 bg-electric-violet/20 p-1 rounded-full flex-shrink-0">
-                  <Check className="h-4 w-4 text-electric-violet" />
+                <div className="mt-1 bg-neon-blue/20 p-1 rounded-full flex-shrink-0">
+                  <Check className="h-4 w-4 text-neon-blue" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-electric-violet text-sm md:text-base">Future-Proof Marketing</h3>
+                  <h3 className="font-semibold text-neon-blue text-sm md:text-base">Future-Proof Marketing</h3>
                   <p className="text-soft-blue-gray text-sm md:text-base">Stay ahead of competitors by embracing cutting-edge technology that continuously improves in quality and capabilities.</p>
                 </div>
               </div>
@@ -142,13 +135,13 @@ const WhyAI: React.FC = () => {
           ref={rainiRef} 
           className="opacity-0 mb-12 md:mb-16"
         >
-          <h2 className="text-xl md:text-2xl lg:text-3xl font-bold mb-4 md:mb-6 bg-gradient-to-r from-neon-blue to-cyber-pink bg-clip-text text-transparent">
+          <h2 className="text-xl md:text-2xl lg:text-3xl font-bold mb-4 md:mb-6 bg-gradient-to-r from-neon-blue to-cyber-pink bg-clip-text text-transparent px-2 md:px-0">
             Meet Raini – AI Influencer
           </h2>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-6 items-start">
             {/* Text column - spans 5/12 on large screens */}
-            <div className="lg:col-span-5 space-y-4 md:space-y-6">
+            <div className="lg:col-span-5 space-y-4 md:space-y-6 px-2 md:px-0">
               <p className="text-soft-blue-gray text-sm md:text-base lg:text-lg">
                 <strong>Raini</strong> is a next-generation AI influencer born in the heart of <strong>Sri Lanka</strong> — a proud <strong>Sinhala girl</strong> blending cultural authenticity with futuristic charm.
               </p>
@@ -204,7 +197,7 @@ const WhyAI: React.FC = () => {
             </div>
             
             {/* Image gallery column - spans 7/12 on large screens */}
-            <div className="lg:col-span-7 grid grid-cols-12 gap-3 md:gap-4">
+            <div className="lg:col-span-7 grid grid-cols-12 gap-3 md:gap-4 px-2 md:px-0">
               {/* Left column with 2 stacked images - spans 5/12 columns */}
               <div className="col-span-5 space-y-3 md:space-y-4">
                 {/* Top image */}
