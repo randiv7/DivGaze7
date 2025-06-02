@@ -15,8 +15,8 @@ const INITIAL_PARTICLES = 30;
 const CYBER_PINK = '#FF2EF5';
 
 // Large divfish size for desktop, normal size for mobile
-const LARGE_DIVFISH_SIZE = 50;
-const NORMAL_DIVFISH_SIZE = 35;
+const LARGE_DIVFISH_SIZE = 35;
+const NORMAL_DIVFISH_SIZE = 25;
 
 /**
  * Creates a divfish for Why Choose Divgaze section (large on desktop, normal on mobile)

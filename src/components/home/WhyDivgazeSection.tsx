@@ -63,12 +63,12 @@ const WhyDivgazeSection: React.FC = () => {
       icon: <Code className="w-5 h-5 text-neon-blue" />,
       title: "Lasting Partnerships",
       preview: "Those who work with Divgaze return — not just for what we create, but how we create it.",
-      details: "It's how we think. It's how we work. We don't just deliver projects; we build relationships. Our clients become partners in innovation, collaborators in pushing the boundaries of what's possible."
+      details: "We don't just deliver projects; we build relationships. Our clients become partners in innovation, collaborators in pushing the boundaries of what's possible."
     }
   ];
 
   return (
-    <section className="min-h-screen flex items-center justify-center py-10 px-2 md:py-20 md:px-4 relative overflow-hidden">
+    <section className="min-h-screen flex items-center justify-center py-10 px-4 md:py-20 md:px-4 relative overflow-hidden">
       {/* Divfish Only Animation - pause when not visible, only show on desktop */}
       {isVisible && (
         <div className="hidden lg:block">
@@ -80,7 +80,7 @@ const WhyDivgazeSection: React.FC = () => {
       <div className="absolute -top-40 -right-40 w-96 h-96 bg-electric-violet/5 rounded-full filter blur-3xl"></div>
       <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-neon-blue/5 rounded-full filter blur-3xl"></div>
       
-      <div className="container mx-auto px-2 md:px-6 lg:px-8 text-center relative z-10 max-w-6xl">
+      <div className="container mx-auto px-4 md:px-6 lg:px-8 text-center relative z-10 max-w-6xl">
         <h2 
           ref={titleRef}
           className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 md:mb-16 opacity-0 bg-gradient-to-r from-neon-blue to-electric-violet bg-clip-text text-transparent"
@@ -90,25 +90,46 @@ const WhyDivgazeSection: React.FC = () => {
         
         <div 
           ref={contentRef}
-          className="relative inline-block p-3 sm:p-6 md:p-12 lg:p-16 rounded-2xl md:rounded-3xl backdrop-blur-sm transition-shadow duration-700 opacity-0 w-full max-w-5xl my-4 md:my-0"
+          className="relative inline-block p-4 sm:p-6 md:p-12 lg:p-16 rounded-2xl md:rounded-3xl backdrop-blur-sm transition-shadow duration-700 opacity-0 w-full max-w-5xl my-4 md:my-0"
           style={{
             background: 'linear-gradient(135deg, rgba(40, 43, 72, 0.4) 0%, rgba(10, 15, 44, 0.6) 100%)',
             border: '2px solid rgba(0, 255, 255, 0.3)',
             boxShadow: '0 0 30px rgba(0, 255, 255, 0.2)',
           }}
         >
-          {/* Opening Statement */}
+          {/* Who We Are Section */}
           <div className="mb-6 md:mb-12">
-            <p className="text-soft-blue-gray text-base sm:text-lg md:text-xl leading-relaxed text-center">
-              <span className="text-neon-blue font-semibold text-lg sm:text-xl md:text-2xl block mb-4">
-                Why choose DivGaze?
-              </span>
-             
+            <h3 className="text-neon-blue font-semibold text-xl sm:text-2xl md:text-3xl mb-4">
+              Who We Are
+            </h3>
+            <div className="text-soft-blue-gray text-sm sm:text-base md:text-lg leading-relaxed text-left space-y-4 mx-2 md:mx-0">
+              <p>
+                We're <span className="font-semibold">Divgaze</span> - a passionate, creative tech startup based in Sri Lanka, with deep roots extending to Melbourne, Australia.
+              </p>
+              <p>
+                At our core, we're a team of curious builders and bold thinkers who believe in creating digital experiences that truly make a difference. We're not just here to deliver services, we're here to <span className="font-semibold">partner with you</span>, challenge ideas, and bring visions to life.
+              </p>
+              <p>
+                What sets us apart? We put <span className="font-semibold">our clients first</span> — always. We dive deep into every project, explore every angle, and give our absolute best to craft solutions that are smart, scalable, and meaningful.
+              </p>
+              <p>
+                We embrace <span className="font-semibold">experimentation</span>. We welcome <span className="font-semibold">risk</span>. Because we know real innovation happens outside the comfort zone.
+              </p>
+            </div>
+          </div>
+
+          {/* Why Choose Divgaze Transition */}
+          <div className="mb-6 md:mb-8">
+            <h3 className="text-neon-blue font-semibold text-lg sm:text-xl md:text-2xl mb-4">
+              Why Choose Divgaze?
+            </h3>
+            <p className="text-soft-blue-gray text-sm sm:text-base md:text-lg leading-relaxed mx-2 md:mx-0">
+              We don't just deliver projects — we craft digital experiences that transform possibilities into realities.
             </p>
           </div>
 
           {/* Core Values Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 text-left">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 text-left mb-6 md:mb-8 mx-2 md:mx-0">
             {coreValues.map((value, index) => (
               <div 
                 key={value.id}
@@ -160,10 +181,10 @@ const WhyDivgazeSection: React.FC = () => {
           </div>
 
           {/* Call to Action */}
-          <div className="mt-6 md:mt-12 pt-4 md:pt-8 border-t border-electric-violet/20">
+          <div className="pt-4 md:pt-6 border-t border-electric-violet/20 mx-2 md:mx-0">
             <div className="bg-gradient-to-r from-neon-blue/10 to-electric-violet/10 p-3 md:p-6 rounded-lg border border-neon-blue/20">
               <p className="text-neon-blue font-semibold text-lg md:text-xl mb-2 text-center">
-                Ready to Go Beyond Boundaries?
+                We Take Care of Your Digital Presence
               </p>
               <p className="text-soft-blue-gray text-sm md:text-base text-center leading-relaxed">
                 Let's collaborate to create digital experiences that don't just meet today's needs—they anticipate tomorrow's opportunities.
