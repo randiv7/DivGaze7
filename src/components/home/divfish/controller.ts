@@ -2,15 +2,18 @@
 
 import { DivFish, DivFishTailSegment } from './types';
 
-const DIVFISH_SIZE = 80; // Doubled from 40 to 80 for Why Choose Divgaze section
+// 🔧 CHANGE THESE VALUES TO ADJUST DIVFISH SIZES:
+const DIVFISH_SIZE_DESKTOP = 30; // Divfish size on desktop
+const DIVFISH_SIZE_MOBILE = 20;  // Divfish size on mobile
+
 const EDGE_BUFFER = 5;
 const TAIL_SEGMENT_COUNT = 10;
 
 /**
- * Creates the divfish with larger size for Why Choose Divgaze section
+ * Creates the divfish with size based on device type
  */
-export function createDivFish(tankWidth: number, tankHeight: number, isLargeSize: boolean = false): DivFish {
-  const size = isLargeSize ? DIVFISH_SIZE : 40; // Use larger size only when specified
+export function createDivFish(tankWidth: number, tankHeight: number, isMobile: boolean = false): DivFish {
+  const size = isMobile ? DIVFISH_SIZE_MOBILE : DIVFISH_SIZE_DESKTOP;
   
   return {
     id: 999, // Unique ID for divfish

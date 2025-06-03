@@ -9,7 +9,7 @@ import { drawDivFish } from './divfish/renderer';
 
 // Number of normal fish to show in the tank
 const FISH_COUNT_MOBILE = 4; // Mobile fish count
-const FISH_COUNT_DESKTOP = 6; // Desktop fish count (1 more than mobile)
+const FISH_COUNT_DESKTOP = 8; // Desktop fish count (1 more than mobile)
 // Number of initial particles
 const INITIAL_PARTICLES = 50;
 // Cyber pink color
@@ -66,10 +66,10 @@ const CyberFishTank: React.FC = () => {
     
     // Initialize normal fish on first render or when window resizes
     const fishCount = isMobileRef.current ? FISH_COUNT_MOBILE : FISH_COUNT_DESKTOP;
-    fishesRef.current = initFishes(fishCount, canvas.width, canvas.height);
+    fishesRef.current = initFishes(fishCount, canvas.width, canvas.height, isMobileRef.current);
     
-    // Initialize divfish
-    divfishRef.current = createDivFish(canvas.width, canvas.height);
+    // Initialize divfish with mobile/desktop size consideration
+    divfishRef.current = createDivFish(canvas.width, canvas.height, isMobileRef.current);
     
     // Initialize particles
     particlesRef.current = [];

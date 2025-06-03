@@ -3,8 +3,10 @@
 import { Fish, CursorState, TailSegment, Particle, ParticleType } from './types';
 import { DivFish } from '../divfish/types';
 
-// Fixed fish size as specified in requirements (slightly smaller)
-const FISH_SIZE = 29; // Reduced from 55
+// 🔧 CHANGE THESE VALUES TO ADJUST FISH SIZES:
+const FISH_SIZE_DESKTOP = 20; // Normal fish size on desktop
+const FISH_SIZE_MOBILE = 15;  // Normal fish size on mobile
+
 // Edge boundary buffer to prevent sticking
 const EDGE_BUFFER = 5;
 // More tail segments for greater fluidity
@@ -13,14 +15,16 @@ const TAIL_SEGMENT_COUNT = 10;
 const DIVFISH_INFLUENCE_DISTANCE = 150;
 
 /**
- * Creates a new fish object
+ * Creates a new fish object with size based on device type
  */
-export function createFish(id: number, tankWidth: number, tankHeight: number): Fish {
+export function createFish(id: number, tankWidth: number, tankHeight: number, isMobile: boolean = false): Fish {
+  const fishSize = isMobile ? FISH_SIZE_MOBILE : FISH_SIZE_DESKTOP;
+  
   return {
     id,
     x: Math.random() * (tankWidth - 2 * EDGE_BUFFER) + EDGE_BUFFER,
     y: Math.random() * (tankHeight - 2 * EDGE_BUFFER) + EDGE_BUFFER,
-    size: FISH_SIZE,
+    size: fishSize,
     speed: 0.8 + Math.random() * 0.4,
     // Reduced maximum speed from 2.0-2.5 range to 1.5-1.8 range
     maxSpeed: 1.5 + Math.random() * 0.3,
@@ -117,10 +121,10 @@ export function createBubble(
 }
 
 /**
- * Initialize multiple fish
+ * Initialize multiple fish with device-appropriate sizes
  */
-export function initFishes(count: number, tankWidth: number, tankHeight: number): Fish[] {
-  return Array.from({ length: count }, (_, i) => createFish(i, tankWidth, tankHeight));
+export function initFishes(count: number, tankWidth: number, tankHeight: number, isMobile: boolean = false): Fish[] {
+  return Array.from({ length: count }, (_, i) => createFish(i, tankWidth, tankHeight, isMobile));
 }
 
 /**
