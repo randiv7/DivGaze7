@@ -8,7 +8,7 @@ const DIVFISH_SIZE_MOBILE = 20;  // Divfish size on mobile
 
 // 🔧 CHANGE THESE VALUES TO ADJUST DIVFISH SPEEDS:
 const DIVFISH_SPEED_DESKTOP = 0.4;     // Base divfish speed on desktop
-const DIVFISH_SPEED_MOBILE = 0.1;      // Base divfish speed on mobile (slower)
+const DIVFISH_SPEED_MOBILE = 0.2;      // Base divfish speed on mobile (slower)
 const DIVFISH_SPEED_VARIATION = 0.2;   // Random speed variation added to base
 
 const EDGE_BUFFER = 5;
