@@ -212,15 +212,17 @@ const Navbar: React.FC = () => {
               <span className="text-xl font-bold text-gradient">
                 DivGaze
               </span>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={closeSidebar}
-                className="min-h-[48px] min-w-[48px] rounded-full hover:bg-neon-blue/10"
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  closeSidebar();
+                }}
+                className="min-h-[48px] min-w-[48px] rounded-full hover:bg-neon-blue/10 bg-transparent border-none p-2 flex items-center justify-center transition-colors duration-200"
                 aria-label="Close menu"
               >
                 <X className="h-6 w-6 text-neon-blue" />
-              </Button>
+              </button>
             </div>
 
             {/* Navigation Items */}
