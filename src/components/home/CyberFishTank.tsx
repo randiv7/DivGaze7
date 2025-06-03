@@ -8,7 +8,7 @@ import { createDivFish, updateDivFish } from './divfish/controller';
 import { drawDivFish } from './divfish/renderer';
 
 // Number of normal fish to show in the tank
-const FISH_COUNT_MOBILE = 4; // Mobile fish count
+const FISH_COUNT_MOBILE = 2; // Mobile fish count
 const FISH_COUNT_DESKTOP = 8; // Desktop fish count (1 more than mobile)
 // Number of initial particles
 const INITIAL_PARTICLES = 50;

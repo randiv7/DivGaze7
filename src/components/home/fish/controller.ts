@@ -5,7 +5,7 @@ import { DivFish } from '../divfish/types';
 
 // 🔧 CHANGE THESE VALUES TO ADJUST FISH SIZES:
 const FISH_SIZE_DESKTOP = 20; // Normal fish size on desktop
-const FISH_SIZE_MOBILE = 10;  // Normal fish size on mobile
+const FISH_SIZE_MOBILE = 15;  // Normal fish size on mobile
 
 // Edge boundary buffer to prevent sticking
 const EDGE_BUFFER = 5;
