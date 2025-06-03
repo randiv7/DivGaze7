@@ -11,11 +11,11 @@ import { createBubble, createParticle } from './fish/controller';
 const BUBBLE_RELEASE_INTERVAL = 8000;
 
 // 🔧 CHANGE THESE VALUES TO ADJUST PARTICLE COUNTS FOR WHY CHOOSE DIVGAZE SECTION:
-const INITIAL_PARTICLES_DESKTOP = 30;  // Desktop particle count
+const INITIAL_PARTICLES_DESKTOP = 10;  // Desktop particle count
 const INITIAL_PARTICLES_MOBILE = 15;   // Mobile particle count (reduced)
 
 // 🔧 CHANGE THESE VALUES TO ADJUST PARTICLE CREATION FREQUENCY:
-const PARTICLE_FREQUENCY_DESKTOP = 0.05;  // Desktop frequency
+const PARTICLE_FREQUENCY_DESKTOP = 0.01;  // Desktop frequency
 const PARTICLE_FREQUENCY_MOBILE = 0.02;   // Mobile frequency (much lower)
 
 // Cyan color for particles
