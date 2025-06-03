@@ -9,14 +9,12 @@ import { createBubble, createParticle } from './fish/controller';
 
 // Bubble release interval (8 seconds = 8000ms)
 const BUBBLE_RELEASE_INTERVAL = 8000;
-// Initial particles count
-const INITIAL_PARTICLES = 30;
 // Cyber pink color
 const CYBER_PINK = '#FF2EF5';
 
 // Large divfish size for desktop, normal size for mobile
 const LARGE_DIVFISH_SIZE = 35;
-const NORMAL_DIVFISH_SIZE = 25;
+const NORMAL_DIVFISH_SIZE = 28; // Increased from 25 to 28
 
 /**
  * Creates a divfish for Why Choose Divgaze section (large on desktop, normal on mobile)
@@ -192,14 +190,16 @@ const DivfishOnly: React.FC = () => {
     
     // Initialize cyber pink floating particles
     particlesRef.current = [];
-    for (let i = 0; i < INITIAL_PARTICLES; i++) {
+    const initialParticleCount = isMobileRef.current ? 15 : 30;
+    for (let i = 0; i < initialParticleCount; i++) {
       particlesRef.current.push(createParticle(
         Math.random() * canvas.width,
         Math.random() * canvas.height,
         'floater',
         CYBER_PINK,
         canvas.width,
-        canvas.height
+        canvas.height,
+        isMobileRef.current
       ));
     }
     
@@ -226,14 +226,16 @@ const DivfishOnly: React.FC = () => {
       drawWaterTexture(ctx, canvas.width, canvas.height);
       
       // Create new floating particles occasionally
-      if (Math.random() < 0.05) {
+      const spawnRate = isMobileRef.current ? 0.02 : 0.05;
+      if (Math.random() < spawnRate) {
         particlesRef.current.push(createParticle(
           Math.random() * canvas.width,
           canvas.height - 10,
           'floater',
           CYBER_PINK,
           canvas.width,
-          canvas.height
+          canvas.height,
+          isMobileRef.current
         ));
       }
       
