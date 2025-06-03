@@ -9,10 +9,17 @@ import { createBubble, createParticle } from './fish/controller';
 
 // Bubble release interval (8 seconds = 8000ms)
 const BUBBLE_RELEASE_INTERVAL = 8000;
-// Initial particles count
-const INITIAL_PARTICLES = 30;
-// Cyber pink color
-const CYBER_PINK = '#FF2EF5';
+
+// 🔧 CHANGE THESE VALUES TO ADJUST PARTICLE COUNTS FOR WHY CHOOSE DIVGAZE SECTION:
+const INITIAL_PARTICLES_DESKTOP = 30;  // Desktop particle count
+const INITIAL_PARTICLES_MOBILE = 15;   // Mobile particle count (reduced)
+
+// 🔧 CHANGE THESE VALUES TO ADJUST PARTICLE CREATION FREQUENCY:
+const PARTICLE_FREQUENCY_DESKTOP = 0.05;  // Desktop frequency
+const PARTICLE_FREQUENCY_MOBILE = 0.02;   // Mobile frequency (much lower)
+
+// Cyan color for particles
+const CYAN_COLOR = '#00FFFF';
 
 // 🔧 CHANGE THESE VALUES TO ADJUST DIVFISH SIZES FOR WHY CHOOSE DIVGAZE SECTION:
 const LARGE_DIVFISH_SIZE_DESKTOP = 35; // Large divfish size for desktop
@@ -196,16 +203,19 @@ const DivfishOnly: React.FC = () => {
     // Initialize divfish with size based on screen size
     divfishRef.current = createLargeDivFish(canvas.width, canvas.height, isMobileRef.current);
     
-    // Initialize cyber pink floating particles
+    // Initialize cyan floating particles with device-appropriate counts
     particlesRef.current = [];
-    for (let i = 0; i < INITIAL_PARTICLES; i++) {
+    const initialParticleCount = isMobileRef.current ? INITIAL_PARTICLES_MOBILE : INITIAL_PARTICLES_DESKTOP;
+    
+    for (let i = 0; i < initialParticleCount; i++) {
       particlesRef.current.push(createParticle(
         Math.random() * canvas.width,
         Math.random() * canvas.height,
         'floater',
-        CYBER_PINK,
+        CYAN_COLOR,
         canvas.width,
-        canvas.height
+        canvas.height,
+        isMobileRef.current
       ));
     }
     
@@ -231,15 +241,17 @@ const DivfishOnly: React.FC = () => {
       // Draw water texture effects
       drawWaterTexture(ctx, canvas.width, canvas.height);
       
-      // Create new floating particles occasionally
-      if (Math.random() < 0.05) {
+      // Create new floating particles occasionally with device-appropriate frequency
+      const particleFrequency = isMobileRef.current ? PARTICLE_FREQUENCY_MOBILE : PARTICLE_FREQUENCY_DESKTOP;
+      if (Math.random() < particleFrequency) {
         particlesRef.current.push(createParticle(
           Math.random() * canvas.width,
           canvas.height - 10,
           'floater',
-          CYBER_PINK,
+          CYAN_COLOR,
           canvas.width,
-          canvas.height
+          canvas.height,
+          isMobileRef.current
         ));
       }
       

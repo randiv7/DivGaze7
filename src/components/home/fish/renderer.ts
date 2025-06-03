@@ -364,7 +364,7 @@ function drawWing(
 }
 
 /**
- * Draws particles on the canvas
+ * Draws particles on the canvas - NOW WITH ROUND CYAN PARTICLES
  */
 export function drawParticles(ctx: CanvasRenderingContext2D, particles: Particle[]): void {
   particles.forEach(particle => {
@@ -405,7 +405,7 @@ export function drawParticles(ctx: CanvasRenderingContext2D, particles: Particle
       ctx.stroke();
       
     } else {
-      // Enhanced floating digital particles with stronger glow
+      // Enhanced floating ROUND CYAN particles with stronger glow
       // Calculate pulse effect for glow intensity
       const pulseIntensity = 0.7 + (particle.pulse * 0.3);
       const glowSize = 8 + (particle.pulse * 5);
@@ -415,27 +415,26 @@ export function drawParticles(ctx: CanvasRenderingContext2D, particles: Particle
       
       // Enhanced glow effect
       ctx.shadowBlur = glowSize;
-      ctx.shadowColor = particle.color;
+      ctx.shadowColor = particle.color; // Now cyan (#00FFFF)
       
-      // Digital rectangle shape
+      // Draw as ROUND circle instead of rectangle
       ctx.fillStyle = particle.color;
-      
-      // Draw a small rectangle
-      ctx.fillRect(
-        particle.x - particle.size / 2, 
-        particle.y - particle.size / 2, 
-        particle.size, 
-        particle.size
-      );
+      ctx.beginPath();
+      ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+      ctx.fill();
       
       // Add a second layer for stronger glow at center
       ctx.globalAlpha = pulseIntensity * 0.7 * (particle.lifetime / particle.maxLifetime);
-      ctx.fillRect(
-        particle.x - particle.size * 0.6, 
-        particle.y - particle.size * 0.6, 
-        particle.size * 1.2, 
-        particle.size * 1.2
-      );
+      ctx.beginPath();
+      ctx.arc(particle.x, particle.y, particle.size * 0.6, 0, Math.PI * 2);
+      ctx.fill();
+      
+      // Add bright center dot for extra sparkle
+      ctx.globalAlpha = pulseIntensity * 0.9 * (particle.lifetime / particle.maxLifetime);
+      ctx.fillStyle = '#FFFFFF'; // White center
+      ctx.beginPath();
+      ctx.arc(particle.x, particle.y, particle.size * 0.3, 0, Math.PI * 2);
+      ctx.fill();
     }
     
     ctx.restore();

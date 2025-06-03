@@ -68,7 +68,7 @@ export function createFish(id: number, tankWidth: number, tankHeight: number, is
 }
 
 /**
- * Creates a new particle
+ * Creates a new particle with device-specific size and cyan color
  */
 export function createParticle(
   x: number, 
@@ -76,10 +76,14 @@ export function createParticle(
   type: ParticleType,
   color: string,
   canvasWidth: number,
-  canvasHeight: number
+  canvasHeight: number,
+  isMobile: boolean = false
 ): Particle {
-  // Enhanced floating digital particles with stronger glow
-  const size = 1.5 + Math.random() * 2.5; // Slightly larger
+  // Different particle sizes for mobile vs desktop
+  const baseSize = isMobile ? 1.0 : 1.8;        // Smaller base size on mobile
+  const sizeVariation = isMobile ? 1.2 : 2.2;   // Less size variation on mobile
+  
+  const size = baseSize + Math.random() * sizeVariation;
   const speed = 0.3 + Math.random() * 0.5;
   const alpha = 0.5 + Math.random() * 0.5; // Increased opacity
   const lifetime = 300 + Math.random() * 500;
@@ -92,7 +96,7 @@ export function createParticle(
     size,
     speed,
     alpha,
-    color,
+    color: '#00FFFF', // Cyan color instead of using passed color
     type: 'floater',
     lifetime,
     maxLifetime: lifetime,
