@@ -1,17 +1,21 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Mail, MessageCircle, Phone, Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
+import { ArrowRight, Mail, MessageCircle, Phone } from "lucide-react";
 
 const ContactSection: React.FC = () => {
-  const handleWhatsAppClick = (number: string, country: string) => {
-    const message = encodeURIComponent(`Hello Divgaze! I'm interested in your services from ${country}.`);
-    window.open(`https://wa.me/${number.replace(/\s+/g, '')}?text=${message}`, '_blank');
+  const handleWhatsAppClick = () => {
+    const message = encodeURIComponent(`Hello Divgaze! I'm interested in your services.`);
+    window.open(`https://wa.me/94707616554?text=${message}`, '_blank');
   };
 
   const handleEmailClick = () => {
     const subject = encodeURIComponent('Service Inquiry - Divgaze');
     const body = encodeURIComponent('Hello Divgaze,\n\nI am interested in your digital services. Please get in touch with me.\n\nBest regards,');
     window.open(`mailto:divgaze@gmail.com?subject=${subject}&body=${body}`, '_blank');
+  };
+
+  const handlePhoneClick = () => {
+    window.open('tel:+61408840996', '_self');
   };
 
   return (
@@ -26,26 +30,34 @@ const ContactSection: React.FC = () => {
           Ready to transform your vision into reality? Let's collaborate to create innovative digital solutions that elevate your business.
         </p>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-6 md:mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 max-w-4xl mx-auto">
           {/* WhatsApp Card */}
           <div className="bg-grid-purple/30 p-4 md:p-6 rounded-lg border border-green-500/20 hover:border-green-500/50 transition-all duration-300 hover:transform hover:scale-105 group">
             <MessageCircle className="h-6 w-6 md:h-8 md:w-8 text-green-500 mx-auto mb-3 md:mb-4 group-hover:scale-110 transition-transform duration-300" />
             <h3 className="text-base md:text-lg font-semibold mb-2 md:mb-3 text-green-500">WhatsApp</h3>
             <div className="space-y-2 md:space-y-3">
               <button
-                onClick={() => handleWhatsAppClick('94707616554', 'Sri Lanka')}
+                onClick={handleWhatsAppClick}
                 className="w-full bg-green-600/20 hover:bg-green-600/40 text-green-400 hover:text-green-300 transition-all duration-300 py-2.5 md:py-2 px-3 md:px-4 rounded-lg font-medium text-sm md:text-base min-h-[44px]"
               >
-                🇱🇰 Chat Sri Lanka
-              </button>
-              <button
-                onClick={() => handleWhatsAppClick('61408840996', 'Australia')}
-                className="w-full bg-green-600/20 hover:bg-green-600/40 text-green-400 hover:text-green-300 transition-all duration-300 py-2.5 md:py-2 px-3 md:px-4 rounded-lg font-medium text-sm md:text-base min-h-[44px]"
-              >
-                🇦🇺 Chat Australia
+                Chat
               </button>
             </div>
             <p className="text-soft-blue-gray text-xs mt-2 md:mt-3">Click to chat directly</p>
+          </div>
+
+          {/* Phone Card */}
+          <div className="bg-grid-purple/30 p-4 md:p-6 rounded-lg border border-electric-violet/20 hover:border-electric-violet/50 transition-all duration-300 hover:transform hover:scale-105 group">
+            <Phone className="h-6 w-6 md:h-8 md:w-8 text-electric-violet mx-auto mb-3 md:mb-4 group-hover:scale-110 transition-transform duration-300" />
+            <h3 className="text-base md:text-lg font-semibold mb-2 text-electric-violet">Phone Support</h3>
+            <p className="text-soft-blue-gray text-xs md:text-sm mb-2 md:mb-3">Direct line for Australian clients</p>
+            <button
+              onClick={handlePhoneClick}
+              className="text-electric-violet hover:text-white transition-colors font-medium text-sm md:text-base break-all md:break-normal bg-electric-violet/20 hover:bg-electric-violet/40 py-2 px-3 rounded-lg w-full min-h-[44px]"
+            >
+              +61 408 840 996
+            </button>
+            <p className="text-soft-blue-gray text-xs mt-2">Melbourne, Australia</p>
           </div>
           
           {/* Email Card */}
@@ -59,60 +71,6 @@ const ContactSection: React.FC = () => {
             >
               divgaze@gmail.com
             </button>
-          </div>
-          
-          {/* Social Media Card */}
-          <div className="bg-grid-purple/30 p-4 md:p-6 rounded-lg border border-electric-violet/10 hover:border-electric-violet/30 transition-all duration-300 hover:transform hover:scale-105 group">
-            <div className="flex justify-center mb-3 md:mb-4">
-              <div className="p-2 bg-electric-violet/20 rounded-full">
-                <Phone className="h-3 w-3 md:h-4 md:w-4 text-electric-violet" />
-              </div>
-            </div>
-            <h3 className="text-base md:text-lg font-semibold mb-2 md:mb-3 text-electric-violet">Follow Us</h3>
-            <p className="text-soft-blue-gray text-xs md:text-sm mb-3 md:mb-4">Connect on social media</p>
-            <div className="flex justify-center gap-2 md:gap-3">
-              {/* Facebook */}
-              <button 
-                className="p-1.5 md:p-2 bg-blue-600/20 hover:bg-blue-600/40 rounded-full transition-all duration-300 hover:scale-110 group/icon min-h-[44px] min-w-[44px] md:min-h-0 md:min-w-0 flex items-center justify-center"
-                onClick={() => console.log('Facebook clicked')}
-              >
-                <Facebook className="h-3 w-3 md:h-4 md:w-4 text-blue-400 group-hover/icon:text-blue-300" />
-              </button>
-              
-              {/* TikTok */}  
-              <button 
-                className="p-1.5 md:p-2 bg-gray-800/20 hover:bg-gray-800/40 rounded-full transition-all duration-300 hover:scale-110 group/icon min-h-[44px] min-w-[44px] md:min-h-0 md:min-w-0 flex items-center justify-center"
-                onClick={() => console.log('TikTok clicked')}
-              >
-                <svg className="h-3 w-3 md:h-4 md:w-4 text-white group-hover/icon:text-gray-300" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
-                </svg>
-              </button>
-              
-              {/* Instagram */}
-              <button 
-                className="p-1.5 md:p-2 bg-gradient-to-r from-purple-500/20 to-pink-500/20 hover:from-purple-500/40 hover:to-pink-500/40 rounded-full transition-all duration-300 hover:scale-110 group/icon min-h-[44px] min-w-[44px] md:min-h-0 md:min-w-0 flex items-center justify-center"
-                onClick={() => console.log('Instagram clicked')}
-              >
-                <Instagram className="h-3 w-3 md:h-4 md:w-4 text-pink-400 group-hover/icon:text-pink-300" />
-              </button>
-              
-              {/* LinkedIn */}
-              <button 
-                className="p-1.5 md:p-2 bg-blue-700/20 hover:bg-blue-700/40 rounded-full transition-all duration-300 hover:scale-110 group/icon min-h-[44px] min-w-[44px] md:min-h-0 md:min-w-0 flex items-center justify-center"
-                onClick={() => console.log('LinkedIn clicked')}
-              >
-                <Linkedin className="h-3 w-3 md:h-4 md:w-4 text-blue-400 group-hover/icon:text-blue-300" />
-              </button>
-              
-              {/* YouTube */}
-              <button 
-                className="p-1.5 md:p-2 bg-red-600/20 hover:bg-red-600/40 rounded-full transition-all duration-300 hover:scale-110 group/icon min-h-[44px] min-w-[44px] md:min-h-0 md:min-w-0 flex items-center justify-center"
-                onClick={() => console.log('YouTube clicked')}
-              >
-                <Youtube className="h-3 w-3 md:h-4 md:w-4 text-red-400 group-hover/icon:text-red-300" />
-              </button>
-            </div>
           </div>
         </div>
       </div>
