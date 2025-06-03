@@ -7,6 +7,17 @@ import { DivFish } from '../divfish/types';
 const FISH_SIZE_DESKTOP = 20; // Normal fish size on desktop
 const FISH_SIZE_MOBILE = 15;  // Normal fish size on mobile
 
+// 🔧 CHANGE THESE VALUES TO ADJUST NORMAL FISH SPEEDS:
+// Normal swimming speed
+const FISH_NORMAL_SPEED_DESKTOP = 0.8; // Base normal speed on desktop
+const FISH_NORMAL_SPEED_MOBILE = 0.6;  // Base normal speed on mobile (slower)
+const FISH_SPEED_VARIATION = 0.4;      // Random speed variation added to base
+
+// Maximum chase speed  
+const FISH_MAX_SPEED_DESKTOP = 1.5;    // Max speed when chasing on desktop
+const FISH_MAX_SPEED_MOBILE = 1.2;     // Max speed when chasing on mobile (slower)
+const FISH_MAX_SPEED_VARIATION = 0.3;  // Random max speed variation
+
 // Edge boundary buffer to prevent sticking
 const EDGE_BUFFER = 5;
 // More tail segments for greater fluidity
@@ -19,16 +30,17 @@ const DIVFISH_INFLUENCE_DISTANCE = 150;
  */
 export function createFish(id: number, tankWidth: number, tankHeight: number, isMobile: boolean = false): Fish {
   const fishSize = isMobile ? FISH_SIZE_MOBILE : FISH_SIZE_DESKTOP;
+  const normalSpeedBase = isMobile ? FISH_NORMAL_SPEED_MOBILE : FISH_NORMAL_SPEED_DESKTOP;
+  const maxSpeedBase = isMobile ? FISH_MAX_SPEED_MOBILE : FISH_MAX_SPEED_DESKTOP;
   
   return {
     id,
     x: Math.random() * (tankWidth - 2 * EDGE_BUFFER) + EDGE_BUFFER,
     y: Math.random() * (tankHeight - 2 * EDGE_BUFFER) + EDGE_BUFFER,
     size: fishSize,
-    speed: 0.8 + Math.random() * 0.4,
-    // Reduced maximum speed from 2.0-2.5 range to 1.5-1.8 range
-    maxSpeed: 1.5 + Math.random() * 0.3,
-    normalSpeed: 0.8 + Math.random() * 0.4,
+    speed: normalSpeedBase + Math.random() * FISH_SPEED_VARIATION,
+    maxSpeed: maxSpeedBase + Math.random() * FISH_MAX_SPEED_VARIATION,
+    normalSpeed: normalSpeedBase + Math.random() * FISH_SPEED_VARIATION,
     angle: Math.random() * Math.PI * 2,
     targetAngle: Math.random() * Math.PI * 2,
     turnSpeed: 0.03 + Math.random() * 0.02,

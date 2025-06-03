@@ -4,7 +4,12 @@ import { DivFish, DivFishTailSegment } from './types';
 
 // 🔧 CHANGE THESE VALUES TO ADJUST DIVFISH SIZES:
 const DIVFISH_SIZE_DESKTOP = 30; // Divfish size on desktop
-const DIVFISH_SIZE_MOBILE = 20;  // Divfish size on mobile
+const DIVFISH_SIZE_MOBILE = 25;  // Divfish size on mobile
+
+// 🔧 CHANGE THESE VALUES TO ADJUST DIVFISH SPEEDS:
+const DIVFISH_SPEED_DESKTOP = 0.4;     // Base divfish speed on desktop
+const DIVFISH_SPEED_MOBILE = 0.3;      // Base divfish speed on mobile (slower)
+const DIVFISH_SPEED_VARIATION = 0.2;   // Random speed variation added to base
 
 const EDGE_BUFFER = 5;
 const TAIL_SEGMENT_COUNT = 10;
@@ -14,14 +19,15 @@ const TAIL_SEGMENT_COUNT = 10;
  */
 export function createDivFish(tankWidth: number, tankHeight: number, isMobile: boolean = false): DivFish {
   const size = isMobile ? DIVFISH_SIZE_MOBILE : DIVFISH_SIZE_DESKTOP;
+  const speedBase = isMobile ? DIVFISH_SPEED_MOBILE : DIVFISH_SPEED_DESKTOP;
   
   return {
     id: 999, // Unique ID for divfish
     x: Math.random() * (tankWidth - 2 * EDGE_BUFFER) + EDGE_BUFFER,
     y: Math.random() * (tankHeight - 2 * EDGE_BUFFER) + EDGE_BUFFER,
     size: size,
-    speed: 0.4 + Math.random() * 0.2, // Made slower: was 0.8 + 0.4, now 0.4 + 0.2
-    normalSpeed: 0.4 + Math.random() * 0.2, // Made slower: was 0.8 + 0.4, now 0.4 + 0.2
+    speed: speedBase + Math.random() * DIVFISH_SPEED_VARIATION,
+    normalSpeed: speedBase + Math.random() * DIVFISH_SPEED_VARIATION,
     angle: Math.random() * Math.PI * 2,
     targetAngle: Math.random() * Math.PI * 2,
     turnSpeed: 0.03 + Math.random() * 0.02,

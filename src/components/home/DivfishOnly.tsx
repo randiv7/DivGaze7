@@ -14,24 +14,30 @@ const INITIAL_PARTICLES = 30;
 // Cyber pink color
 const CYBER_PINK = '#FF2EF5';
 
-// Large divfish size for desktop, normal size for mobile
-const LARGE_DIVFISH_SIZE = 35;
-const NORMAL_DIVFISH_SIZE = 25;
+// 🔧 CHANGE THESE VALUES TO ADJUST DIVFISH SIZES FOR WHY CHOOSE DIVGAZE SECTION:
+const LARGE_DIVFISH_SIZE_DESKTOP = 35; // Large divfish size for desktop
+const LARGE_DIVFISH_SIZE_MOBILE = 25;  // Normal divfish size for mobile
+
+// 🔧 CHANGE THESE VALUES TO ADJUST DIVFISH SPEEDS FOR WHY CHOOSE DIVGAZE SECTION:
+const LARGE_DIVFISH_SPEED_DESKTOP = 0.4;   // Base divfish speed on desktop
+const LARGE_DIVFISH_SPEED_MOBILE = 0.3;    // Base divfish speed on mobile (slower)
+const LARGE_DIVFISH_SPEED_VARIATION = 0.2; // Random speed variation
 
 /**
- * Creates a divfish for Why Choose Divgaze section (large on desktop, normal on mobile)
+ * Creates a divfish for Why Choose Divgaze section with size based on device type
  */
 function createLargeDivFish(tankWidth: number, tankHeight: number, isMobile: boolean): DivFish {
   const EDGE_BUFFER = 100; // Increased buffer to keep fish away from navbar area
-  const fishSize = isMobile ? NORMAL_DIVFISH_SIZE : LARGE_DIVFISH_SIZE;
+  const fishSize = isMobile ? LARGE_DIVFISH_SIZE_MOBILE : LARGE_DIVFISH_SIZE_DESKTOP;
+  const speedBase = isMobile ? LARGE_DIVFISH_SPEED_MOBILE : LARGE_DIVFISH_SPEED_DESKTOP;
   
   return {
     id: 999,
     x: Math.random() * (tankWidth - 2 * EDGE_BUFFER) + EDGE_BUFFER,
     y: Math.random() * (tankHeight - 2 * EDGE_BUFFER) + EDGE_BUFFER + 100, // Start below navbar
     size: fishSize,
-    speed: 0.4 + Math.random() * 0.2,
-    normalSpeed: 0.4 + Math.random() * 0.2,
+    speed: speedBase + Math.random() * LARGE_DIVFISH_SPEED_VARIATION,
+    normalSpeed: speedBase + Math.random() * LARGE_DIVFISH_SPEED_VARIATION,
     angle: Math.random() * Math.PI * 2,
     targetAngle: Math.random() * Math.PI * 2,
     turnSpeed: 0.03 + Math.random() * 0.02,
