@@ -22,7 +22,7 @@ const PARTICLE_FREQUENCY_MOBILE = 0.02;   // Mobile frequency (much lower)
 const CYAN_COLOR = '#00FFFF';
 
 // 🔧 CHANGE THESE VALUES TO ADJUST DIVFISH SIZES FOR WHY CHOOSE DIVGAZE SECTION:
-const LARGE_DIVFISH_SIZE_DESKTOP = 35; // Large divfish size for desktop
+const LARGE_DIVFISH_SIZE_DESKTOP = 25; // Large divfish size for desktop
 const LARGE_DIVFISH_SIZE_MOBILE = 25;  // Normal divfish size for mobile
 
 // 🔧 CHANGE THESE VALUES TO ADJUST DIVFISH SPEEDS FOR WHY CHOOSE DIVGAZE SECTION:
