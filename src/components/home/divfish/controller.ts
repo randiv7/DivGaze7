@@ -3,11 +3,11 @@
 import { DivFish, DivFishTailSegment } from './types';
 
 // 🔧 CHANGE THESE VALUES TO ADJUST DIVFISH SIZES:
-const DIVFISH_SIZE_DESKTOP = 30; // Divfish size on desktop
+const DIVFISH_SIZE_DESKTOP = 25; // Divfish size on desktop
 const DIVFISH_SIZE_MOBILE = 20;  // Divfish size on mobile
 
 // 🔧 CHANGE THESE VALUES TO ADJUST DIVFISH SPEEDS:
-const DIVFISH_SPEED_DESKTOP = 0.4;     // Base divfish speed on desktop
+const DIVFISH_SPEED_DESKTOP = 0.3;     // Base divfish speed on desktop
 const DIVFISH_SPEED_MOBILE = 0.2;      // Base divfish speed on mobile (slower)
 const DIVFISH_SPEED_VARIATION = 0.2;   // Random speed variation added to base
 

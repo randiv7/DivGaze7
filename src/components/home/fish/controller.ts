@@ -4,12 +4,12 @@ import { Fish, CursorState, TailSegment, Particle, ParticleType } from './types'
 import { DivFish } from '../divfish/types';
 
 // 🔧 CHANGE THESE VALUES TO ADJUST FISH SIZES:
-const FISH_SIZE_DESKTOP = 20; // Normal fish size on desktop
+const FISH_SIZE_DESKTOP = 15; // Normal fish size on desktop
 const FISH_SIZE_MOBILE = 15;  // Normal fish size on mobile
 
 // 🔧 CHANGE THESE VALUES TO ADJUST NORMAL FISH SPEEDS:
 // Normal swimming speed
-const FISH_NORMAL_SPEED_DESKTOP = 0.8; // Base normal speed on desktop
+const FISH_NORMAL_SPEED_DESKTOP = 0.5; // Base normal speed on desktop
 const FISH_NORMAL_SPEED_MOBILE = 0.4;  // Base normal speed on mobile (slower)
 const FISH_SPEED_VARIATION = 0.4;      // Random speed variation added to base
 
