@@ -5,7 +5,6 @@ import { DivFish } from '../divfish/types';
 
 // Fixed fish size as specified in requirements (slightly smaller)
 const FISH_SIZE = 29; // Reduced from 55
-const MOBILE_FISH_SIZE = 22; // New mobile-specific size
 // Edge boundary buffer to prevent sticking
 const EDGE_BUFFER = 5;
 // More tail segments for greater fluidity
@@ -16,12 +15,12 @@ const DIVFISH_INFLUENCE_DISTANCE = 150;
 /**
  * Creates a new fish object
  */
-export function createFish(id: number, tankWidth: number, tankHeight: number, isMobile: boolean = false): Fish {
+export function createFish(id: number, tankWidth: number, tankHeight: number): Fish {
   return {
     id,
     x: Math.random() * (tankWidth - 2 * EDGE_BUFFER) + EDGE_BUFFER,
     y: Math.random() * (tankHeight - 2 * EDGE_BUFFER) + EDGE_BUFFER,
-    size: isMobile ? MOBILE_FISH_SIZE : FISH_SIZE,
+    size: FISH_SIZE,
     speed: 0.8 + Math.random() * 0.4,
     // Reduced maximum speed from 2.0-2.5 range to 1.5-1.8 range
     maxSpeed: 1.5 + Math.random() * 0.3,
@@ -61,13 +60,10 @@ export function createParticle(
   type: ParticleType,
   color: string,
   canvasWidth: number,
-  canvasHeight: number,
-  isMobile: boolean = false
+  canvasHeight: number
 ): Particle {
-  // Enhanced floating digital particles with mobile optimization
-  const size = isMobile ? 
-    1 + Math.random() * 1.5 :  // Mobile: 1-2.5px
-    1.5 + Math.random() * 2.5; // Desktop: 1.5-4px
+  // Enhanced floating digital particles with stronger glow
+  const size = 1.5 + Math.random() * 2.5; // Slightly larger
   const speed = 0.3 + Math.random() * 0.5;
   const alpha = 0.5 + Math.random() * 0.5; // Increased opacity
   const lifetime = 300 + Math.random() * 500;
@@ -123,8 +119,8 @@ export function createBubble(
 /**
  * Initialize multiple fish
  */
-export function initFishes(count: number, tankWidth: number, tankHeight: number, isMobile: boolean = false): Fish[] {
-  return Array.from({ length: count }, (_, i) => createFish(i, tankWidth, tankHeight, isMobile));
+export function initFishes(count: number, tankWidth: number, tankHeight: number): Fish[] {
+  return Array.from({ length: count }, (_, i) => createFish(i, tankWidth, tankHeight));
 }
 
 /**
@@ -341,11 +337,11 @@ export function updateFish(
   if (nextX < edgeMargin) {
     // Approaching left edge - turn right with random angle variation
     fish.targetAngle = (Math.random() * Math.PI / 2) - (Math.PI / 4); // Random angle between -45° to 45° (generally rightward)
-    fish.x += Math.min(edgeMargin - nextX, fish.speed);
+    fish.x = Math.max(edgeMargin, fish.x); // Ensure fish doesn't go past margin
   } else if (nextX > tankWidth - edgeMargin) {
     // Approaching right edge - turn left with random angle variation
     fish.targetAngle = Math.PI + (Math.random() * Math.PI / 2) - (Math.PI / 4); // Random angle between 135° to 225° (generally leftward)
-    fish.x -= Math.min(nextX - (tankWidth - edgeMargin), fish.speed);
+    fish.x = Math.min(tankWidth - edgeMargin, fish.x); // Ensure fish doesn't go past margin
   } else {
     // Regular movement
     fish.x = nextX;
