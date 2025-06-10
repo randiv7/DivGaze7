@@ -99,7 +99,7 @@ const Navbar: React.FC = () => {
           onClick={() => scrollToSection('home')}
           className="flex items-center relative"
         >
-          <span className="text-3xl font-bold text-gradient">
+          <span className="text-3xl font-bold text-neon-blue">
             DivGaze
           </span>
         </button>
@@ -183,7 +183,7 @@ const Navbar: React.FC = () => {
             >
               {/* Menu Header */}
               <div className="flex items-center justify-between p-6 border-b border-grid-purple/30" style={{ flexShrink: 0 }}>
-                <span className="text-xl font-bold text-gradient">
+                <span className="text-xl font-bold text-neon-blue">
                   DivGaze
                 </span>
                 <Button
