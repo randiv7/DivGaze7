@@ -1,12 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ChevronDown, ChevronUp, Lightbulb, Target, Palette, Code } from "lucide-react";
-import DivfishOnly from "./DivfishOnly";
 
 const WhyDivgazeSection: React.FC = () => {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const [expandedSections, setExpandedSections] = useState<{ [key: string]: boolean }>({});
-  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -14,9 +12,6 @@ const WhyDivgazeSection: React.FC = () => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("animate-fade-in");
-            if (entry.target === contentRef.current) {
-              setIsVisible(true);
-            }
           }
         });
       },
@@ -69,13 +64,6 @@ const WhyDivgazeSection: React.FC = () => {
 
   return (
     <section className="min-h-screen flex items-center justify-center py-10 px-4 md:py-20 md:px-4 relative overflow-hidden">
-      {/* Divfish Only Animation - pause when not visible, only show on desktop */}
-      {isVisible && (
-        <div className="hidden lg:block">
-          <DivfishOnly />
-        </div>
-      )}
-
       {/* Background elements */}
       <div className="absolute -top-40 -right-40 w-96 h-96 bg-electric-violet/5 rounded-full filter blur-3xl"></div>
       <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-neon-blue/5 rounded-full filter blur-3xl"></div>
