@@ -19,12 +19,7 @@ const contactFormSchema = z.object({
   phone: z.string().optional(),
   company: z.string().optional(),
   service_interest: z.string().min(1, "Please select a service"),
-  project_type: z.string().min(1, "Please select a project type"),
-  timeline: z.string().min(1, "Please select a timeline"),
-  budget_range: z.string().min(1, "Please select a budget range"),
-  contact_method: z.string().min(1, "Please select preferred contact method"),
-  best_time: z.string().min(1, "Please select best time to contact"),
-  message: z.string().min(10, "Please provide at least 10 characters describing your project"),
+  message: z.string().optional(),
 });
 
 type ContactFormData = z.infer<typeof contactFormSchema>;
@@ -41,11 +36,6 @@ const ProfessionalContactSection: React.FC = () => {
       phone: "",
       company: "",
       service_interest: "",
-      project_type: "",
-      timeline: "",
-      budget_range: "",
-      contact_method: "",
-      best_time: "",
       message: "",
     },
   });
@@ -195,7 +185,7 @@ const ProfessionalContactSection: React.FC = () => {
                 <div className="border-t border-neon-blue/20 pt-6">
                   <h4 className="text-lg font-semibold text-white mb-4">Project Details</h4>
                   
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                  <div className="mb-4">
                     <FormField
                       control={form.control}
                       name="service_interest"
@@ -223,136 +213,6 @@ const ProfessionalContactSection: React.FC = () => {
                         </FormItem>
                       )}
                     />
-
-                    <FormField
-                      control={form.control}
-                      name="project_type"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-white">Project Type</FormLabel>
-                          <Select onValueChange={field.onChange} defaultValue={field.value}>
-                            <FormControl>
-                              <SelectTrigger className="bg-white/10 border-neon-blue/30 focus:border-neon-blue text-white">
-                                <SelectValue placeholder="Select project type" />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              <SelectItem value="new-project">New Project</SelectItem>
-                              <SelectItem value="redesign">Redesign/Upgrade</SelectItem>
-                              <SelectItem value="maintenance">Ongoing Maintenance</SelectItem>
-                              <SelectItem value="consultation">Consultation Only</SelectItem>
-                            </SelectContent>
-                          </Select>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <FormField
-                      control={form.control}
-                      name="timeline"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-white">Timeline</FormLabel>
-                          <Select onValueChange={field.onChange} defaultValue={field.value}>
-                            <FormControl>
-                              <SelectTrigger className="bg-white/10 border-neon-blue/30 focus:border-neon-blue text-white">
-                                <SelectValue placeholder="Select timeline" />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              <SelectItem value="asap">ASAP (Rush)</SelectItem>
-                              <SelectItem value="1-month">Within 1 month</SelectItem>
-                              <SelectItem value="3-months">1-3 months</SelectItem>
-                              <SelectItem value="6-months">3-6 months</SelectItem>
-                              <SelectItem value="flexible">Flexible</SelectItem>
-                            </SelectContent>
-                          </Select>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="budget_range"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-white">Budget Range</FormLabel>
-                          <Select onValueChange={field.onChange} defaultValue={field.value}>
-                            <FormControl>
-                              <SelectTrigger className="bg-white/10 border-neon-blue/30 focus:border-neon-blue text-white">
-                                <SelectValue placeholder="Select budget range" />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              <SelectItem value="under-5k">Under $5,000</SelectItem>
-                              <SelectItem value="5k-15k">$5,000 - $15,000</SelectItem>
-                              <SelectItem value="15k-50k">$15,000 - $50,000</SelectItem>
-                              <SelectItem value="50k-plus">$50,000+</SelectItem>
-                              <SelectItem value="enterprise">Enterprise</SelectItem>
-                            </SelectContent>
-                          </Select>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                </div>
-
-                {/* Communication Preferences */}
-                <div className="border-t border-neon-blue/20 pt-6">
-                  <h4 className="text-lg font-semibold text-white mb-4">Communication Preferences</h4>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <FormField
-                      control={form.control}
-                      name="contact_method"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-white">Preferred Contact Method</FormLabel>
-                          <Select onValueChange={field.onChange} defaultValue={field.value}>
-                            <FormControl>
-                              <SelectTrigger className="bg-white/10 border-neon-blue/30 focus:border-neon-blue text-white">
-                                <SelectValue placeholder="How should we contact you?" />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              <SelectItem value="email">Email</SelectItem>
-                              <SelectItem value="phone">Phone Call</SelectItem>
-                              <SelectItem value="whatsapp">WhatsApp</SelectItem>
-                            </SelectContent>
-                          </Select>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="best_time"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-white">Best Time to Contact</FormLabel>
-                          <Select onValueChange={field.onChange} defaultValue={field.value}>
-                            <FormControl>
-                              <SelectTrigger className="bg-white/10 border-neon-blue/30 focus:border-neon-blue text-white">
-                                <SelectValue placeholder="Select best time" />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              <SelectItem value="morning">Morning (9AM-12PM)</SelectItem>
-                              <SelectItem value="afternoon">Afternoon (12PM-5PM)</SelectItem>
-                              <SelectItem value="evening">Evening (5PM-8PM)</SelectItem>
-                              <SelectItem value="anytime">Anytime</SelectItem>
-                            </SelectContent>
-                          </Select>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
                   </div>
                 </div>
 
@@ -362,7 +222,7 @@ const ProfessionalContactSection: React.FC = () => {
                   name="message"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-white">Project Description</FormLabel>
+                      <FormLabel className="text-gray-300">Project Description (Optional)</FormLabel>
                       <FormControl>
                         <Textarea
                           placeholder="Please describe your project in detail. Include any specific requirements, features, or goals you have in mind..."
