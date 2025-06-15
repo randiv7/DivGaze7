@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -10,27 +10,30 @@ const Navbar: React.FC = () => {
   const [activeSection, setActiveSection] = useState("home");
   const isMobile = useIsMobile();
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
       
-      // Scroll spy functionality
-      const sections = ['home', 'services', 'about', 'contact'];
-      const scrollPosition = window.scrollY + 100; // Offset for navbar height
-      
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const section = document.getElementById(sections[i]);
-        if (section && section.offsetTop <= scrollPosition) {
-          setActiveSection(sections[i]);
-          break;
+      // Only run scroll spy on home page
+      if (location.pathname === '/') {
+        const sections = ['home', 'services', 'about', 'contact'];
+        const scrollPosition = window.scrollY + 100; // Offset for navbar height
+        
+        for (let i = sections.length - 1; i >= 0; i--) {
+          const section = document.getElementById(sections[i]);
+          if (section && section.offsetTop <= scrollPosition) {
+            setActiveSection(sections[i]);
+            break;
+          }
         }
       }
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [location.pathname]);
 
   // Close mobile menu when route changes
   useEffect(() => {
@@ -59,17 +62,37 @@ const Navbar: React.FC = () => {
     };
   }, [mobileMenuOpen]);
 
+  // Fixed navigation function that works across all pages
   const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      });
-      setActiveSection(sectionId);
-    }
-    // Auto-close mobile menu after navigation
+    // Close mobile menu immediately
     setMobileMenuOpen(false);
+    
+    // If we're not on the home page, navigate to home first
+    if (location.pathname !== '/') {
+      navigate('/', { replace: false });
+      
+      // Wait for navigation to complete, then scroll to section
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+          });
+          setActiveSection(sectionId);
+        }
+      }, 100);
+    } else {
+      // We're already on home page, just scroll to section
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        });
+        setActiveSection(sectionId);
+      }
+    }
   };
 
   const closeMobileMenu = () => {
@@ -84,13 +107,15 @@ const Navbar: React.FC = () => {
   ];
 
   const isActiveLink = (id: string) => {
-    return activeSection === id;
+    // Only show active state when on home page
+    return location.pathname === '/' && activeSection === id;
   };
 
   return (
     <nav
       className={`fixed w-full transition-all duration-300 ${
         isScrolled ? "bg-deep-navy-blue/90 backdrop-blur-md shadow-md" : "bg-transparent"
+      } ${mobileMenuOpen ? "bg-deep-navy-blue/90 backdrop-blur-md shadow-md" : "bg-transparent"
       } ${mobileMenuOpen ? "z-[9998]" : "z-50"}`}
     >
       <div className="container mx-auto px-4 py-6 flex items-center justify-between">
