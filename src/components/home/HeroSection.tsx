@@ -7,7 +7,6 @@ import NeuralNetworkBackground from "./NeuralNetworkBackground"; // Replace the 
 
 const HeroSection: React.FC = () => {
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const ctaRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -16,10 +15,6 @@ const HeroSection: React.FC = () => {
           if (entry.isIntersecting) {
             if (entry.target === titleRef.current) {
               titleRef.current.classList.add("animate-fade-in");
-            } else if (entry.target === ctaRef.current) {
-              setTimeout(() => {
-                ctaRef.current?.classList.add("animate-fade-in");
-              }, 600);
             }
           }
         });
@@ -28,7 +23,6 @@ const HeroSection: React.FC = () => {
     );
 
     if (titleRef.current) observer.observe(titleRef.current);
-    if (ctaRef.current) observer.observe(ctaRef.current);
 
     return () => observer.disconnect();
   }, []);
@@ -68,35 +62,7 @@ const HeroSection: React.FC = () => {
           <span className="text-neon-blue block drop-shadow-lg">
             Beyond Boundaries
           </span>
-          <span className="text-white block">
-            Digital Innovation
-          </span>
         </h1>
-        
-        <div 
-          ref={ctaRef}
-          className="flex justify-center opacity-0 transition-opacity duration-700"
-        >
-          <div className="flex flex-col sm:flex-row gap-4 items-center">
-            <Button 
-              onClick={() => scrollToSection('services')}
-              className="bg-gradient-to-r from-neon-blue to-electric-violet text-white hover:from-electric-violet hover:to-neon-blue transition-all duration-300 transform hover:scale-105"
-            >
-              <span className="flex items-center gap-2">
-                Explore Our Services
-                <ArrowRight className="w-5 h-5" />
-              </span>
-            </Button>
-            
-            <Button 
-              onClick={() => scrollToSection('contact')}
-              variant="outline" 
-              className="border-neon-blue text-neon-blue hover:bg-neon-blue/10"
-            >
-              Get In Touch
-            </Button>
-          </div>
-        </div>
       </div>
     </section>
   );

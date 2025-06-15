@@ -119,12 +119,21 @@ const Navbar: React.FC = () => {
       } ${mobileMenuOpen ? "z-[9998]" : "z-50"}`}
     >
       <div className="container mx-auto px-4 py-6 flex items-center justify-between">
-        {/* Logo */}
+        {/* Logo with Image */}
         <button 
           onClick={() => scrollToSection('home')}
-          className="flex items-center relative"
+          className="flex items-center gap-3 relative"
         >
-          <span className="text-3xl font-bold text-neon-blue">
+          {/* Logo Image */}
+          <div className="flex-shrink-0">
+            <img 
+              src="/assets/logo.png" 
+              alt="Divgaze Logo" 
+              className="h-12 w-12 md:h-14 md:w-14"
+            />
+          </div>
+          {/* Company Name */}
+          <span className="text-2xl md:text-3xl font-bold text-white">
             DivGaze
           </span>
         </button>
@@ -208,9 +217,17 @@ const Navbar: React.FC = () => {
             >
               {/* Menu Header */}
               <div className="flex items-center justify-between p-6 border-b border-grid-purple/30" style={{ flexShrink: 0 }}>
-                <span className="text-xl font-bold text-neon-blue">
-                  DivGaze
-                </span>
+                {/* Logo in Mobile Menu */}
+                <div className="flex items-center gap-2">
+                  <img 
+                    src="/assets/logo.png" 
+                    alt="Divgaze Logo" 
+                    className="h-8 w-8"
+                  />
+                  <span className="text-lg font-bold text-white">
+                    DivGaze
+                  </span>
+                </div>
                 <Button
                   variant="ghost"
                   size="icon"
