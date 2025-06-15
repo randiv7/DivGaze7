@@ -2,14 +2,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { CursorState, Fish, Particle } from './fish/types';
 import { drawFish, drawWaterTexture, drawParticles } from './fish/renderer';
-import { initFishes, updateFish, createParticle, createBubble } from './fish/controller';
-import { DivFish } from './divfish/types';
-import { createDivFish, updateDivFish } from './divfish/controller';
-import { drawDivFish } from './divfish/renderer';
+import { initFishes, updateFish, createParticle } from './fish/controller';
 
 // Number of normal fish to show in the tank
-const FISH_COUNT_MOBILE = 2; // Mobile fish count
-const FISH_COUNT_DESKTOP = 8; // Desktop fish count
+const FISH_COUNT_MOBILE = 4; // Mobile fish count
+const FISH_COUNT_DESKTOP = 10; // Desktop fish count
 
 // 🔧 CHANGE THESE VALUES TO ADJUST PARTICLE COUNTS:
 const INITIAL_PARTICLES_DESKTOP = 50;  // Desktop particle count
@@ -21,8 +18,6 @@ const PARTICLE_FREQUENCY_MOBILE = 0.04;   // Mobile frequency (lower = fewer par
 
 // Cyan color for particles
 const CYAN_COLOR = '#00FFFF';
-// Bubble release interval (8 seconds = 8000ms)
-const BUBBLE_RELEASE_INTERVAL = 8000;
 
 const CyberFishTank: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -40,10 +35,8 @@ const CyberFishTank: React.FC = () => {
     isActive: false
   });
   const fishesRef = useRef<Fish[]>([]);
-  const divfishRef = useRef<DivFish | null>(null);
   const particlesRef = useRef<Particle[]>([]);
   const animationRef = useRef<number | null>(null);
-  const lastBubbleTimeRef = useRef<number>(0);
   
   // Handle window resize
   useEffect(() => {
@@ -75,9 +68,6 @@ const CyberFishTank: React.FC = () => {
     const fishCount = isMobileRef.current ? FISH_COUNT_MOBILE : FISH_COUNT_DESKTOP;
     fishesRef.current = initFishes(fishCount, canvas.width, canvas.height, isMobileRef.current);
     
-    // Initialize divfish with mobile/desktop size consideration
-    divfishRef.current = createDivFish(canvas.width, canvas.height, isMobileRef.current);
-    
     // Initialize particles with device-appropriate counts
     particlesRef.current = [];
     const initialParticleCount = isMobileRef.current ? INITIAL_PARTICLES_MOBILE : INITIAL_PARTICLES_DESKTOP;
@@ -94,9 +84,6 @@ const CyberFishTank: React.FC = () => {
         isMobileRef.current
       ));
     }
-    
-    // Reset bubble timer
-    lastBubbleTimeRef.current = Date.now();
     
     // Mouse event handlers
     const handleMouseMove = (e: MouseEvent) => {
@@ -157,21 +144,6 @@ const CyberFishTank: React.FC = () => {
         ));
       }
       
-      // Divfish bubble release every 8 seconds
-      const currentTime = Date.now();
-      if (divfishRef.current && currentTime - lastBubbleTimeRef.current > BUBBLE_RELEASE_INTERVAL) {
-        // Release 6 bubbles from divfish position
-        for (let i = 0; i < 6; i++) {
-          particlesRef.current.push(createBubble(
-            divfishRef.current.x,
-            divfishRef.current.y,
-            canvas.width,
-            canvas.height
-          ));
-        }
-        lastBubbleTimeRef.current = currentTime;
-      }
-      
       // Update and filter out dead particles
       particlesRef.current = particlesRef.current
         .filter(particle => {
@@ -199,17 +171,11 @@ const CyberFishTank: React.FC = () => {
           );
         });
       
-      // Update and draw normal fish (pass divfish for influence calculation)
+      // Update and draw normal fish (no divfish parameter needed now)
       fishesRef.current.forEach(fish => {
-        updateFish(fish, canvas.width, canvas.height, cursorRef.current, isMobileRef.current, deltaTime, divfishRef.current);
+        updateFish(fish, canvas.width, canvas.height, cursorRef.current, isMobileRef.current, deltaTime, null);
         drawFish(ctx, fish);
       });
-      
-      // Update and draw divfish
-      if (divfishRef.current) {
-        updateDivFish(divfishRef.current, canvas.width, canvas.height, deltaTime);
-        drawDivFish(ctx, divfishRef.current);
-      }
       
       // Draw particles
       drawParticles(ctx, particlesRef.current);

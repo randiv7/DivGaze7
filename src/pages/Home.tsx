@@ -3,9 +3,9 @@ import HeroSection from "@/components/home/HeroSection";
 import ServicesSection from "@/components/home/ServicesSection";
 import FeaturedProject from "@/components/home/FeaturedProject";
 import WhyDivgazeSection from "@/components/home/WhyDivgazeSection";
-// import ContactSection from "@/components/home/ContactSection"; // Remove old import
-import ProfessionalContactSection from "@/components/home/ProfessionalContactSection"; // Add new import
+import ProfessionalContactSection from "@/components/home/ProfessionalContactSection";
 import CustomerCounterSection from "@/components/home/CustomerCounterSection";
+import CyberAquariumSection from "@/components/home/CyberAquariumSection"; // Add new import
 import Layout from "@/components/layout/Layout";
 
 const Home: React.FC = () => {
@@ -24,6 +24,10 @@ const Home: React.FC = () => {
       <CustomerCounterSection />
       <div id="contact">
         <ProfessionalContactSection />
+      </div>
+      {/* New Cyber Aquarium Section */}
+      <div id="aquarium">
+        <CyberAquariumSection />
       </div>
     </Layout>
   );
